@@ -28,6 +28,7 @@ ROOT_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 RESULTS_DIR = os.path.join(SCRIPT_DIR, "results")
 DOCS_FIGURES_DIR = os.path.join(ROOT_DIR, "docs", "figures")
 RELATORIO_FIGURES_DIR = os.path.join(ROOT_DIR, "relatorio", "figuras")
+WEB_FIGURES_DIR = os.path.join(ROOT_DIR, "web", "figures")
 
 # Paleta oficial padronizada
 PALETTE: dict[str, str] = {
@@ -72,17 +73,20 @@ def setup_theme() -> None:
 
 
 def save_figure(fig: plt.Figure, filename: str) -> None:
-    """Salva a figura a 200 DPI em docs/figures/ e relatorio/figuras/."""
+    """Salva a figura a 200 DPI em docs/figures/, relatorio/figuras/ e web/figures/."""
     os.makedirs(DOCS_FIGURES_DIR, exist_ok=True)
     os.makedirs(RELATORIO_FIGURES_DIR, exist_ok=True)
+    os.makedirs(WEB_FIGURES_DIR, exist_ok=True)
 
     dest_docs = os.path.join(DOCS_FIGURES_DIR, filename)
     dest_relatorio = os.path.join(RELATORIO_FIGURES_DIR, filename)
+    dest_web = os.path.join(WEB_FIGURES_DIR, filename)
 
     fig.savefig(dest_docs, dpi=200, bbox_inches="tight")
     fig.savefig(dest_relatorio, dpi=200, bbox_inches="tight")
+    fig.savefig(dest_web, dpi=200, bbox_inches="tight")
     plt.close(fig)
-    print(f"      [FIG] Salvo: {filename} em docs/figures e relatorio/figuras.")
+    print(f"      [FIG] Salvo: {filename} em docs/figures, relatorio/figuras e web/figures.")
 
 
 def load_dataset(filename: str, required_cols: list[str] | None = None) -> pd.DataFrame | None:

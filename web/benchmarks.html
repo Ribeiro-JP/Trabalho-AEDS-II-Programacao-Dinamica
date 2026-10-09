@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Benchmarks Empíricos — PD LAB</title>
-  <meta name="description" content="Painel de benchmarks empíricos do PD Lab. Comparação de tempo de execução, operações e consumo de memória entre algoritmos de Programação Dinâmica, Recursão e Gulosos.">
+  <meta name="description" content="Painel de benchmarks empíricos do PD Lab. Comparação de tempo de execução, memória e limites de escala entre algoritmos de Programação Dinâmica, Recursão e Gulosos com dados científicos a 200 DPI.">
   <script>
     (function() {
       try {
@@ -21,6 +21,343 @@
     })();
   </script>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Estilos complementares específicos da galeria de gráficos científicos */
+    .bench-gallery-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .bench-fig-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 1.5rem;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      position: relative;
+    }
+
+    .bench-fig-card:hover {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .bench-fig-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .bench-fig-title-area {
+      flex: 1 1 320px;
+    }
+
+    .bench-fig-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-primary);
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .bench-fig-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 0.4rem 0;
+      line-height: 1.3;
+    }
+
+    .bench-fig-desc {
+      font-size: 0.925rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .bench-fig-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    /* Moldura técnica da imagem */
+    .bench-fig-display {
+      position: relative;
+      background-color: #0f172a; /* Fundo oficial dark slate do matplotlib */
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin: 1.15rem 0;
+      cursor: zoom-in;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+    }
+
+    .bench-fig-display:hover .bench-fig-zoom-hint {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .bench-fig-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 580px;
+      object-fit: contain;
+      user-select: none;
+      transition: transform 0.25s ease;
+    }
+
+    .bench-fig-zoom-hint {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background-color: rgba(15, 23, 42, 0.88);
+      color: #f8fafc;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-xs);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: all var(--transition-fast);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Barra de Ações do Card */
+    .bench-fig-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.15rem;
+      padding: 0.5rem 0;
+    }
+
+    .bench-fig-meta {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .bench-fig-btns {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* Caixa de Conclusões Empíricas */
+    .bench-takeaway-box {
+      background-color: var(--bg-surface-alt);
+      border-left: 3px solid var(--color-primary);
+      border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+      padding: 0.85rem 1.15rem;
+      font-size: 0.875rem;
+      line-height: 1.55;
+    }
+
+    .bench-takeaway-title {
+      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 0.775rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-primary);
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .bench-takeaway-list {
+      margin: 0;
+      padding-left: 1.2rem;
+      color: var(--text-secondary);
+    }
+
+    .bench-takeaway-list li {
+      margin-bottom: 0.25rem;
+    }
+
+    .bench-takeaway-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Barra de Navegação Rápida / Filtros */
+    .bench-nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .bench-tab-btn {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      padding: 0.4rem 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xs);
+      background-color: var(--bg-surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      user-select: none;
+    }
+
+    .bench-tab-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--text-primary);
+      background-color: var(--bg-surface-alt);
+    }
+
+    .bench-tab-btn.is-active {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #FFFDF7;
+      font-weight: 700;
+    }
+
+    /* Modal / Lightbox para Inspeção de Alta Resolução */
+    .bench-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    .bench-modal-backdrop.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .bench-modal-content {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      max-width: 1100px;
+      width: 100%;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transform: scale(0.97);
+      transition: transform 0.2s ease;
+    }
+
+    .bench-modal-backdrop.is-open .bench-modal-content {
+      transform: scale(1);
+    }
+
+    .bench-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--bg-surface);
+    }
+
+    .bench-modal-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .bench-modal-close-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0.3rem 0.6rem;
+      border-radius: var(--radius-xs);
+      transition: background-color var(--transition-fast);
+    }
+
+    .bench-modal-close-btn:hover {
+      background-color: var(--color-danger);
+      color: #fff;
+      border-color: var(--color-danger);
+    }
+
+    .bench-modal-body {
+      background-color: #0f172a;
+      padding: 1rem;
+      overflow: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .bench-modal-img {
+      max-width: 100%;
+      max-height: 74vh;
+      object-fit: contain;
+      border-radius: var(--radius-xs);
+    }
+
+    .bench-modal-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--border-color);
+      background-color: var(--bg-surface);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 768px) {
+      .bench-fig-card {
+        padding: 1rem;
+      }
+      .bench-fig-display {
+        min-height: 200px;
+      }
+      .bench-fig-title {
+        font-size: 1.05rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -97,219 +434,576 @@
         <div class="lab-card-title">
           <span>Módulo 05</span>
           <span class="badge badge-accent">Análise Experimental</span>
+          <span class="badge badge-secondary">AEDS-II • Cormen et al.</span>
         </div>
-        <div style="display: flex; gap: 0.5rem; align-items: center;">
-          <span class="badge badge-secondary" id="badge-dataset-info">data/results.json</span>
-          <span class="badge" id="badge-total-records">0 medições</span>
+        <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+          <span class="badge">9 Gráficos Gerados</span>
+          <span class="badge badge-success">200 DPI Científico</span>
         </div>
       </div>
       
-      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.75rem;">
-        <div>
-          <h2>Painel de Benchmarks Empíricos</h2>
-          <p style="margin: 0; font-size: 0.95rem;">
-            Analise e compare o comportamento experimental dos algoritmos sob diferentes tamanhos de entrada.
-            Os dados são carregados dinamicamente via <code>fetch()</code> a partir de medições reais de tempo de CPU, operações elementares e consumo de memória.
-          </p>
-        </div>
+      <div>
+        <h2>Painel de Benchmarks Empíricos — Resultados Científicos</h2>
+        <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
+          Exibição dos resultados empíricos da suíte de testes de Programação Dinâmica. Cada gráfico foi produzido com
+          <strong>20 amostragens por algoritmo</strong>, <strong>média aparada de 5 repetições (trimmed mean)</strong>
+          descartando o tempo mínimo e máximo para eliminar ruídos do sistema operacional, medição rigorosamente isolada
+          com <code>time.perf_counter()</code>, rastreamento de memória via <code>tracemalloc</code> e tratamento editorial com linhas contínuas e sem marcadores.
+        </p>
       </div>
     </div>
 
-    <!-- ESTADO: CARREGAMENTO -->
-    <div class="bench-feedback-box" id="state-loading">
-      <div class="bench-spinner"></div>
-      <div class="bench-feedback-title">Carregando dados...</div>
-      <p class="bench-feedback-desc">
-        Acessando medições experimentais em <code>data/results.json</code>.
-      </p>
-    </div>
-
-    <!-- ESTADO: ERRO -->
-    <div class="bench-feedback-box" id="state-error" style="display: none;">
-      <div class="bench-feedback-icon" style="color: var(--color-danger);">⚠️</div>
-      <div class="bench-feedback-title">Não foi possível carregar os resultados.</div>
-      <p class="bench-feedback-desc" id="error-message-text">
-        Ocorreu uma falha ao tentar ler os dados de benchmark. Verifique se o arquivo <code>data/results.json</code> existe e é um JSON válido.
-      </p>
-      <button type="button" class="btn btn-primary btn-sm" id="btn-retry-fetch">
-        Tentar novamente
-      </button>
-    </div>
-
-    <!-- ESTADO: VAZIO -->
-    <div class="bench-feedback-box" id="state-empty" style="display: none;">
-      <div class="bench-feedback-icon" style="color: var(--color-accent);">📭</div>
-      <div class="bench-feedback-title">Nenhum resultado experimental encontrado.</div>
-      <p class="bench-feedback-desc">
-        O arquivo <code>data/results.json</code> foi carregado com sucesso, porém não contém medições de experimentos disponíveis.
-      </p>
-      <button type="button" class="btn btn-outline btn-sm" id="btn-reload-empty">
-        Recarregar
-      </button>
-    </div>
-
-    <!-- CONTEÚDO PRINCIPAL (Exibido após o carregamento com sucesso) -->
-    <div id="benchmarks-content" style="display: none;">
-
-      <!-- 1. Barra de Filtros e Controles -->
-      <div class="bench-filters-bar">
-        
-        <!-- Filtro: Algoritmo -->
-        <div class="bench-filter-group">
-          <label for="filter-algorithm">Algoritmo:</label>
-          <select id="filter-algorithm" aria-label="Filtrar por algoritmo">
-            <option value="all">Todos os Algoritmos</option>
-            <!-- Preenchido dinamicamente via JS -->
-          </select>
-        </div>
-
-        <!-- Filtro: Métrica -->
-        <div class="bench-filter-group">
-          <label for="filter-metric">Métrica:</label>
-          <select id="filter-metric" aria-label="Filtrar por métrica">
-            <option value="timeMs">Tempo de Execução (ms)</option>
-            <option value="operations">Operações / Chamadas</option>
-            <option value="memoryKb">Consumo de Memória (KB)</option>
-          </select>
-        </div>
-
-        <!-- Filtro: Tamanho de Entrada -->
-        <div class="bench-filter-group">
-          <label for="filter-size">Tamanho (N):</label>
-          <select id="filter-size" aria-label="Filtrar por tamanho de entrada">
-            <option value="all">Todos os Tamanhos</option>
-            <!-- Preenchido dinamicamente via JS -->
-          </select>
-        </div>
-
-        <!-- Filtro: Escala do Eixo Y -->
-        <div class="bench-filter-group">
-          <label for="filter-scale">Escala Y:</label>
-          <select id="filter-scale" aria-label="Escala do eixo vertical">
-            <option value="linear">Linear</option>
-            <option value="log">Logarítmica (log₁₀)</option>
-          </select>
-        </div>
-
-        <!-- Filtro: Tipo de Gráfico -->
-        <div class="bench-filter-group">
-          <label for="filter-chart-type">Visualização:</label>
-          <select id="filter-chart-type" aria-label="Tipo de visualização gráfica">
-            <option value="lines">Tempo × Tamanho (Linhas)</option>
-            <option value="bars">Comparação Direta (Barras)</option>
-          </select>
-        </div>
-
-        <!-- Botão: Limpar Filtros -->
-        <div style="margin-left: auto;">
-          <button type="button" class="btn btn-outline btn-sm" id="btn-reset-filters" title="Restaurar filtros padrões">
-            ↺ Restaurar filtros
-          </button>
-        </div>
+    <!-- 1. Grade de Estatísticas Rápidas do Ambiente -->
+    <div class="bench-stats-grid">
+      <div class="bench-stat-card">
+        <span class="bench-stat-title">Amostragem Rigorosa</span>
+        <span class="bench-stat-value">20 Pontos</span>
+        <span class="bench-stat-sub">por curva algorítmica</span>
       </div>
 
-      <!-- 2. Grade de Estatísticas Rápidas -->
-      <div class="bench-stats-grid">
-        <div class="bench-stat-card">
-          <span class="bench-stat-title">Medições Visíveis</span>
-          <span class="bench-stat-value" id="stat-count">0</span>
-          <span class="bench-stat-sub">pontos de dados filtrados</span>
-        </div>
-
-        <div class="bench-stat-card">
-          <span class="bench-stat-title">Menor Valor</span>
-          <span class="bench-stat-value" id="stat-min-val" style="color: var(--color-success);">−</span>
-          <span class="bench-stat-sub" id="stat-min-sub">algoritmo mais veloz</span>
-        </div>
-
-        <div class="bench-stat-card">
-          <span class="bench-stat-title">Maior Valor</span>
-          <span class="bench-stat-value" id="stat-max-val" style="color: var(--color-danger);">−</span>
-          <span class="bench-stat-sub" id="stat-max-sub">custo mais alto</span>
-        </div>
-
-        <div class="bench-stat-card">
-          <span class="bench-stat-title">Média da Métrica</span>
-          <span class="bench-stat-value" id="stat-avg-val">−</span>
-          <span class="bench-stat-sub" id="stat-avg-sub">média ponderada</span>
-        </div>
+      <div class="bench-stat-card">
+        <span class="bench-stat-title">Filtro Estatístico</span>
+        <span class="bench-stat-value" style="color: var(--color-success);">Trimmed Mean</span>
+        <span class="bench-stat-sub">5 execuções (média das 3 centrais)</span>
       </div>
 
-      <!-- 3. Container do Gráfico SVG Interativo -->
-      <div class="bench-chart-container">
-        <div class="bench-chart-header">
-          <div>
-            <span class="bench-chart-title" id="chart-main-title">
-              Curvas de Crescimento: Tempo (ms) × Tamanho da Entrada (N)
-            </span>
-            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem;" id="chart-sub-title">
-              Passe o cursor sobre os pontos para ver detalhes. Clique em um ponto para selecioná-lo na tabela.
+      <div class="bench-stat-card">
+        <span class="bench-stat-title">Isolamento de Clock</span>
+        <span class="bench-stat-value">perf_counter</span>
+        <span class="bench-stat-sub">medição separada do tracemalloc</span>
+      </div>
+
+      <div class="bench-stat-card">
+        <span class="bench-stat-title">Resolução Gráfica</span>
+        <span class="bench-stat-value" style="color: var(--color-accent);">200 DPI</span>
+        <span class="bench-stat-sub">linhas contínuas e suavizadas</span>
+      </div>
+    </div>
+
+    <!-- 2. Barra de Filtros e Busca Rápida -->
+    <div class="bench-filters-bar">
+      <div class="bench-filter-group" style="flex: 1 1 240px;">
+        <label for="filter-search-input">Buscar Experimento:</label>
+        <input type="text" id="filter-search-input" placeholder="Ex: fibonacci, memória, c++, guloso..." style="min-width: 100%;">
+      </div>
+
+      <div class="bench-filter-group">
+        <label for="filter-category-select">Filtrar por Categoria:</label>
+        <select id="filter-category-select">
+          <option value="all">Todos os Experimentos (9)</option>
+          <option value="dashboard">Dashboard Geral</option>
+          <option value="tempo">Tempo de Execução</option>
+          <option value="memoria">Consumo de Memória</option>
+          <option value="linguagem">Comparação C++ vs Python</option>
+          <option value="pilha">Pilha & Recursão</option>
+          <option value="guloso">Falha do Guloso</option>
+        </select>
+      </div>
+
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 0.5rem;">
+        <span class="badge" id="visible-cards-count">Exibindo 9 de 9</span>
+        <button type="button" class="btn btn-outline btn-sm" id="btn-reset-filter" title="Restaurar todos os gráficos">
+          ↺ Ver Todos
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. Abas de Acesso Rápido -->
+    <nav class="bench-nav-tabs" aria-label="Navegação rápida por experimento">
+      <button type="button" class="bench-tab-btn is-active" data-target="all">Todos (9)</button>
+      <button type="button" class="bench-tab-btn" data-target="card-summary">Dashboard Geral</button>
+      <button type="button" class="bench-tab-btn" data-target="card-e1">E1 • Fibonacci</button>
+      <button type="button" class="bench-tab-btn" data-target="card-e2">E2 • Rod Cutting</button>
+      <button type="button" class="bench-tab-btn" data-target="card-e3">E3 • LCS Memória</button>
+      <button type="button" class="bench-tab-btn" data-target="card-e4">E4 • C++ vs Python</button>
+      <button type="button" class="bench-tab-btn" data-target="card-e5">E5 • Limite Recursão</button>
+      <button type="button" class="bench-tab-btn" data-target="card-e6">E6 • Falha do Guloso</button>
+      <button type="button" class="bench-tab-btn" data-target="card-e7">E7 • Matrix Chain</button>
+      <button type="button" class="bench-tab-btn" data-target="card-e8">E8 • Mochila 0/1</button>
+    </nav>
+
+    <!-- 4. Galeria de Gráficos Científicos -->
+    <div class="bench-gallery-grid" id="benchmarks-gallery">
+
+      <!-- ==============================================================
+           DASHBOARD GERAL DE COMPLEXIDADES
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-summary" data-category="dashboard" data-keywords="dashboard resumo síntese fibonacci rod cutting lcs cpp python c++">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num">
+              <span>★ Síntese Experimental</span>
+              <span>•</span>
+              <span>Visão Panorâmica</span>
             </div>
+            <h3 class="bench-fig-title">Dashboard Geral de Complexidades e Desempenho</h3>
+            <p class="bench-fig-desc">
+              Painel consolidado em 4 quadrantes ilustrando as principais teses teóricas de Cormen et al.:
+              a quebra da barreira exponencial no Fibonacci, a contenção polinomial no Corte de Hastes, a economia de memória de 2 linhas na LCS e a aceleração de compilação em código nativo C++.
+            </p>
           </div>
-
-          <div class="bench-chart-tools">
-            <span class="badge badge-accent" id="badge-chart-mode">Linhas (Tempo × N)</span>
-            <span class="badge" id="badge-chart-scale">Escala Linear</span>
-          </div>
-        </div>
-
-        <!-- Wrapper com SVG e Tooltip Flutuante -->
-        <div class="bench-svg-wrapper" id="svg-wrapper">
-          <svg id="bench-svg" class="bench-svg" viewBox="0 0 900 460" preserveAspectRatio="xMidYMid meet" aria-label="Gráfico de benchmark empírico">
-            <!-- Renderizado dinamicamente via JS -->
-          </svg>
-
-          <!-- Tooltip dinâmico -->
-          <div class="bench-tooltip" id="bench-tooltip" role="tooltip" aria-hidden="true">
-            <div class="bench-tooltip-title" id="tooltip-title">Algoritmo</div>
-            <div class="bench-tooltip-line" id="tooltip-size">Tamanho N: 10</div>
-            <div class="bench-tooltip-line" id="tooltip-value">Métrica: 2.31 ms</div>
-            <div class="bench-tooltip-line" id="tooltip-comp">Complexidade: O(n)</div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">4 Painéis Integrados</span>
+            <span class="badge badge-secondary">Tempo & Memória</span>
+            <span class="badge">Escalas Adaptadas</span>
           </div>
         </div>
 
-        <!-- Legenda Interativa -->
-        <div class="bench-legend" id="bench-legend" aria-label="Legenda dos algoritmos">
-          <!-- Chips gerados dinamicamente com cores e toggle on/off -->
-        </div>
-      </div>
-
-      <!-- 4. Tabela de Dados Experimentais -->
-      <div class="bench-table-container">
-        <div class="bench-table-header">
-          <div>
-            <span style="font-weight: 700; font-family: var(--font-mono); font-size: 1rem; color: var(--text-primary);">
-              Tabela de Medições Empíricas
-            </span>
-            <span style="font-size: 0.8rem; color: var(--text-secondary); margin-left: 0.5rem;" id="table-record-count">
-              (0 registros)
-            </span>
-          </div>
-
-          <div style="display: flex; gap: 0.5rem; align-items: center;">
-            <input type="text" id="table-search" placeholder="Filtrar tabela..." style="font-family: var(--font-mono); font-size: 0.825rem; padding: 0.4rem 0.65rem; border: 1px solid var(--border-color); border-radius: var(--radius-xs); background-color: var(--bg-surface-alt); color: var(--text-primary); width: 180px;" aria-label="Buscar dados na tabela">
+        <div class="bench-fig-display" onclick="openModal('summary_complexity_dashboard.png', 'Dashboard Geral de Complexidades e Desempenho')">
+          <img src="figures/summary_complexity_dashboard.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/summary_complexity_dashboard.png';}" alt="Dashboard Geral de Complexidades" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">
+            <span>🔍 Clique para ampliar</span>
           </div>
         </div>
 
-        <div class="bench-table-wrapper">
-          <table class="bench-table" id="bench-table" aria-label="Tabela de resultados empíricos">
-            <thead>
-              <tr>
-                <th scope="col" data-col="algorithm">Algoritmo <span class="sort-indicator">↕</span></th>
-                <th scope="col" data-col="paradigm">Paradigma <span class="sort-indicator">↕</span></th>
-                <th scope="col" data-col="inputSize">Tamanho (N) <span class="sort-indicator">↕</span></th>
-                <th scope="col" data-col="timeMs">Tempo (ms) <span class="sort-indicator">↕</span></th>
-                <th scope="col" data-col="operations">Operações <span class="sort-indicator">↕</span></th>
-                <th scope="col" data-col="memoryKb">Memória (KB) <span class="sort-indicator">↕</span></th>
-                <th scope="col" data-col="complexity">Complexidade <span class="sort-indicator">↕</span></th>
-              </tr>
-            </thead>
-            <tbody id="bench-table-body">
-              <!-- Linhas geradas dinamicamente -->
-            </tbody>
-          </table>
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta">
+            <span>Resolução: 200 DPI</span> • <span>Linhas contínuas</span> • <span>Paleta Dark Slate</span>
+          </div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('summary_complexity_dashboard.png', 'Dashboard Geral de Complexidades')">
+              🔍 Ampliar Gráfico
+            </button>
+            <a href="figures/summary_complexity_dashboard.png" download="summary_complexity_dashboard.png" class="btn btn-primary btn-sm">
+              ⬇ Baixar Imagem
+            </a>
+          </div>
         </div>
-      </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas Fundamentais:</div>
+          <ul class="bench-takeaway-list">
+            <li><strong>Fibonacci:</strong> A força bruta colapsa a partir de \(n = 25\), enquanto Memoização e Bottom-Up executam abaixo de 0.05 ms.</li>
+            <li><strong>Corte de Hastes:</strong> O algoritmo ingênuo atinge timeout de segurança em \(n \approx 22\), comprovando a inviabilidade de \(\Theta(2^n)\).</li>
+            <li><strong>LCS Memória:</strong> A versão otimizada de 2 linhas economiza mais de 95% de memória RAM em strings médias e longas.</li>
+            <li><strong>C++ vs Python:</strong> Implementação idêntica em C++ nativo (-O3) alcança speedup de até 40x sem alterar a complexidade assintótica.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           EXPERIMENTO 1: FIBONACCI
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e1" data-category="tempo" data-keywords="e1 fibonacci forca bruta memoizacao bottom-up o(1) tempo exponencial">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num">
+              <span>Experimento 01</span>
+              <span>•</span>
+              <span>Cormen Cap. 15</span>
+            </div>
+            <h3 class="bench-fig-title">Fibonacci: Força Bruta vs Memoização vs Bottom-Up vs Espaço O(1)</h3>
+            <p class="bench-fig-desc">
+              Avaliação empírica do tempo de CPU para calcular o \(n\)-ésimo termo da sequência. A força bruta cresce proporcionalmente à razão áurea \(\Theta(\phi^n)\), sofrendo explosão combinatorial. As três variantes de Programação Dinâmica mantêm comportamento estritamente linear \(\Theta(n)\).
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">\(\Theta(2^n) \to \Theta(n)\)</span>
+            <span class="badge badge-secondary">Tempo de CPU (ms)</span>
+            <span class="badge">Timeout Ativo</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e1_fibonacci.png', 'E1 — Fibonacci: Força Bruta vs Memoização vs Bottom-Up vs Espaço O(1)')">
+          <img src="figures/e1_fibonacci.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e1_fibonacci.png';}" alt="Gráfico E1 - Fibonacci" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">
+            <span>🔍 Clique para ampliar</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta">
+            <span>Amostras: 20 tamanhos</span> • <span>Delimitação de escala Y para viabilidade visual</span>
+          </div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e1_fibonacci.png', 'E1 — Fibonacci')">
+              🔍 Ampliar Gráfico
+            </button>
+            <a href="figures/e1_fibonacci.png" download="e1_fibonacci.png" class="btn btn-primary btn-sm">
+              ⬇ Baixar Imagem
+            </a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <ul class="bench-takeaway-list">
+            <li>Linhas sólidas contínuas e filtradas eliminam descontinuidades de amostragem.</li>
+            <li>A curva vermelha (Força Bruta) dispara exponencialmente para \(n > 25\), enquanto as três variantes de PD permanecem rentes ao eixo horizontal.</li>
+            <li>A versão com espaço \(O(1)\) utiliza apenas duas variáveis auxiliares, reduzindo o custo de alocação no heap a zero.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           EXPERIMENTO 2: ROD CUTTING
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e2" data-category="tempo" data-keywords="e2 rod cutting corte de hastes forca bruta memoizacao bottom up n2">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num">
+              <span>Experimento 02</span>
+              <span>•</span>
+              <span>Cormen Cap. 15.1</span>
+            </div>
+            <h3 class="bench-fig-title">Corte de Hastes: Força Bruta vs Programação Dinâmica</h3>
+            <p class="bench-fig-desc">
+              Comparação direta entre a decomposição recursiva pura com ramificação \(2^{n-1}\) e as versões estruturadas com subestrutura ótima (Memoização Top-Down e Tabulação Bottom-Up), ambas com complexidade \(\Theta(n^2)\).
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">\(\Theta(2^n) \to \Theta(n^2)\)</span>
+            <span class="badge badge-secondary">Tempo de CPU (ms)</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e2_rod_cutting.png', 'E2 — Corte de Hastes: Força Bruta vs Programação Dinâmica')">
+          <img src="figures/e2_rod_cutting.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e2_rod_cutting.png';}" alt="Gráfico E2 - Rod Cutting" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">
+            <span>🔍 Clique para ampliar</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta">
+            <span>Entrada: Hastes até n=30</span> • <span>Média aparada de 5 repetições</span>
+          </div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e2_rod_cutting.png', 'E2 — Corte de Hastes')">
+              🔍 Ampliar Gráfico
+            </button>
+            <a href="figures/e2_rod_cutting.png" download="e2_rod_cutting.png" class="btn btn-primary btn-sm">
+              ⬇ Baixar Imagem
+            </a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <ul class="bench-takeaway-list">
+            <li>A versão ingênua sofre timeout a partir de \(n = 22\), ilustrando como problemas com repetição maciça de subproblemas são intratáveis sem memória.</li>
+            <li>Bottom-Up e Memoização apresentam tempos praticamente indistinguíveis, com ligeira vantagem para o loop iterativo que dispensa chamadas de função.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           EXPERIMENTO 3: LCS MEMÓRIA
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e3" data-category="memoria" data-keywords="e3 lcs memoria tracemalloc duas linhas tabela completa economizar">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num">
+              <span>Experimento 03</span>
+              <span>•</span>
+              <span>Cormen Cap. 15.4</span>
+            </div>
+            <h3 class="bench-fig-title">LCS: Consumo de Memória (Tabela Completa vs 2 Linhas)</h3>
+            <p class="bench-fig-desc">
+              Medição experimental do pico de memória alocada (em KB) através de <code>tracemalloc</code>. Ao calcular apenas o comprimento ótimo da maior subsequência comum, manter apenas duas linhas ativas na memória reduz o consumo de \(\Theta(m \cdot n)\) para \(\Theta(\min(m, n))\).
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">\(\Theta(m \cdot n) \to \Theta(\min(m, n))\)</span>
+            <span class="badge badge-secondary">Memória Pico (KB)</span>
+            <span class="badge badge-success">Economia &gt; 95%</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e3_lcs_memory.png', 'E3 — LCS: Consumo de Memória (Tabela Completa vs 2 Linhas)')">
+          <img src="figures/e3_lcs_memory.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e3_lcs_memory.png';}" alt="Gráfico E3 - LCS Memória" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">
+            <span>🔍 Clique para ampliar</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta">
+            <span>Métrica: tracemalloc peak</span> • <span>Strings de tamanho até 1000 caracteres</span>
+          </div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e3_lcs_memory.png', 'E3 — LCS Memória')">
+              🔍 Ampliar Gráfico
+            </button>
+            <a href="figures/e3_lcs_memory.png" download="e3_lcs_memory.png" class="btn btn-primary btn-sm">
+              ⬇ Baixar Imagem
+            </a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <ul class="bench-takeaway-list">
+            <li>A tabela completa exibe curva quadrática acentuada, atingindo centenas de kilobytes rapidamente.</li>
+            <li>A estratégia de 2 linhas mantém crescimento estritamente horizontal/linear, provando o valor da redução de espaço quando a recuperação do caminho não é requerida.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           EXPERIMENTO 4: C++ VS PYTHON
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e4" data-category="linguagem" data-keywords="e4 lcs cpp python compilar interpretador speedup tempo nativo">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num">
+              <span>Experimento 04</span>
+              <span>•</span>
+              <span>Engenharia de Software</span>
+            </div>
+            <h3 class="bench-fig-title">LCS: Desempenho C++ Nativo vs Python</h3>
+            <p class="bench-fig-desc">
+              Comparativo de tempo de execução entre implementações com lógica idêntica de Programação Dinâmica em Python e em C++ compilado com otimizações (`-O3`). Analisa o impacto do runtime, checagem dinâmica de tipos e abstrações de alto nível.
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">Compilado vs Interpretado</span>
+            <span class="badge badge-secondary">Tempo de CPU (ms)</span>
+            <span class="badge">Speedup ~35x</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e4_lcs_cpp_vs_python.png', 'E4 — LCS: Desempenho C++ Nativo vs Python')">
+          <img src="figures/e4_lcs_cpp_vs_python.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e4_lcs_cpp_vs_python.png';}" alt="Gráfico E4 - C++ vs Python" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">
+            <span>🔍 Clique para ampliar</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta">
+            <span>Mesmo algoritmo assintótico \(\Theta(m \cdot n)\)</span> • <span>Medição via perf_counter</span>
+          </div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e4_lcs_cpp_vs_python.png', 'E4 — C++ vs Python')">
+              🔍 Ampliar Gráfico
+            </button>
+            <a href="figures/e4_lcs_cpp_vs_python.png" download="e4_lcs_cpp_vs_python.png" class="btn btn-primary btn-sm">
+              ⬇ Baixar Imagem
+            </a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <ul class="bench-takeaway-list">
+            <li>Ambas as curvas preservam exatamente a inclinação quadrática, demonstrando que a teoria assintótica é universal independente da linguagem.</li>
+            <li>O código em C++ roda com fator constante significativamente menor devido ao acesso direto a arrays contíguos na memória e ausência de garbage collector.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           EXPERIMENTO 5: LIMITE DE RECURSÃO
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e5" data-category="pilha" data-keywords="e5 limite recursao recursionerror stack overflow pilha top down bottom up">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num">
+              <span>Experimento 05</span>
+              <span>•</span>
+              <span>Arquitetura de Execução</span>
+            </div>
+            <h3 class="bench-fig-title">Impacto do Limite de Recursão: Top-Down vs Bottom-Up</h3>
+            <p class="bench-fig-desc">
+              Demonstração da robustez arquitetural entre abordagens recursivas e iterativas. Em Python, a pilha de chamadas possui limite padrão de 1.000 frames. O algoritmo Top-Down lança <code>RecursionError</code> para entradas grandes, enquanto o Bottom-Up itera sem restrições.
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">RecursionError</span>
+            <span class="badge badge-secondary">Estabilidade de Pilha</span>
+            <span class="badge badge-success">Bottom-Up &gt; 10.000</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e5_recursion_limit.png', 'E5 — Impacto do Limite de Recursão: Top-Down vs Bottom-Up')">
+          <img src="figures/e5_recursion_limit.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e5_recursion_limit.png';}" alt="Gráfico E5 - Limite de Recursão" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">
+            <span>🔍 Clique para ampliar</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta">
+            <span>Barreira: 1000 chamadas em Python</span> • <span>Bottom-Up escala linearmente</span>
+          </div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e5_recursion_limit.png', 'E5 — Limite de Recursão')">
+              🔍 Ampliar Gráfico
+            </button>
+            <a href="figures/e5_recursion_limit.png" download="e5_recursion_limit.png" class="btn btn-primary btn-sm">
+              ⬇ Baixar Imagem
+            </a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <ul class="bench-takeaway-list">
+            <li>O gráfico evidencia a interrupção abrupta do método Top-Down exatamente na linha do limite de recursão da linguagem.</li>
+            <li>O método Bottom-Up continua executando estavelmente, provando porque a tabulação iterativa é a escolha preferencial para sistemas robustos de produção.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           EXPERIMENTO 6: FALHA DO GULOSO
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e6" data-category="guloso" data-keywords="e6 falha do guloso greedy rod cutting receita densidade otimo global">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num">
+              <span>Experimento 06</span>
+              <span>•</span>
+              <span>Paradigma Guloso vs PD</span>
+            </div>
+            <h3 class="bench-fig-title">Corte de Hastes: Prova Empírica da Falha da Abordagem Gulosa</h3>
+            <p class="bench-fig-desc">
+              Comparação empírica de receita obtida entre a heurística gulosa (que escolhe o pedaço com maior densidade de valor por centímetro \(p_i / i\)) e a Programação Dinâmica. Revela visualmente as entradas onde a escolha gulosa atinge soluções subótimas.
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">Guloso vs PD</span>
+            <span class="badge badge-secondary">Receita Gerada ($)</span>
+            <span class="badge badge-success">PD Sempre Ótima</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e6_greedy_failure.png', 'E6 — Corte de Hastes: Prova Empírica da Falha da Abordagem Gulosa')">
+          <img src="figures/e6_greedy_failure.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e6_greedy_failure.png';}" alt="Gráfico E6 - Falha do Guloso" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">
+            <span>🔍 Clique para ampliar</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta">
+            <span>Tamanhos de haste até n=30</span> • <span>Linhas contínuas demonstrando defasagem</span>
+          </div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e6_greedy_failure.png', 'E6 — Falha do Guloso')">
+              🔍 Ampliar Gráfico
+            </button>
+            <a href="figures/e6_greedy_failure.png" download="e6_greedy_failure.png" class="btn btn-primary btn-sm">
+              ⬇ Baixar Imagem
+            </a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <ul class="bench-takeaway-list">
+            <li>Em diversos tamanhos de haste, a curva cinza (Guloso) descola para baixo da curva verde (PD), comprovando que a escolha míope da melhor densidade local não compõe o ótimo global.</li>
+            <li>A Programação Dinâmica avalia todas as partições possíveis de subproblemas e garante rigorosamente 100% da receita máxima.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           EXPERIMENTO 7: MATRIX CHAIN
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e7" data-category="tempo" data-keywords="e7 matrix chain multiplicacao de matrizes parentizacao cubico n3 diagonais">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num">
+              <span>Experimento 07</span>
+              <span>•</span>
+              <span>Cormen Cap. 15.2</span>
+            </div>
+            <h3 class="bench-fig-title">Matrix Chain: Custo Cúbico e Parentização Ótima</h3>
+            <p class="bench-fig-desc">
+              Determinação da ordem ideal de parentização para o produto encadeado de \(n\) matrizes. A tabela de custos é preenchida por diagonais sucessivas, com complexidade de tempo \(\Theta(n^3)\) e espaço \(\Theta(n^2)\).
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">\(\Theta(n^3)\) Tempo</span>
+            <span class="badge badge-secondary">\(\Theta(n^2)\) Espaço</span>
+            <span class="badge">Preenchimento Diagonal</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e7_matrix_chain.png', 'E7 — Matrix Chain: Custo Cúbico e Parentização Ótima')">
+          <img src="figures/e7_matrix_chain.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e7_matrix_chain.png';}" alt="Gráfico E7 - Matrix Chain" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">
+            <span>🔍 Clique para ampliar</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta">
+            <span>Cadeias de até 60 matrizes</span> • <span>Linha contínua sem ruídos</span>
+          </div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e7_matrix_chain.png', 'E7 — Matrix Chain')">
+              🔍 Ampliar Gráfico
+            </button>
+            <a href="figures/e7_matrix_chain.png" download="e7_matrix_chain.png" class="btn btn-primary btn-sm">
+              ⬇ Baixar Imagem
+            </a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <ul class="bench-takeaway-list">
+            <li>A curva temporal confirma com precisão o crescimento cúbico esperado pelo triplo laço aninhado de computação.</li>
+            <li>O investimento em tempo cúbico para determinar a tabela \(s[i,j]\) compensa amplamente na prática: a parentização ótima poupa bilhões de operações escalares de ponto flutuante em pipelines de computação gráfica e aprendizado de máquina.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           EXPERIMENTO 8: MOCHILA 0/1
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e8" data-category="tempo" data-keywords="e8 knapsack mochila 01 capacidade w pseudo-polinomial tempo memoria">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num">
+              <span>Experimento 08</span>
+              <span>•</span>
+              <span>Cormen Exercícios</span>
+            </div>
+            <h3 class="bench-fig-title">Mochila 0/1: Comportamento Pseudo-Polinomial \(\Theta(n \cdot W)\)</h3>
+            <p class="bench-fig-desc">
+              Investigação experimental de tempo e consumo de memória do algoritmo clássico de Mochila 0/1 frente a variações do número de itens \(n\) e da capacidade limite da mochila \(W\). Como o custo depende do valor numérico de \(W\), trata-se de um algoritmo pseudo-polinomial.
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">\(\Theta(n \cdot W)\)</span>
+            <span class="badge badge-secondary">Tempo e Matriz 2D</span>
+            <span class="badge">Capacidade Dinâmica</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e8_knapsack.png', 'E8 — Mochila 0/1: Comportamento Pseudo-Polinomial')">
+          <img src="figures/e8_knapsack.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e8_knapsack.png';}" alt="Gráfico E8 - Mochila 0/1" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">
+            <span>🔍 Clique para ampliar</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta">
+            <span>Subplots integrados</span> • <span>Eixo de itens e capacidade W</span>
+          </div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e8_knapsack.png', 'E8 — Mochila 0/1')">
+              🔍 Ampliar Gráfico
+            </button>
+            <a href="figures/e8_knapsack.png" download="e8_knapsack.png" class="btn btn-primary btn-sm">
+              ⬇ Baixar Imagem
+            </a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <ul class="bench-takeaway-list">
+            <li>O gráfico demonstra que o tempo e a tabela escalam linearmente com o produto do número de itens pela capacidade \(W\).</li>
+            <li>Quando \(W\) é exponencialmente grande em relação ao tamanho da entrada, a abordagem de Programação Dinâmica perde competitividade, exemplificando os limites da pseudo-polinomialidade em problemas NP-completos.</li>
+          </ul>
+        </div>
+      </article>
 
     </div>
 
@@ -318,7 +1012,7 @@
       <div class="lab-card-header">
         <div class="lab-card-title">
           <span>Fundamentos da Análise Empírica</span>
-          <span class="badge badge-secondary">Teoria vs Prática</span>
+          <span class="badge badge-secondary">Metodologia Científica</span>
         </div>
       </div>
 
@@ -326,24 +1020,30 @@
         <div>
           <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">1. Por que Medir Empiricamente?</h4>
           <p style="margin: 0; font-size: 0.875rem; color: var(--text-secondary); line-height: 1.55;">
-            A notação assintótica \(O(f(n))\) descreve o crescimento para valores infinitamente grandes, ocultando constantes multiplicativas e termos de menor ordem.
-            Na prática, o custo de alocação de tabelas, chamadas de função e cache da CPU afetam o tempo real em tamanhos moderados.
+            A notação assintótica \(\Theta(f(n))\) descreve o comportamento no limite para entradas arbitrariamente grandes, ocultando constantes multiplicativas e termos de menor ordem.
+            Na prática, o custo de alocação de tabelas, overhead de interpretação e hierarquia de cache de memória afetam o tempo real.
           </p>
         </div>
 
         <div>
-          <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">2. O Papel da Escala Logarítmica</h4>
+          <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">2. Média Aparada (Trimmed Mean)</h4>
           <p style="margin: 0; font-size: 0.875rem; color: var(--text-secondary); line-height: 1.55;">
-            Quando comparamos um algoritmo exponencial como Fibonacci Recursivo \(O(2^n)\) com Fibonacci Memoizado \(O(n)\), a escala linear achata completamente a curva linear próxima de zero.
-            A escala logarítmica (\(\log_{10}\)) converte exponenciais em retas crescentes e permite examinar ambas as curvas com clareza.
+            Para neutralizar anomalias de escalonamento do sistema operacional, interrupções de hardware e pausas do coletor de lixo, executamos 5 repetições por ponto, descartando a menor e a maior medida, consolidando a média das 3 centrais.
           </p>
         </div>
 
         <div>
           <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">3. Trade-off: Tempo vs Memória</h4>
           <p style="margin: 0; font-size: 0.875rem; color: var(--text-secondary); line-height: 1.55;">
-            A essência da Programação Dinâmica é a memoização: trocar espaço em memória para poupar tempo de recomputação.
-            Observe na métrica de memória como tabelas 2D (LCS e Matrix Chain) crescem quadraticamente enquanto algoritmos gulosos mantêm uso mínimo de memória.
+            A essência da Programação Dinâmica é a memoização: investir espaço em memória para erradicar a recomputação de subproblemas.
+            As curvas de LCS evidenciam como a estratégia de 2 linhas economiza mais de 95% da memória sem comprometer o tempo de execução.
+          </p>
+        </div>
+
+        <div>
+          <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">4. Isolamento Estrito de Perf Counter</h4>
+          <p style="margin: 0; font-size: 0.875rem; color: var(--text-secondary); line-height: 1.55;">
+            O profiler de memória <code>tracemalloc</code> adiciona um overhead considerável às instruções de CPU. Por isso, a suíte executa uma rodada exclusiva para medição precisa de tempo de clock e outra separada para o pico de memória.
           </p>
         </div>
       </div>
@@ -351,11 +1051,31 @@
 
   </main>
 
+  <!-- MODAL / LIGHTBOX PARA INSPEÇÃO EM ALTA RESOLUÇÃO -->
+  <div class="bench-modal-backdrop" id="image-modal" role="dialog" aria-modal="true" aria-labelledby="modal-graph-title" onclick="handleBackdropClick(event)">
+    <div class="bench-modal-content" onclick="event.stopPropagation()">
+      <div class="bench-modal-header">
+        <h4 class="bench-modal-title" id="modal-graph-title">Visualização do Gráfico</h4>
+        <button type="button" class="bench-modal-close-btn" onclick="closeModal()" aria-label="Fechar visualização">✕</button>
+      </div>
+      <div class="bench-modal-body">
+        <img src="" alt="Gráfico em alta resolução" class="bench-modal-img" id="modal-graph-img">
+      </div>
+      <div class="bench-modal-footer">
+        <span style="font-family: var(--font-mono); font-size: 0.8rem;">Gráfico Científico Gerado a 200 DPI</span>
+        <div style="display: flex; gap: 0.5rem;">
+          <a href="#" download id="modal-download-link" class="btn btn-primary btn-sm">⬇ Baixar Arquivo PNG</a>
+          <button type="button" class="btn btn-outline btn-sm" onclick="closeModal()">Fechar (Esc)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- RODAPÉ GLOBAL -->
   <footer class="site-footer">
     <div class="footer-inner">
       <div><strong>PD LAB</strong> — Laboratório Interativo de Programação Dinâmica</div>
-      <div class="footer-meta"><span>Módulo 05</span> • <span>Etapa 7</span></div>
+      <div class="footer-meta"><span>Módulo 05</span> • <span>Etapa 7 • Benchmarks Empíricos</span></div>
     </div>
   </footer>
 
@@ -365,875 +1085,149 @@
     (function() {
       'use strict';
 
-      // =========================================================================
-      // PALETA DE CORES DOS ALGORITMOS (Conforme Design System do PD Lab)
-      // =========================================================================
-      var ALGO_COLORS = {
-        'fib_memo': '#4F8068',     // Verde Sucesso (Memoizado Ótimo)
-        'fib_rec': '#B94A48',      // Vermelho Perigo (Recursão Exponencial)
-        'lcs': '#D96C4F',          // Terracota Primário (LCS)
-        'rod_dp': '#3E6B63',       // Verde-azulado Secundário (Rod Cutting PD)
-        'rod_greedy': '#D9A441',   // Dourado Accent (Rod Cutting Guloso)
-        'matrix_chain': '#7E57C2', // Roxo Acadêmico (Matrix Chain)
-        'default': '#6B6B63'
-      };
+      // Gerenciamento do Modal / Lightbox
+      var modalBackdrop = document.getElementById('image-modal');
+      var modalImg = document.getElementById('modal-graph-img');
+      var modalTitle = document.getElementById('modal-graph-title');
+      var modalDownloadLink = document.getElementById('modal-download-link');
 
-      // Estado Global da Aplicação de Benchmarks
-      var state = {
-        rawData: null,          // JSON carregado de results.json
-        experiments: [],        // Lista completa de experimentos
-        disabledAlgorithms: {}, // Algoritmos desativados via clique na legenda
-        selectedPointId: null,  // ID do ponto selecionado no gráfico/tabela
-        filters: {
-          algorithm: 'all',
-          metric: 'timeMs',
-          size: 'all',
-          scale: 'linear',
-          chartType: 'lines'
-        },
-        tableSort: {
-          column: 'inputSize',
-          asc: true
-        },
-        tableSearchQuery: ''
-      };
-
-      // Elementos do DOM
-      var dom = {
-        stateLoading: document.getElementById('state-loading'),
-        stateError: document.getElementById('state-error'),
-        stateEmpty: document.getElementById('state-empty'),
-        errorMessageText: document.getElementById('error-message-text'),
-        btnRetryFetch: document.getElementById('btn-retry-fetch'),
-        btnReloadEmpty: document.getElementById('btn-reload-empty'),
-        benchmarksContent: document.getElementById('benchmarks-content'),
-
-        badgeDatasetInfo: document.getElementById('badge-dataset-info'),
-        badgeTotalRecords: document.getElementById('badge-total-records'),
-
-        filterAlgorithm: document.getElementById('filter-algorithm'),
-        filterMetric: document.getElementById('filter-metric'),
-        filterSize: document.getElementById('filter-size'),
-        filterScale: document.getElementById('filter-scale'),
-        filterChartType: document.getElementById('filter-chart-type'),
-        btnResetFilters: document.getElementById('btn-reset-filters'),
-
-        statCount: document.getElementById('stat-count'),
-        statMinVal: document.getElementById('stat-min-val'),
-        statMinSub: document.getElementById('stat-min-sub'),
-        statMaxVal: document.getElementById('stat-max-val'),
-        statMaxSub: document.getElementById('stat-max-sub'),
-        statAvgVal: document.getElementById('stat-avg-val'),
-        statAvgSub: document.getElementById('stat-avg-sub'),
-
-        chartMainTitle: document.getElementById('chart-main-title'),
-        chartSubTitle: document.getElementById('chart-sub-title'),
-        badgeChartMode: document.getElementById('badge-chart-mode'),
-        badgeChartScale: document.getElementById('badge-chart-scale'),
-        svgWrapper: document.getElementById('svg-wrapper'),
-        benchSvg: document.getElementById('bench-svg'),
-        benchLegend: document.getElementById('bench-legend'),
-
-        tooltip: document.getElementById('bench-tooltip'),
-        tooltipTitle: document.getElementById('tooltip-title'),
-        tooltipSize: document.getElementById('tooltip-size'),
-        tooltipValue: document.getElementById('tooltip-value'),
-        tooltipComp: document.getElementById('tooltip-comp'),
-
-        tableSearch: document.getElementById('table-search'),
-        tableRecordCount: document.getElementById('table-record-count'),
-        benchTable: document.getElementById('bench-table'),
-        benchTableBody: document.getElementById('bench-table-body')
-      };
-
-      // =========================================================================
-      // 1. CARREGAMENTO DOS DADOS COM TRATAMENTO DE ERROS E ESTADOS
-      // =========================================================================
-      function loadBenchmarkData() {
-        showState('loading');
-
-        fetch('data/results.json')
-          .then(function(response) {
-            if (!response.ok) {
-              throw new Error('Falha na resposta do servidor: status HTTP ' + response.status);
-            }
-            return response.json();
-          })
-          .then(function(data) {
-            if (!data) {
-              throw new Error('O arquivo data/results.json retornou vazio ou nulo.');
-            }
-
-            // Normaliza a estrutura para garantir acesso aos experimentos
-            var list = [];
-            if (Array.isArray(data.experiments)) {
-              list = data.experiments;
-            } else if (Array.isArray(data.algorithms)) {
-              // Suporta formato alternativo aninhado
-              data.algorithms.forEach(function(algo) {
-                if (Array.isArray(algo.dataPoints)) {
-                  algo.dataPoints.forEach(function(pt, idx) {
-                    list.push({
-                      id: algo.id + '_' + (pt.inputSize || idx),
-                      algorithm: algo.name || algo.id,
-                      algorithmId: algo.id,
-                      inputSize: pt.inputSize || pt.n || 0,
-                      timeMs: pt.timeMs !== undefined ? pt.timeMs : pt.time || 0,
-                      operations: pt.operations || pt.ops || 0,
-                      memoryKb: pt.memoryKb || pt.mem || 0,
-                      complexity: pt.complexity || 'O(n)',
-                      paradigm: pt.paradigm || 'Programação Dinâmica'
-                    });
-                  });
-                }
-              });
-            }
-
-            if (list.length === 0) {
-              showState('empty');
-              return;
-            }
-
-            state.rawData = data;
-            state.experiments = list;
-            initFiltersOptions();
-            showState('content');
-            updateDashboard();
-          })
-          .catch(function(err) {
-            console.error('[PD Lab Benchmarks] Erro ao carregar dados:', err);
-            dom.errorMessageText.textContent = 'Erro ao processar dados de benchmark: ' + (err.message || 'Falha de rede.');
-            showState('error');
-          });
-      }
-
-      function showState(type) {
-        dom.stateLoading.style.display = (type === 'loading') ? 'flex' : 'none';
-        dom.stateError.style.display = (type === 'error') ? 'flex' : 'none';
-        dom.stateEmpty.style.display = (type === 'empty') ? 'flex' : 'none';
-        dom.benchmarksContent.style.display = (type === 'content') ? 'block' : 'none';
-      }
-
-      // =========================================================================
-      // 2. INICIALIZAÇÃO DE FILTROS A PARTIR DO DATASET CARREGADO
-      // =========================================================================
-      function initFiltersOptions() {
-        var exps = state.experiments;
-
-        // Extrai algoritmos únicos
-        var algoMap = {};
-        exps.forEach(function(e) {
-          if (!algoMap[e.algorithmId]) {
-            algoMap[e.algorithmId] = e.algorithm;
+      window.openModal = function(imageFilename, title) {
+        if (!modalBackdrop || !modalImg) return;
+        var srcPath = 'figures/' + imageFilename;
+        modalImg.src = srcPath;
+        modalImg.onerror = function() {
+          if (!this.dataset.triedDocs) {
+            this.dataset.triedDocs = '1';
+            this.src = '../docs/figures/' + imageFilename;
           }
-        });
-
-        var algoHtml = '<option value="all">Todos os Algoritmos (' + Object.keys(algoMap).length + ')</option>';
-        Object.keys(algoMap).forEach(function(id) {
-          algoHtml += '<option value="' + id + '">' + escapeHtml(algoMap[id]) + '</option>';
-        });
-        dom.filterAlgorithm.innerHTML = algoHtml;
-
-        // Extrai tamanhos únicos (ordenados crescentemente)
-        var sizesSet = new Set();
-        exps.forEach(function(e) { sizesSet.add(e.inputSize); });
-        var sortedSizes = Array.from(sizesSet).sort(function(a, b) { return a - b; });
-
-        var sizeHtml = '<option value="all">Todos os Tamanhos (' + sortedSizes.length + ')</option>';
-        sortedSizes.forEach(function(s) {
-          sizeHtml += '<option value="' + s + '">N = ' + s + '</option>';
-        });
-        dom.filterSize.innerHTML = sizeHtml;
-
-        dom.badgeTotalRecords.textContent = exps.length + ' medições';
-      }
-
-      // =========================================================================
-      // 3. FILTRAGEM E SELEÇÃO DE DADOS
-      // =========================================================================
-      function getFilteredExperiments() {
-        var f = state.filters;
-        return state.experiments.filter(function(e) {
-          // Filtro de algoritmo
-          if (f.algorithm !== 'all' && e.algorithmId !== f.algorithm) {
-            return false;
-          }
-          // Filtro de desativação individual pela legenda
-          if (state.disabledAlgorithms[e.algorithmId]) {
-            return false;
-          }
-          // Filtro de tamanho
-          if (f.size !== 'all' && e.inputSize !== parseInt(f.size, 10)) {
-            return false;
-          }
-          return true;
-        });
-      }
-
-      function getMetricInfo(metricKey) {
-        var meta = {
-          timeMs: { label: 'Tempo de Execução', unit: 'ms', decimals: 3 },
-          operations: { label: 'Operações / Chamadas', unit: 'ops', decimals: 0 },
-          memoryKb: { label: 'Consumo de Memória', unit: 'KB', decimals: 2 }
         };
-        return meta[metricKey] || meta.timeMs;
-      }
-
-      function getMetricValue(item, metricKey) {
-        var val = item[metricKey];
-        return (val !== undefined && val !== null && !isNaN(val)) ? Number(val) : 0;
-      }
-
-      // =========================================================================
-      // 4. ATUALIZAÇÃO GERAL DO PAINEL (ESTATÍSTICAS + GRÁFICO + TABELA)
-      // =========================================================================
-      function updateDashboard() {
-        var filtered = getFilteredExperiments();
-        updateSummaryStats(filtered);
-        renderChart(filtered);
-        renderLegend();
-        renderTable(filtered);
-      }
-
-      function updateSummaryStats(filtered) {
-        var mKey = state.filters.metric;
-        var mInfo = getMetricInfo(mKey);
-
-        dom.statCount.textContent = filtered.length;
-
-        if (filtered.length === 0) {
-          dom.statMinVal.textContent = '−';
-          dom.statMinSub.textContent = 'sem medições';
-          dom.statMaxVal.textContent = '−';
-          dom.statMaxSub.textContent = 'sem medições';
-          dom.statAvgVal.textContent = '−';
-          dom.statAvgSub.textContent = 'sem medições';
-          return;
+        modalTitle.textContent = title || 'Gráfico Científico de Benchmark';
+        if (modalDownloadLink) {
+          modalDownloadLink.href = srcPath;
+          modalDownloadLink.download = imageFilename;
         }
+        modalBackdrop.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      };
 
-        var minItem = filtered[0];
-        var maxItem = filtered[0];
-        var sum = 0;
+      window.closeModal = function() {
+        if (!modalBackdrop) return;
+        modalBackdrop.classList.remove('is-open');
+        document.body.style.overflow = '';
+      };
 
-        filtered.forEach(function(item) {
-          var val = getMetricValue(item, mKey);
-          sum += val;
-          if (val < getMetricValue(minItem, mKey)) minItem = item;
-          if (val > getMetricValue(maxItem, mKey)) maxItem = item;
-        });
-
-        var avg = sum / filtered.length;
-
-        dom.statMinVal.textContent = formatMetricNumber(getMetricValue(minItem, mKey), mInfo);
-        dom.statMinSub.textContent = minItem.algorithm + ' (N=' + minItem.inputSize + ')';
-
-        dom.statMaxVal.textContent = formatMetricNumber(getMetricValue(maxItem, mKey), mInfo);
-        dom.statMaxSub.textContent = maxItem.algorithm + ' (N=' + maxItem.inputSize + ')';
-
-        dom.statAvgVal.textContent = formatMetricNumber(avg, mInfo);
-        dom.statAvgSub.textContent = 'média de ' + filtered.length + ' execuções';
-      }
-
-      function formatMetricNumber(num, mInfo) {
-        if (num === 0) return '0 ' + mInfo.unit;
-        if (num < 0.01 && mInfo.decimals > 2) {
-          return num.toFixed(4) + ' ' + mInfo.unit;
+      window.handleBackdropClick = function(event) {
+        if (event.target === modalBackdrop) {
+          window.closeModal();
         }
-        return num.toLocaleString('pt-BR', { maximumFractionDigits: mInfo.decimals }) + ' ' + mInfo.unit;
-      }
+      };
 
-      // =========================================================================
-      // 5. RENDERIZAÇÃO DE GRÁFICOS SVG INTERATIVOS
-      // =========================================================================
-      function renderChart(filtered) {
-        var svg = dom.benchSvg;
-        var mKey = state.filters.metric;
-        var mInfo = getMetricInfo(mKey);
-        var isLog = (state.filters.scale === 'log');
-        var isBars = (state.filters.chartType === 'bars');
-
-        // Atualiza títulos do painel
-        dom.chartMainTitle.textContent = (isBars ? 'Comparação Direta: ' : 'Curvas de Crescimento: ') +
-          mInfo.label + ' (' + mInfo.unit + ') ' + (isBars ? 'por Algoritmo' : '× Tamanho (N)');
-        dom.badgeChartMode.textContent = isBars ? 'Comparação em Barras' : 'Linhas (Tempo × N)';
-        dom.badgeChartScale.textContent = isLog ? 'Escala Logarítmica (log₁₀)' : 'Escala Linear';
-
-        if (filtered.length === 0) {
-          svg.innerHTML = '<text x="450" y="230" text-anchor="middle" fill="var(--text-muted)" font-size="15" font-family="var(--font-mono)">Nenhum dado coincide com os filtros selecionados.</text>';
-          return;
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modalBackdrop && modalBackdrop.classList.contains('is-open')) {
+          window.closeModal();
         }
+      });
 
-        // Dimensões do viewBox do SVG
-        var width = 900;
-        var height = 460;
-        var padding = { top: 35, right: 40, bottom: 65, left: 85 };
-        var plotW = width - padding.left - padding.right;
-        var plotH = height - padding.top - padding.bottom;
+      // Gerenciamento de Filtros e Busca Rápida
+      var searchInput = document.getElementById('filter-search-input');
+      var categorySelect = document.getElementById('filter-category-select');
+      var btnReset = document.getElementById('btn-reset-filter');
+      var visibleCountEl = document.getElementById('visible-cards-count');
+      var tabButtons = document.querySelectorAll('.bench-tab-btn');
+      var cards = document.querySelectorAll('.bench-fig-card');
 
-        // Agrupamento por algoritmo
-        var groups = {};
-        filtered.forEach(function(item) {
-          if (!groups[item.algorithmId]) {
-            groups[item.algorithmId] = {
-              id: item.algorithmId,
-              name: item.algorithm,
-              items: []
-            };
-          }
-          groups[item.algorithmId].items.push(item);
-        });
+      function filterCards() {
+        var query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+        var selectedCat = categorySelect ? categorySelect.value : 'all';
+        var visibleCount = 0;
 
-        // Ordena itens de cada grupo por inputSize
-        Object.keys(groups).forEach(function(id) {
-          groups[id].items.sort(function(a, b) { return a.inputSize - b.inputSize; });
-        });
+        cards.forEach(function(card) {
+          var cardId = card.id;
+          var cardCategory = card.getAttribute('data-category') || '';
+          var keywords = (card.getAttribute('data-keywords') || '').toLowerCase();
+          var cardText = card.innerText.toLowerCase();
 
-        if (isBars) {
-          renderBarChart(svg, filtered, groups, padding, plotW, plotH, width, height, mKey, mInfo, isLog);
-        } else {
-          renderLineChart(svg, groups, padding, plotW, plotH, width, height, mKey, mInfo, isLog);
-        }
-      }
+          var matchesCat = (selectedCat === 'all') || (cardCategory === selectedCat);
+          var matchesQuery = !query || keywords.indexOf(query) !== -1 || cardText.indexOf(query) !== -1;
 
-      // 5.A: Gráfico de Linhas (Curvas de Crescimento)
-      function renderLineChart(svg, groups, pad, plotW, plotH, W, H, mKey, mInfo, isLog) {
-        // Encontrar limites X (inputSize) e Y (métrica)
-        var allSizes = [];
-        var allVals = [];
-
-        Object.keys(groups).forEach(function(id) {
-          groups[id].items.forEach(function(item) {
-            allSizes.push(item.inputSize);
-            var val = getMetricValue(item, mKey);
-            allVals.push(val);
-          });
-        });
-
-        var minX = Math.min.apply(null, allSizes);
-        var maxX = Math.max.apply(null, allSizes);
-        if (minX === maxX) minX = Math.max(0, minX - 10);
-
-        var minY = 0;
-        var maxY = Math.max.apply(null, allVals);
-        if (maxY <= 0) maxY = 1;
-
-        if (isLog) {
-          var positiveVals = allVals.filter(function(v) { return v > 0; });
-          var minPos = positiveVals.length > 0 ? Math.min.apply(null, positiveVals) : 0.001;
-          minY = Math.max(0.0001, minPos);
-        }
-
-        // Escalas
-        function scaleX(xVal) {
-          return pad.left + ((xVal - minX) / (maxX - minX)) * plotW;
-        }
-
-        function scaleY(yVal) {
-          if (isLog) {
-            var safeY = Math.max(minY, yVal);
-            var logMin = Math.log10(minY);
-            var logMax = Math.log10(maxY * 1.15);
-            var norm = (Math.log10(safeY) - logMin) / (logMax - logMin);
-            return pad.top + plotH - (norm * plotH);
+          if (matchesCat && matchesQuery) {
+            card.style.display = '';
+            visibleCount++;
           } else {
-            var yTop = maxY * 1.12;
-            return pad.top + plotH - ((yVal / yTop) * plotH);
+            card.style.display = 'none';
           }
-        }
-
-        var html = '';
-
-        // 1. Linhas de grade e eixos
-        html += renderGridAndAxes(pad, plotW, plotH, minX, maxX, minY, maxY, isLog, mInfo, scaleX, scaleY);
-
-        // 2. Linhas das séries e pontos
-        Object.keys(groups).forEach(function(algoId) {
-          var group = groups[algoId];
-          var color = ALGO_COLORS[algoId] || ALGO_COLORS.default;
-          var points = group.items;
-
-          // Caminho da linha SVG
-          var pathD = '';
-          points.forEach(function(pt, idx) {
-            var cx = scaleX(pt.inputSize);
-            var cy = scaleY(getMetricValue(pt, mKey));
-            pathD += (idx === 0 ? 'M ' : ' L ') + cx.toFixed(1) + ' ' + cy.toFixed(1);
-          });
-
-          html += '<path d="' + pathD + '" fill="none" stroke="' + color + '" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9" />';
-
-          // Pontos de dados interativos
-          points.forEach(function(pt) {
-            var cx = scaleX(pt.inputSize);
-            var cy = scaleY(getMetricValue(pt, mKey));
-            var isSelected = (state.selectedPointId === pt.id);
-
-            html += '<circle class="bench-chart-point" ' +
-              'cx="' + cx.toFixed(1) + '" cy="' + cy.toFixed(1) + '" ' +
-              'r="' + (isSelected ? '7' : '4.5') + '" ' +
-              'fill="' + (isSelected ? 'var(--color-accent)' : color) + '" ' +
-              'stroke="var(--bg-surface)" stroke-width="2" ' +
-              'data-id="' + pt.id + '" ' +
-              'data-algo="' + escapeHtml(pt.algorithm) + '" ' +
-              'data-size="' + pt.inputSize + '" ' +
-              'data-val="' + getMetricValue(pt, mKey) + '" ' +
-              'data-comp="' + escapeHtml(pt.complexity) + '" ' +
-              'style="cursor: pointer; transition: transform 0.15s ease;" />';
-          });
         });
 
-        svg.innerHTML = html;
-        bindSvgInteractions(svg, mInfo);
-      }
-
-      // 5.B: Gráfico de Barras (Comparação Direta)
-      function renderBarChart(svg, filtered, groups, pad, plotW, plotH, W, H, mKey, mInfo, isLog) {
-        var algoIds = Object.keys(groups);
-        var groupCount = algoIds.length;
-
-        // Se há apenas um tamanho de entrada selecionado ou vários
-        // Mapeia médias ou valores por algoritmo
-        var algoAggregates = algoIds.map(function(id) {
-          var items = groups[id].items;
-          var sum = 0;
-          items.forEach(function(it) { sum += getMetricValue(it, mKey); });
-          var avg = items.length > 0 ? (sum / items.length) : 0;
-          return {
-            id: id,
-            name: groups[id].name,
-            value: avg,
-            items: items,
-            item: items[0] // amostra
-          };
-        });
-
-        var maxVal = Math.max.apply(null, algoAggregates.map(function(a) { return a.value; }));
-        if (maxVal <= 0) maxVal = 1;
-        var minVal = isLog ? 0.001 : 0;
-
-        function scaleBarY(val) {
-          if (isLog) {
-            var safe = Math.max(minVal, val);
-            var logMin = Math.log10(minVal);
-            var logMax = Math.log10(maxVal * 1.2);
-            var norm = (Math.log10(safe) - logMin) / (logMax - logMin);
-            return pad.top + plotH - (norm * plotH);
-          } else {
-            var yTop = maxVal * 1.15;
-            return pad.top + plotH - ((val / yTop) * plotH);
-          }
+        if (visibleCountEl) {
+          visibleCountEl.textContent = 'Exibindo ' + visibleCount + ' de ' + cards.length;
         }
-
-        var html = '';
-
-        // Eixo Y e linhas de grade
-        html += renderVerticalGridOnly(pad, plotW, plotH, minVal, maxVal, isLog, mInfo, scaleBarY);
-
-        // Barras
-        var barSpacing = plotW / groupCount;
-        var barWidth = Math.min(68, barSpacing * 0.65);
-
-        algoAggregates.forEach(function(agg, idx) {
-          var color = ALGO_COLORS[agg.id] || ALGO_COLORS.default;
-          var x = pad.left + (idx * barSpacing) + (barSpacing - barWidth) / 2;
-          var y = scaleBarY(agg.value);
-          var h = Math.max(2, (pad.top + plotH) - y);
-
-          html += '<rect class="bench-chart-bar" ' +
-            'x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" ' +
-            'width="' + barWidth.toFixed(1) + '" height="' + h.toFixed(1) + '" ' +
-            'fill="' + color + '" rx="3" opacity="0.88" ' +
-            'data-id="' + agg.id + '" ' +
-            'data-algo="' + escapeHtml(agg.name) + '" ' +
-            'data-size="' + (agg.items.length === 1 ? agg.items[0].inputSize : 'Média (' + agg.items.length + ' Ns)') + '" ' +
-            'data-val="' + agg.value + '" ' +
-            'data-comp="' + escapeHtml(agg.items[0].complexity) + '" ' +
-            'style="cursor: pointer; transition: opacity 0.15s ease;" />';
-
-          // Rótulo na base da barra (Eixo X)
-          var labelX = x + barWidth / 2;
-          var shortName = agg.name.split(' ')[0] + (agg.name.includes('Memo') ? ' (M)' : (agg.name.includes('Rec') ? ' (R)' : ''));
-          html += '<text x="' + labelX.toFixed(1) + '" y="' + (pad.top + plotH + 22) + '" text-anchor="middle" font-size="11" fill="var(--text-secondary)">' + escapeHtml(shortName) + '</text>';
-
-          // Valor numérico no topo da barra
-          html += '<text x="' + labelX.toFixed(1) + '" y="' + (y - 6).toFixed(1) + '" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--text-primary)">' + formatMetricNumber(agg.value, mInfo) + '</text>';
-        });
-
-        // Linha base Eixo X
-        html += '<line x1="' + pad.left + '" y1="' + (pad.top + plotH) + '" x2="' + (pad.left + plotW) + '" y2="' + (pad.top + plotH) + '" stroke="var(--border-color)" stroke-width="1.5" />';
-
-        svg.innerHTML = html;
-        bindSvgInteractions(svg, mInfo);
       }
 
-      // Função auxiliar: Eixos e Grade para o gráfico de linhas
-      function renderGridAndAxes(pad, plotW, plotH, minX, maxX, minY, maxY, isLog, mInfo, scaleX, scaleY) {
-        var g = '';
-
-        // Linhas de Grade Horizontais Y (5 divisões)
-        var yTicks = 5;
-        for (var i = 0; i <= yTicks; i++) {
-          var yRatio = i / yTicks;
-          var valY = 0;
-          if (isLog) {
-            var logMin = Math.log10(minY);
-            var logMax = Math.log10(maxY * 1.15);
-            var curLog = logMin + yRatio * (logMax - logMin);
-            valY = Math.pow(10, curLog);
-          } else {
-            valY = yRatio * (maxY * 1.12);
-          }
-          var yPos = scaleY(valY);
-
-          // Linha sutil
-          g += '<line x1="' + pad.left + '" y1="' + yPos.toFixed(1) + '" x2="' + (pad.left + plotW) + '" y2="' + yPos.toFixed(1) + '" stroke="var(--border-subtle)" stroke-dasharray="3,3" stroke-width="1" />';
-
-          // Rótulo Y
-          var labelYText = formatMetricShort(valY, mInfo);
-          g += '<text x="' + (pad.left - 10) + '" y="' + (yPos + 4).toFixed(1) + '" text-anchor="end" font-size="11" fill="var(--text-secondary)">' + labelYText + '</text>';
-        }
-
-        // Linhas de Grade Verticais X (Marcas nos valores de N)
-        var xSteps = 5;
-        for (var j = 0; j <= xSteps; j++) {
-          var curX = minX + (j / xSteps) * (maxX - minX);
-          var xPos = scaleX(curX);
-
-          g += '<line x1="' + xPos.toFixed(1) + '" y1="' + pad.top + '" x2="' + xPos.toFixed(1) + '" y2="' + (pad.top + plotH) + '" stroke="var(--border-subtle)" stroke-dasharray="3,3" stroke-width="1" opacity="0.6" />';
-          g += '<text x="' + xPos.toFixed(1) + '" y="' + (pad.top + plotH + 20) + '" text-anchor="middle" font-size="11" fill="var(--text-secondary)">' + Math.round(curX) + '</text>';
-        }
-
-        // Eixo X e Eixo Y
-        g += '<line x1="' + pad.left + '" y1="' + (pad.top + plotH) + '" x2="' + (pad.left + plotW) + '" y2="' + (pad.top + plotH) + '" stroke="var(--border-color)" stroke-width="1.5" />';
-        g += '<line x1="' + pad.left + '" y1="' + pad.top + '" x2="' + pad.left + '" y2="' + (pad.top + plotH) + '" stroke="var(--border-color)" stroke-width="1.5" />';
-
-        // Legenda dos Eixos
-        g += '<text x="' + (pad.left + plotW / 2) + '" y="' + (pad.top + plotH + 46) + '" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">Tamanho da Entrada (N)</text>';
-        g += '<text x="' + 22 + '" y="' + (pad.top + plotH / 2) + '" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)" transform="rotate(-90, 22, ' + (pad.top + plotH / 2) + ')">' + escapeHtml(mInfo.label + ' (' + mInfo.unit + ')') + '</text>';
-
-        return g;
+      if (searchInput) {
+        searchInput.addEventListener('input', filterCards);
       }
 
-      function renderVerticalGridOnly(pad, plotW, plotH, minY, maxY, isLog, mInfo, scaleBarY) {
-        var g = '';
-        var yTicks = 5;
-        for (var i = 0; i <= yTicks; i++) {
-          var yRatio = i / yTicks;
-          var valY = 0;
-          if (isLog) {
-            var logMin = Math.log10(minY);
-            var logMax = Math.log10(maxY * 1.2);
-            valY = Math.pow(10, logMin + yRatio * (logMax - logMin));
-          } else {
-            valY = yRatio * (maxY * 1.15);
-          }
-          var yPos = scaleBarY(valY);
-
-          g += '<line x1="' + pad.left + '" y1="' + yPos.toFixed(1) + '" x2="' + (pad.left + plotW) + '" y2="' + yPos.toFixed(1) + '" stroke="var(--border-subtle)" stroke-dasharray="3,3" stroke-width="1" />';
-          g += '<text x="' + (pad.left - 10) + '" y="' + (yPos + 4).toFixed(1) + '" text-anchor="end" font-size="11" fill="var(--text-secondary)">' + formatMetricShort(valY, mInfo) + '</text>';
-        }
-
-        g += '<line x1="' + pad.left + '" y1="' + pad.top + '" x2="' + pad.left + '" y2="' + (pad.top + plotH) + '" stroke="var(--border-color)" stroke-width="1.5" />';
-        g += '<text x="' + 22 + '" y="' + (pad.top + plotH / 2) + '" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)" transform="rotate(-90, 22, ' + (pad.top + plotH / 2) + ')">' + escapeHtml(mInfo.label + ' (' + mInfo.unit + ')') + '</text>';
-        return g;
-      }
-
-      function formatMetricShort(val, mInfo) {
-        if (val === 0) return '0';
-        if (val >= 1000000) return (val / 1000000).toFixed(1) + 'M';
-        if (val >= 1000) return (val / 1000).toFixed(1) + 'k';
-        if (val < 0.01) return val.toFixed(3);
-        if (val < 1) return val.toFixed(2);
-        return Math.round(val).toLocaleString('pt-BR');
-      }
-
-      // =========================================================================
-      // 6. INTERATIVIDADE DO SVG: TOOLTIP E SELEÇÃO DE PONTOS
-      // =========================================================================
-      function bindSvgInteractions(svg, mInfo) {
-        var targets = svg.querySelectorAll('.bench-chart-point, .bench-chart-bar');
-
-        targets.forEach(function(el) {
-          // Hover / Mouseover
-          el.addEventListener('mouseenter', function(e) {
-            var algo = el.getAttribute('data-algo');
-            var size = el.getAttribute('data-size');
-            var rawVal = parseFloat(el.getAttribute('data-val'));
-            var comp = el.getAttribute('data-comp');
-
-            dom.tooltipTitle.textContent = algo;
-            dom.tooltipSize.textContent = 'Tamanho da Entrada: N = ' + size;
-            dom.tooltipValue.textContent = mInfo.label + ': ' + formatMetricNumber(rawVal, mInfo);
-            dom.tooltipComp.textContent = 'Complexidade Assintótica: ' + comp;
-
-            positionTooltip(e);
-            dom.tooltip.classList.add('is-visible');
-            dom.tooltip.setAttribute('aria-hidden', 'false');
-
-            if (el.tagName === 'circle') {
-              el.setAttribute('r', '8');
-              el.setAttribute('stroke-width', '3');
-            } else {
-              el.setAttribute('opacity', '1');
+      if (categorySelect) {
+        categorySelect.addEventListener('change', function() {
+          // Atualiza as abas caso a categoria mude
+          tabButtons.forEach(function(btn) {
+            btn.classList.remove('is-active');
+            if (btn.getAttribute('data-target') === 'all') {
+              btn.classList.add('is-active');
             }
           });
+          filterCards();
+        });
+      }
 
-          el.addEventListener('mousemove', function(e) {
-            positionTooltip(e);
-          });
-
-          el.addEventListener('mouseleave', function() {
-            dom.tooltip.classList.remove('is-visible');
-            dom.tooltip.setAttribute('aria-hidden', 'true');
-
-            if (el.tagName === 'circle') {
-              var isSel = (el.getAttribute('data-id') === state.selectedPointId);
-              el.setAttribute('r', isSel ? '7' : '4.5');
-              el.setAttribute('stroke-width', '2');
-            } else {
-              el.setAttribute('opacity', '0.88');
+      if (btnReset) {
+        btnReset.addEventListener('click', function() {
+          if (searchInput) searchInput.value = '';
+          if (categorySelect) categorySelect.value = 'all';
+          tabButtons.forEach(function(btn) {
+            btn.classList.remove('is-active');
+            if (btn.getAttribute('data-target') === 'all') {
+              btn.classList.add('is-active');
             }
           });
-
-          // Clique para selecionar na tabela
-          el.addEventListener('click', function() {
-            var id = el.getAttribute('data-id');
-            state.selectedPointId = (state.selectedPointId === id) ? null : id;
-            updateDashboard();
-
-            if (state.selectedPointId) {
-              highlightAndScrollToTableRow(state.selectedPointId);
-            }
+          cards.forEach(function(card) {
+            card.style.display = '';
           });
-        });
-      }
-
-      function positionTooltip(event) {
-        var rect = dom.svgWrapper.getBoundingClientRect();
-        var x = event.clientX - rect.left;
-        var y = event.clientY - rect.top;
-
-        dom.tooltip.style.left = x + 'px';
-        dom.tooltip.style.top = y + 'px';
-      }
-
-      function highlightAndScrollToTableRow(id) {
-        var row = document.getElementById('table-row-' + id);
-        if (row) {
-          row.classList.add('is-selected');
-          row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-      }
-
-      // =========================================================================
-      // 7. LEGENDA INTERATIVA COM TOGGLE DE SÉRIES
-      // =========================================================================
-      function renderLegend() {
-        var algoMap = {};
-        state.experiments.forEach(function(e) {
-          if (!algoMap[e.algorithmId]) {
-            algoMap[e.algorithmId] = e.algorithm;
+          if (visibleCountEl) {
+            visibleCountEl.textContent = 'Exibindo ' + cards.length + ' de ' + cards.length;
           }
         });
-
-        var html = '';
-        Object.keys(algoMap).forEach(function(id) {
-          var color = ALGO_COLORS[id] || ALGO_COLORS.default;
-          var isDisabled = !!state.disabledAlgorithms[id];
-
-          html += '<button type="button" class="bench-legend-item ' + (isDisabled ? 'is-disabled' : '') + '" data-algoid="' + id + '" title="Clique para ocultar ou exibir este algoritmo">';
-          html += '  <span class="bench-legend-dot" style="background-color: ' + color + ';"></span>';
-          html += '  <span>' + escapeHtml(algoMap[id]) + '</span>';
-          html += '</button>';
-        });
-
-        dom.benchLegend.innerHTML = html;
-
-        // Binds de clique na legenda
-        dom.benchLegend.querySelectorAll('.bench-legend-item').forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            var algoId = btn.getAttribute('data-algoid');
-            state.disabledAlgorithms[algoId] = !state.disabledAlgorithms[algoId];
-            updateDashboard();
-          });
-        });
       }
 
-      // =========================================================================
-      // 8. RENDERIZAÇÃO E ORDENAÇÃO DA TABELA DE DADOS
-      // =========================================================================
-      function renderTable(filtered) {
-        var query = state.tableSearchQuery.toLowerCase().trim();
-        var mKey = state.filters.metric;
-        var mInfo = getMetricInfo(mKey);
+      // Navegação por Abas Rápidas
+      tabButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var targetId = this.getAttribute('data-target');
 
-        // Aplica busca textual se houver
-        var displayList = filtered.filter(function(item) {
-          if (!query) return true;
-          return item.algorithm.toLowerCase().includes(query) ||
-                 item.paradigm.toLowerCase().includes(query) ||
-                 item.complexity.toLowerCase().includes(query) ||
-                 String(item.inputSize).includes(query);
-        });
+          tabButtons.forEach(function(b) { b.classList.remove('is-active'); });
+          this.classList.add('is-active');
 
-        // Aplica ordenação de colunas
-        var col = state.tableSort.column;
-        var asc = state.tableSort.asc ? 1 : -1;
-
-        displayList.sort(function(a, b) {
-          var valA = a[col];
-          var valB = b[col];
-
-          if (typeof valA === 'string') {
-            return valA.localeCompare(valB) * asc;
-          }
-          return (valA - valB) * asc;
-        });
-
-        dom.tableRecordCount.textContent = '(' + displayList.length + ' de ' + filtered.length + ' visíveis)';
-
-        // Atualiza cabeçalhos da tabela com indicadores de ordenação
-        dom.benchTable.querySelectorAll('th[data-col]').forEach(function(th) {
-          var cName = th.getAttribute('data-col');
-          var ind = th.querySelector('.sort-indicator');
-          if (cName === col) {
-            th.classList.add('is-sorted');
-            if (ind) ind.textContent = state.tableSort.asc ? '▲' : '▼';
+          if (targetId === 'all') {
+            if (searchInput) searchInput.value = '';
+            if (categorySelect) categorySelect.value = 'all';
+            cards.forEach(function(card) { card.style.display = ''; });
+            if (visibleCountEl) visibleCountEl.textContent = 'Exibindo ' + cards.length + ' de ' + cards.length;
           } else {
-            th.classList.remove('is-sorted');
-            if (ind) ind.textContent = '↕';
-          }
-        });
-
-        if (displayList.length === 0) {
-          dom.benchTableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 2rem;">Nenhuma medição encontrada para os filtros atuais.</td></tr>';
-          return;
-        }
-
-        var rowsHtml = '';
-        displayList.forEach(function(item) {
-          var color = ALGO_COLORS[item.algorithmId] || ALGO_COLORS.default;
-          var isSelected = (state.selectedPointId === item.id);
-
-          rowsHtml += '<tr id="table-row-' + item.id + '" class="' + (isSelected ? 'is-selected' : '') + '">';
-          rowsHtml += '  <td style="font-weight: 700; color: var(--text-primary);"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ' + color + '; margin-right: 6px;"></span>' + escapeHtml(item.algorithm) + '</td>';
-          rowsHtml += '  <td><span class="badge" style="font-size: 0.725rem;">' + escapeHtml(item.paradigm) + '</span></td>';
-          rowsHtml += '  <td style="font-weight: 600;">' + item.inputSize + '</td>';
-          rowsHtml += '  <td style="color: ' + (mKey === 'timeMs' ? 'var(--color-primary)' : 'var(--text-primary)') + '; font-weight: ' + (mKey === 'timeMs' ? '700' : 'normal') + ';">' + item.timeMs.toFixed(3) + ' ms</td>';
-          rowsHtml += '  <td style="color: ' + (mKey === 'operations' ? 'var(--color-accent)' : 'var(--text-primary)') + '; font-weight: ' + (mKey === 'operations' ? '700' : 'normal') + ';">' + item.operations.toLocaleString('pt-BR') + '</td>';
-          rowsHtml += '  <td style="color: ' + (mKey === 'memoryKb' ? 'var(--color-secondary)' : 'var(--text-primary)') + '; font-weight: ' + (mKey === 'memoryKb' ? '700' : 'normal') + ';">' + item.memoryKb.toFixed(2) + ' KB</td>';
-          rowsHtml += '  <td><code style="font-size: 0.775rem;">' + escapeHtml(item.complexity) + '</code></td>';
-          rowsHtml += '</tr>';
-        });
-
-        dom.benchTableBody.innerHTML = rowsHtml;
-      }
-
-      // =========================================================================
-      // 9. EVENT LISTENERS E CONTROLES
-      // =========================================================================
-      function initEvents() {
-        // Filtros
-        dom.filterAlgorithm.addEventListener('change', function() {
-          state.filters.algorithm = dom.filterAlgorithm.value;
-          state.selectedPointId = null;
-          updateDashboard();
-        });
-
-        dom.filterMetric.addEventListener('change', function() {
-          state.filters.metric = dom.filterMetric.value;
-          updateDashboard();
-        });
-
-        dom.filterSize.addEventListener('change', function() {
-          state.filters.size = dom.filterSize.value;
-          state.selectedPointId = null;
-          updateDashboard();
-        });
-
-        dom.filterScale.addEventListener('change', function() {
-          state.filters.scale = dom.filterScale.value;
-          updateDashboard();
-        });
-
-        dom.filterChartType.addEventListener('change', function() {
-          state.filters.chartType = dom.filterChartType.value;
-          updateDashboard();
-        });
-
-        dom.btnResetFilters.addEventListener('click', function() {
-          state.filters.algorithm = 'all';
-          state.filters.metric = 'timeMs';
-          state.filters.size = 'all';
-          state.filters.scale = 'linear';
-          state.filters.chartType = 'lines';
-          state.disabledAlgorithms = {};
-          state.selectedPointId = null;
-          state.tableSearchQuery = '';
-
-          dom.filterAlgorithm.value = 'all';
-          dom.filterMetric.value = 'timeMs';
-          dom.filterSize.value = 'all';
-          dom.filterScale.value = 'linear';
-          dom.filterChartType.value = 'lines';
-          dom.tableSearch.value = '';
-
-          updateDashboard();
-        });
-
-        // Ordenação de colunas da tabela
-        dom.benchTable.querySelectorAll('th[data-col]').forEach(function(th) {
-          th.addEventListener('click', function() {
-            var col = th.getAttribute('data-col');
-            if (state.tableSort.column === col) {
-              state.tableSort.asc = !state.tableSort.asc;
-            } else {
-              state.tableSort.column = col;
-              state.tableSort.asc = true;
+            var targetCard = document.getElementById(targetId);
+            cards.forEach(function(card) {
+              if (card.id === targetId) {
+                card.style.display = '';
+              } else {
+                card.style.display = 'none';
+              }
+            });
+            if (visibleCountEl) visibleCountEl.textContent = 'Exibindo 1 de ' + cards.length;
+            if (targetCard) {
+              targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-            renderTable(getFilteredExperiments());
-          });
-        });
-
-        // Busca rápida na tabela
-        dom.tableSearch.addEventListener('input', function() {
-          state.tableSearchQuery = dom.tableSearch.value;
-          renderTable(getFilteredExperiments());
-        });
-
-        // Botões de recarregar nos estados de erro / vazio
-        dom.btnRetryFetch.addEventListener('click', loadBenchmarkData);
-        dom.btnReloadEmpty.addEventListener('click', loadBenchmarkData);
-
-        // Suporte ao redimensionamento de janela para recalcular posições de SVG se necessário
-        window.addEventListener('resize', function() {
-          if (state.experiments.length > 0) {
-            renderChart(getFilteredExperiments());
           }
         });
-      }
-
-      function escapeHtml(str) {
-        if (!str) return '';
-        return String(str)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#039;');
-      }
-
-      // Inicialização da página
-      function init() {
-        initEvents();
-        loadBenchmarkData();
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-      } else {
-        init();
-      }
+      });
 
     })();
   </script>
