@@ -193,10 +193,35 @@ Para consulta rápida da equipe, o cronograma operacional divide-se nas seguinte
 
 ## 8. Resultados Experimentais
 
-*(a preencher por P4 depois dos benchmarks)*
+Esta seção sintetiza os principais achados práticos obtidos a partir dos benchmarks automatizados (experimentos E1 a E8), confrontando as previsões assintóticas do livro do Cormen com medições reais de tempo de execução, consumo de memória e qualidade das soluções.
 
-> [!NOTE]
-> Esta seção será preenchida com as tabelas de tempos medidos, número de chamadas recursivas, pico de memória alocada e comparação percentual de erro da heurística gulosa assim que o integrante P4 executar `make bench`.
+### Tabela-Resumo dos Experimentos
+
+| Experimento | Resultado observado | O que isso demonstra |
+| :--- | :--- | :--- |
+| **E1 — Fibonacci**<br>([gráfico](docs/figures/e1_fibonacci_tempo.png)) | Em $n=30$, a força bruta consumiu **0,84 s**, enquanto a PD com espaço $O(1)$ levou **1,32 $\mu$s** (speedup $> 600.000\times$). Para $n > 32$, a força bruta foi interrompida por timeout. | A superposição massiva de subproblemas torna a recursão ingênua $\Theta(2^n)$ impraticável em poucos passos, enquanto a PD reduz o custo para tempo linear $\Theta(n)$. |
+| **E2 — Corte de Hastes**<br>([gráfico](docs/figures/e2_rod_cutting_tempo.png)) | A força bruta atingiu **31,9 ms** em $n=15$, dobrando o tempo a cada novo centímetro. A PD resolveu $n=100$ em apenas **2,08 ms**. | Substituir uma árvore recursiva redundante $\Theta(2^n)$ por uma tabela de subproblemas $\Theta(n^2)$ permite resolver instâncias de produção em milissegundos. |
+| **E3 — Memória no LCS**<br>([gráfico](docs/figures/e3_lcs_memoria.png)) | Em cadeias de $n=1000$, a matriz completa consumiu **19,6 MB** de heap, enquanto a técnica de duas linhas exigiu apenas **42,9 KB** (redução de **99,8%**). | A dependência de transição do LCS exige apenas a linha anterior. Quando o rastreamento da string (*traceback*) não é exigido, a economia de espaço é drástica. |
+| **E4 — CPython vs. C++17**<br>([gráfico](docs/figures/e4_lcs_python_cpp.png)) | Para sequências de $n=1000$, o C++ (`-O3`) executou em **8,5 ms** contra **446 ms** do Python 3.11 (speedup empírico de **$52{,}2\times$**). | Ambos possuem a mesma complexidade assintótica $\Theta(mn)$, mas fatores constantes (alocação estática contígua, compilação nativa e ausência de *boxing*) tornam o C++ muito mais veloz. |
+| **E5 — Limite de Recursão**<br>([gráfico](docs/figures/e5_recursao_limites.png)) | A memoização Top-Down falhou com `RecursionError` exatamente em $n=1000$ (limite da pilha do interpretador). O Bottom-Up iterativo seguiu estável em $n=1200$ (**0,61 ms**). | O modelo Bottom-Up possui maior robustez de engenharia, pois opera iterativamente na memória heap, imune a limitações de profundidade da pilha recursiva. |
+| **E6 — Falha do Guloso**<br>([gráfico](docs/figures/e6_guloso_erro.png)) | A heurística gulosa pela razão de densidade ($p_i / i$) falhou em até **34%** das instâncias randômicas testadas (ex.: em $n=25$), com perda média de receita de até **6,04%**. | Problemas que não satisfazem a *propriedade da escolha gulosa* exigem Programação Dinâmica; decisões localmente atraentes não garantem a solução ótima global. |
+| **E7 — Cadeia de Matrizes**<br>([gráfico](docs/figures/e7_matrix_chain_tempo.png)) | Para $n=50$ matrizes, existem $\approx 5{,}1 \times 10^{26}$ ordens possíveis de parênteses (números de Catalan). A PD Bottom-Up encontrou a ordem ótima em apenas **11,7 ms**. | A busca exaustiva combinatória é inexecutável na prática, enquanto a PD resolve o problema em tempo cúbico $\Theta(n^3)$ reaproveitando soluções parciais. |
+| **E8 — Mochila 0/1**<br>([gráfico](docs/figures/e8_knapsack_memoria.png)) | O vetor 1D reduziu o pico de memória de **1,6 MB** para **39,2 KB** em $W=1000$ (**97,5%** de economia). O tempo de execução cresceu linearmente com o valor da capacidade $W$. | Comprova experimentalmente o caráter *pseudo-polinomial* $\Theta(nW)$: a complexidade do algoritmo depende da magnitude numérica de $W$, e não apenas da quantidade de itens. |
+
+> 📊 **Dashboard Unificado:** Para visualizar o contraste empírico direto entre as ordens assintóticas ($\Theta(2^n)$, $\Theta(n^3)$, $\Theta(n^2)$ e $\Theta(n)$), consulte [`docs/figures/summary_complexity_dashboard.png`](docs/figures/summary_complexity_dashboard.png).
+
+### Principais Conclusões Didáticas
+
+1. **Quando a Programação Dinâmica é indispensável?** Quando o problema exibe *subestrutura ótima* e *superposição de subproblemas*, mas a *propriedade da escolha gulosa* não se sustenta. O experimento E6 prova que tentar simplificar o problema com uma heurística gulosa sem prova teórica gera perdas financeiras concretas em até 1 a cada 3 instâncias.
+2. **Top-Down (Memoização) vs. Bottom-Up (Tabulação):** Ambas as abordagens oferecem a mesma complexidade assintótica de tempo. No entanto, o Bottom-Up evita o overhead da pilha de execução de funções e elimina riscos de interrupção abrupta por limite de recursão, como evidenciado no E5.
+3. **Trade-off clássico de Espaço vs. Recuperação da Solução:** Se o objetivo é apenas obter o valor ótimo (ex.: comprimento da subsequência ou lucro máximo da mochila), vetores rotativos ou de linha única economizam mais de 97% de memória (E3 e E8). Já quando é necessário reconstruir a solução concreta (*traceback*), a matriz bidimensional completa torna-se obrigatória.
+4. **Constantes Ocultas na Notação Big-O:** O experimento E4 comprova aos estudantes que dois algoritmos $\Theta(mn)$ podem ter tempos drasticamente diferentes na prática ($52\times$ de diferença entre C++ e Python), ressaltando a relevância da arquitetura de execução e alocação de memória do hardware.
+
+> [!WARNING]
+> **Limitações Experimentais Observadas:**
+> * **Timeouts de Segurança:** Nos algoritmos puramente recursivos (E1 e E2), as medições foram truncadas em $n \le 30$ e $n \le 15$ por limite de tempo (10s) para evitar travamento do ambiente.
+> * **Ausência de Dados Pós-Limite:** No experimento E5, não há tempos de execução para a memoização Top-Down acima de $n=1000$ em virtude do `RecursionError`.
+> * **Medições vs. Provas Matemáticas:** Os tempos reportados foram aferidos empiricamente com `time.perf_counter()` em CPython 3.11 / GCC 6.3. As classes de complexidade indicam o comportamento assintótico teórico, mas flutuações de hardware e sistema operacional geram variações nas ordens de grandeza das constantes.
 
 ---
 
