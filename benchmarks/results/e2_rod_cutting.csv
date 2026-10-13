@@ -1,47 +1,63 @@
-experiment,algorithm,approach,n,time_seconds,memory_bytes,calls,status,notes
-E2,Corte de Hastes,naive,2,1.1099997209385037e-05,0,0,success,Theta(2^n) Recursivo Puro
-E2,Corte de Hastes,naive,3,1.8699996871873736e-05,0,0,success,Theta(2^n) Recursivo Puro
-E2,Corte de Hastes,naive,4,2.269999822601676e-05,0,0,success,Theta(2^n) Recursivo Puro
-E2,Corte de Hastes,naive,5,2.7399975806474686e-05,0,0,success,Theta(2^n) Recursivo Puro
-E2,Corte de Hastes,naive,6,4.190002800896764e-05,0,0,success,Theta(2^n) Recursivo Puro
-E2,Corte de Hastes,naive,7,6.510000093840063e-05,0,0,success,Theta(2^n) Recursivo Puro
-E2,Corte de Hastes,naive,8,0.00013139998191036284,0,0,success,Theta(2^n) Recursivo Puro
-E2,Corte de Hastes,naive,9,0.00021840000408701599,0,0,success,Theta(2^n) Recursivo Puro
-E2,Corte de Hastes,naive,10,0.00041450001299381256,0,0,success,Theta(2^n) Recursivo Puro
-E2,Corte de Hastes,naive,11,0.000825099996291101,0,0,success,Theta(2^n) Recursivo Puro
-E2,Corte de Hastes,naive,12,0.0020871000015176833,0,0,success,Theta(2^n) Recursivo Puro
-E2,Corte de Hastes,naive,13,0.0032427000114694238,0,0,success,Theta(2^n) Recursivo Puro
-E2,Corte de Hastes,naive,14,0.007863800012273714,0,0,success,Theta(2^n) Recursivo Puro
-E2,Corte de Hastes,naive,15,0.013603200000943616,0,0,success,Theta(2^n) Recursivo Puro
-E2,Corte de Hastes,memo,2,2.00001522898674e-06,0,3,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,2,2.200016751885414e-06,0,1,success,Theta(n^2) Bottom-Up Tabulação
-E2,Corte de Hastes,memo,5,4.2000028770416975e-06,0,6,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,5,2.900022082030773e-06,0,1,success,Theta(n^2) Bottom-Up Tabulação
-E2,Corte de Hastes,memo,8,7.90000194683671e-06,0,9,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,8,5.4000120144337416e-06,0,1,success,Theta(n^2) Bottom-Up Tabulação
-E2,Corte de Hastes,memo,10,1.1600001016631722e-05,0,11,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,10,6.600021151825786e-06,0,1,success,Theta(n^2) Bottom-Up Tabulação
-E2,Corte de Hastes,memo,15,2.1299987565726042e-05,0,16,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,15,1.2100004823878407e-05,0,1,success,Theta(n^2) Bottom-Up Tabulação
-E2,Corte de Hastes,memo,20,3.470000228844583e-05,0,21,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,20,1.8699996871873736e-05,0,1,success,Theta(n^2) Bottom-Up Tabulação
-E2,Corte de Hastes,memo,25,5.060000694356859e-05,0,26,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,25,2.8199981898069382e-05,0,1,success,Theta(n^2) Bottom-Up Tabulação
-E2,Corte de Hastes,memo,30,7.039998308755457e-05,0,31,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,30,3.9000005926936865e-05,0,1,success,Theta(n^2) Bottom-Up Tabulação
-E2,Corte de Hastes,memo,40,0.00013270002091303468,0,41,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,40,6.330001633614302e-05,0,1,success,Theta(n^2) Bottom-Up Tabulação
-E2,Corte de Hastes,memo,50,0.0001973999897018075,0,51,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,50,9.740001405589283e-05,0,1,success,Theta(n^2) Bottom-Up Tabulação
-E2,Corte de Hastes,memo,60,0.00028959999326616526,0,61,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,60,0.0001373999984934926,0,1,success,Theta(n^2) Bottom-Up Tabulação
-E2,Corte de Hastes,memo,70,0.0005315000016707927,0,71,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,70,0.00017179999849759042,0,1,success,Theta(n^2) Bottom-Up Tabulação
-E2,Corte de Hastes,memo,80,0.0004151000175625086,0,81,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,80,0.0001889999839477241,0,1,success,Theta(n^2) Bottom-Up Tabulação
-E2,Corte de Hastes,memo,90,0.0010301999864168465,0,91,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,90,0.00025290000485256314,0,1,success,Theta(n^2) Bottom-Up Tabulação
-E2,Corte de Hastes,memo,100,0.000673700007610023,0,101,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,100,0.0002700999903026968,0,1,success,Theta(n^2) Bottom-Up Tabulação
-E2,Corte de Hastes,memo,120,0.001003899989882484,0,121,success,Theta(n^2) Top-Down Memoização
-E2,Corte de Hastes,bottom_up,120,0.0003819999983534217,0,1,success,Theta(n^2) Bottom-Up Tabulação
+experiment,algorithm,approach,n,time_seconds,time_std,time_min,time_max,memory_bytes,calls,status,notes
+E2,Corte de Hastes,naive,2,1.9799917936325073e-05,8.331591935118153e-05,1.5099998563528061e-05,0.00016169995069503784,0,0,success,Theta(2^n) Recursivo Puro
+E2,Corte de Hastes,naive,3,3.350002225488424e-05,6.898076290011542e-06,2.2999942302703857e-05,3.599992487579584e-05,0,0,success,Theta(2^n) Recursivo Puro
+E2,Corte de Hastes,naive,4,2.8799986466765404e-05,3.204708473838031e-06,2.8699985705316067e-05,3.430002834647894e-05,0,0,success,Theta(2^n) Recursivo Puro
+E2,Corte de Hastes,naive,5,5.749997217208147e-05,2.6895070309340885e-05,3.639992792159319e-05,8.979998528957367e-05,0,0,success,Theta(2^n) Recursivo Puro
+E2,Corte de Hastes,naive,6,5.880009848624468e-05,1.783823125498281e-05,5.4299947805702686e-05,8.719996549189091e-05,0,0,success,Theta(2^n) Recursivo Puro
+E2,Corte de Hastes,naive,7,0.00021600001491606236,0.00011584170983553095,0.00014450005255639553,0.0003711000317707658,0,0,success,Theta(2^n) Recursivo Puro
+E2,Corte de Hastes,naive,8,0.0002957000397145748,5.126643834718746e-05,0.0002364999381825328,0.0003386000171303749,0,0,success,Theta(2^n) Recursivo Puro
+E2,Corte de Hastes,naive,9,0.0003926000790670514,0.00015012601106299307,0.00027139997109770775,0.0005698999157175422,0,0,success,Theta(2^n) Recursivo Puro
+E2,Corte de Hastes,naive,10,0.0011373000452294946,0.000270636037734838,0.0007048000115901232,0.0012028999626636505,0,0,success,Theta(2^n) Recursivo Puro
+E2,Corte de Hastes,naive,11,0.0012950999662280083,0.0010959012878270916,0.001070900005288422,0.0030712001025676727,0,0,success,Theta(2^n) Recursivo Puro
+E2,Corte de Hastes,naive,12,0.003143099951557815,0.0007887013989927457,0.0022374000400304794,0.0038087000139057636,0,0,success,Theta(2^n) Recursivo Puro
+E2,Corte de Hastes,naive,13,0.004295799997635186,0.00020132622774203334,0.004188299993984401,0.004578099935315549,0,0,success,Theta(2^n) Recursivo Puro
+E2,Corte de Hastes,naive,14,0.009102200041525066,0.0009017414443191579,0.008262299932539463,0.010064400034025311,0,0,success,Theta(2^n) Recursivo Puro
+E2,Corte de Hastes,naive,15,0.03191989997867495,0.010271656906627768,0.01864269992802292,0.038857299950905144,0,0,success,Theta(2^n) Recursivo Puro
+E2,Corte de Hastes,memo,2,4.486000398173928e-06,4.4831426760186725e-06,3.2019999343901874e-06,1.1528999311849476e-05,0,3,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,2,4.418999888002872e-06,5.315792717711493e-07,3.72299924492836e-06,4.767000209540129e-06,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,2,0.00010419997852295637,8.04125067582206e-05,9.879993740469217e-05,0.00024069997016340494,0,1,success,"Guloso p_i/i (Receita: 5 vs Ótimo: 5, Perda: 0.0%)"
+E2,Corte de Hastes,memo,5,1.4491999754682183e-05,2.0192212243208713e-06,1.3142999960109591e-05,1.711399992927909e-05,0,6,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,5,9.725000709295272e-06,2.6520647524856633e-06,8.648999501019716e-06,1.3685000594705343e-05,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,5,9.069523574518306e-05,1.1058106158603687e-05,7.549999836122705e-05,9.701428713188285e-05,0,1,success,"Guloso p_i/i (Receita: 13 vs Ótimo: 13, Perda: 0.0%)"
+E2,Corte de Hastes,memo,8,3.917352981208002e-05,1.8265020128450907e-05,2.4294117739533677e-05,6.062647341476644e-05,0,9,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,8,1.4891000464558602e-05,3.0681950989359535e-06,1.4593000523746013e-05,2.0050000166520477e-05,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,8,7.153055371923579e-05,1.3106103237875191e-05,6.35833324243625e-05,8.91888889277147e-05,0,1,success,"Guloso p_i/i (Receita: 22 vs Ótimo: 22, Perda: 0.0%)"
+E2,Corte de Hastes,memo,10,3.849882221616366e-05,2.4392862913217636e-05,3.433999988962622e-05,7.851529482971219e-05,0,11,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,10,4.744500038214028e-05,3.3823755364127866e-05,2.8542999643832445e-05,9.424500050954521e-05,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,10,0.00012794400099664928,0.0004881489218415072,0.00012504199985414745,0.00097198799951002,0,1,success,"Guloso p_i/i (Receita: 30 vs Ótimo: 30, Perda: 0.0%)"
+E2,Corte de Hastes,memo,15,0.0024560216210178427,0.002577525091810426,6.222432303066189e-05,0.005213008108045402,0,16,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,15,0.00020100001711398363,0.0058978401001883824,3.93999507650733e-05,0.010334599995985627,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,15,6.059999577701092e-05,2.8502881030079054e-05,5.759997293353081e-05,0.00010840001050382853,0,1,success,"Guloso p_i/i (Receita: 43 vs Ótimo: 43, Perda: 0.0%)"
+E2,Corte de Hastes,memo,20,0.00017052726947109807,0.0002784106020518877,0.00011004545641216365,0.000619654543697834,0,21,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,20,0.00028516818102533847,0.00020289830060150104,0.00012490908953953874,0.0005279022734612226,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,20,0.000281611538062302,0.0003004477774745762,6.999230782429759e-05,0.000662853847293613,0,1,success,"Guloso p_i/i (Receita: 60 vs Ótimo: 60, Perda: 0.0%)"
+E2,Corte de Hastes,memo,25,0.0009132142877206206,0.0011282698001514122,0.000308442852526371,0.0024935571377032568,0,26,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,25,0.00037240344982851167,0.0002829160700565625,6.470689951474296e-05,0.000629793101889563,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,25,0.0002960520004853606,0.00016784363609531418,7.646000012755394e-05,0.0004061400005593896,0,1,success,"Guloso p_i/i (Receita: 73 vs Ótimo: 73, Perda: 0.0%)"
+E2,Corte de Hastes,memo,30,0.0007537153836053151,0.00035593098832615937,0.00018488461724840678,0.0008399538480891631,0,31,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,30,0.0005380720039829612,0.00026703664013156376,0.0002308400021865964,0.000762784001417458,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,30,0.00017644166655372828,7.071372206222764e-05,7.218333485070616e-05,0.00020707083361533782,0,1,success,"Guloso p_i/i (Receita: 90 vs Ótimo: 90, Perda: 0.0%)"
+E2,Corte de Hastes,memo,40,0.00034799997229129076,1.1218013790970366e-05,0.00033359997905790806,0.0003557000309228897,0,41,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,40,0.0001584307666724691,4.446886366509474e-05,0.00015085383963126404,0.00023138461312135824,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,40,0.000178530767488365,6.18124131860552e-05,7.42769200139894e-05,0.00018394230685841577,0,1,success,"Guloso p_i/i (Receita: 120 vs Ótimo: 120, Perda: 0.0%)"
+E2,Corte de Hastes,memo,50,0.0005044999998062849,1.4202983238695192e-05,0.0004898000042885542,0.0005182001041248441,0,51,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,50,0.000228899996727705,2.944252485821278e-05,0.00021319999359548092,0.0002701999619603157,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,50,0.0003790346135456975,9.115145630720985e-05,0.00037632692300786194,0.0005355423065618827,0,1,success,"Guloso p_i/i (Receita: 150 vs Ótimo: 150, Perda: 0.0%)"
+E2,Corte de Hastes,memo,60,0.0007404000498354435,0.00362587943630395,0.0007292000809684396,0.007014999981038272,0,61,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,60,0.00030559999868273735,3.296993409110202e-06,0.00030519999563694,0.0003111000405624509,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,60,0.0002973541704704985,0.00017707099871897702,7.469999642732243e-05,0.00042452499716697883,0,1,success,"Guloso p_i/i (Receita: 180 vs Ótimo: 180, Perda: 0.0%)"
+E2,Corte de Hastes,memo,70,0.00520619994495064,0.003743427783508137,0.0024271999718621373,0.009837299934588373,0,71,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,70,0.0010557000059634447,0.0019894817992062892,0.0007607000879943371,0.004344600019976497,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,70,0.00029657916456926614,0.0003707959340945443,0.00018595833292541405,0.0008763208315940574,0,1,success,"Guloso p_i/i (Receita: 210 vs Ótimo: 210, Perda: 0.0%)"
+E2,Corte de Hastes,memo,80,0.0020465999841690063,0.0007069076684955739,0.001777400029823184,0.0031139999628067017,0,81,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,80,0.0010428999084979296,0.0011294882620752763,0.0005146999610587955,0.002680900041013956,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,80,9.58999153226614e-05,1.711851417404935e-05,7.479998748749495e-05,0.00010870001278817654,0,1,success,"Guloso p_i/i (Receita: 240 vs Ótimo: 240, Perda: 0.0%)"
+E2,Corte de Hastes,memo,90,0.0023862000089138746,0.0020345612094114815,0.0021476000547409058,0.0057848000433295965,0,91,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,90,0.0007140999659895897,0.0001271564515481126,0.0006608000257983804,0.0009028000058606267,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,90,0.0001575480028986931,4.030896148318195e-05,9.177200030535459e-05,0.00016502799931913614,0,1,success,"Guloso p_i/i (Receita: 270 vs Ótimo: 270, Perda: 0.0%)"
+E2,Corte de Hastes,memo,100,0.012084899935871363,0.005997767126198491,0.0035195000236853957,0.015075100003741682,0,101,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,100,0.0020840999204665422,0.0009451420535945313,0.0011162000009790063,0.0030062999576330185,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,100,0.00019034583237953484,3.693631753034733e-05,0.0001553999997364978,0.00022923749929759651,0,1,success,"Guloso p_i/i (Receita: 300 vs Ótimo: 300, Perda: 0.0%)"
+E2,Corte de Hastes,memo,120,0.005526200053282082,0.0010472473388741014,0.005368700018152595,0.007256199955008924,0,121,success,Theta(n^2) Top-Down Memoização
+E2,Corte de Hastes,bottom_up,120,0.0014934999635443091,0.0005643549582857081,0.0011125999735668302,0.0022231999319046736,0,1,success,Theta(n^2) Bottom-Up Tabulação
+E2,Corte de Hastes,greedy,120,9.745713655969926e-05,3.197295085330908e-05,9.292142099833914e-05,0.00015042856934347322,0,1,success,"Guloso p_i/i (Receita: 360 vs Ótimo: 360, Perda: 0.0%)"

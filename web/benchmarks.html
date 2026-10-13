@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Benchmarks Empíricos — PD LAB</title>
-  <meta name="description" content="Painel de benchmarks empíricos do PD Lab. Comparação de tempo de execução, memória e limites de escala entre algoritmos de Programação Dinâmica, Recursão e Gulosos com dados científicos a 200 DPI.">
+  <meta name="description" content="Painel de benchmarks empíricos do PD Lab. Comparação científica de tempo de execução, memória, speedup e limites assintóticos de algoritmos de Programação Dinâmica a 200 DPI.">
   <script>
     (function() {
       try {
@@ -22,7 +22,7 @@
   </script>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    /* Estilos complementares específicos da galeria de gráficos científicos */
+    /* Estilos específicos da galeria científica e visualização editorial */
     .bench-gallery-grid {
       display: flex;
       flex-direction: column;
@@ -56,7 +56,7 @@
     }
 
     .bench-fig-title-area {
-      flex: 1 1 320px;
+      flex: 1 1 340px;
     }
 
     .bench-fig-num {
@@ -76,8 +76,15 @@
       font-size: 1.2rem;
       font-weight: 700;
       color: var(--text-primary);
-      margin: 0 0 0.4rem 0;
+      margin: 0 0 0.35rem 0;
       line-height: 1.3;
+    }
+
+    .bench-fig-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin: 0 0 0.5rem 0;
+      font-family: var(--font-mono);
     }
 
     .bench-fig-desc {
@@ -162,6 +169,7 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
     .bench-fig-btns {
@@ -207,11 +215,18 @@
       margin-bottom: 0;
     }
 
+    .bench-limitations-note {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
     /* Barra de Navegação Rápida / Filtros */
     .bench-nav-tabs {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.45rem;
       align-items: center;
       margin-bottom: 1.25rem;
       padding-bottom: 0.5rem;
@@ -219,8 +234,8 @@
 
     .bench-tab-btn {
       font-family: var(--font-mono);
-      font-size: 0.8rem;
-      padding: 0.4rem 0.75rem;
+      font-size: 0.78rem;
+      padding: 0.38rem 0.7rem;
       border: 1px solid var(--border-color);
       border-radius: var(--radius-xs);
       background-color: var(--bg-surface);
@@ -344,6 +359,8 @@
       background-color: var(--bg-surface);
       font-size: 0.85rem;
       color: var(--text-secondary);
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
 
     @media (max-width: 768px) {
@@ -437,18 +454,19 @@
           <span class="badge badge-secondary">AEDS-II • Cormen et al.</span>
         </div>
         <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
-          <span class="badge">9 Gráficos Gerados</span>
-          <span class="badge badge-success">200 DPI Científico</span>
+          <span class="badge" id="badge-total-figures">19 Gráficos Científicos</span>
+          <span class="badge badge-success">200 DPI Editorial</span>
         </div>
       </div>
       
       <div>
         <h2>Painel de Benchmarks Empíricos — Resultados Científicos</h2>
         <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
-          Exibição dos resultados empíricos da suíte de testes de Programação Dinâmica. Cada gráfico foi produzido com
-          <strong>20 amostragens por algoritmo</strong>, <strong>média aparada de 5 repetições (trimmed mean)</strong>
-          descartando o tempo mínimo e máximo para eliminar ruídos do sistema operacional, medição rigorosamente isolada
-          com <code>time.perf_counter()</code>, rastreamento de memória via <code>tracemalloc</code> e tratamento editorial com linhas contínuas e sem marcadores.
+          Avaliação empírica rigorosa dos algoritmos de Programação Dinâmica. Cada figura foi gerada a partir de
+          <strong>medições de tempo isoladas (time.perf_counter)</strong> com <strong>aquecimento prévio (warm-up)</strong>,
+          <strong>batching adaptativo</strong> para operações sub-microsegundos, <strong>média aparada de 5 repetições (trimmed mean)</strong>,
+          <strong>rastreamento de memória independente via tracemalloc</strong> e <strong>timeout seguro com encerramento de processos</strong>.
+          Não há interpolações artificiais: as curvas retratam observações experimentais reais com suas respectivas bandas de dispersão.
         </p>
       </div>
     </div>
@@ -456,551 +474,861 @@
     <!-- 1. Grade de Estatísticas Rápidas do Ambiente -->
     <div class="bench-stats-grid">
       <div class="bench-stat-card">
-        <span class="bench-stat-title">Amostragem Rigorosa</span>
-        <span class="bench-stat-value">20 Pontos</span>
-        <span class="bench-stat-sub">por curva algorítmica</span>
+        <span class="bench-stat-title">Resolução Temporal</span>
+        <span class="bench-stat-value" style="color: var(--color-success);">Sub-µs</span>
+        <span class="bench-stat-sub">batching adaptativo para operações rápidas</span>
       </div>
 
       <div class="bench-stat-card">
         <span class="bench-stat-title">Filtro Estatístico</span>
-        <span class="bench-stat-value" style="color: var(--color-success);">Trimmed Mean</span>
-        <span class="bench-stat-sub">5 execuções (média das 3 centrais)</span>
+        <span class="bench-stat-value">Trimmed Mean</span>
+        <span class="bench-stat-sub">5 execuções (média das 3 centrais + std)</span>
       </div>
 
       <div class="bench-stat-card">
-        <span class="bench-stat-title">Isolamento de Clock</span>
+        <span class="bench-stat-title">Isolamento Estrito</span>
         <span class="bench-stat-value">perf_counter</span>
-        <span class="bench-stat-sub">medição separada do tracemalloc</span>
+        <span class="bench-stat-sub">zero overhead de tracemalloc no tempo</span>
       </div>
 
       <div class="bench-stat-card">
-        <span class="bench-stat-title">Resolução Gráfica</span>
-        <span class="bench-stat-value" style="color: var(--color-accent);">200 DPI</span>
-        <span class="bench-stat-sub">linhas contínuas e suavizadas</span>
+        <span class="bench-stat-title">C++ Nativo</span>
+        <span class="bench-stat-value" style="color: var(--color-accent);">g++ -O3</span>
+        <span class="bench-stat-sub">validação de saída idêntica ao CPython</span>
       </div>
     </div>
 
     <!-- 2. Barra de Filtros e Busca Rápida -->
     <div class="bench-filters-bar">
       <div class="bench-filter-group" style="flex: 1 1 240px;">
-        <label for="filter-search-input">Buscar Experimento:</label>
-        <input type="text" id="filter-search-input" placeholder="Ex: fibonacci, memória, c++, guloso..." style="min-width: 100%;">
+        <label for="filter-search-input">Buscar Gráfico:</label>
+        <input type="text" id="filter-search-input" placeholder="Ex: fibonacci, speedup, memória, c++, catalan..." style="min-width: 100%;">
       </div>
 
       <div class="bench-filter-group">
         <label for="filter-category-select">Filtrar por Categoria:</label>
         <select id="filter-category-select">
-          <option value="all">Todos os Experimentos (9)</option>
-          <option value="dashboard">Dashboard Geral</option>
+          <option value="all">Todas as Categorias</option>
+          <option value="dashboard">Dashboard Síntese</option>
           <option value="tempo">Tempo de Execução</option>
-          <option value="memoria">Consumo de Memória</option>
-          <option value="linguagem">Comparação C++ vs Python</option>
-          <option value="pilha">Pilha & Recursão</option>
-          <option value="guloso">Falha do Guloso</option>
+          <option value="memoria">Memória & Espaço</option>
+          <option value="speedup">Speedup & Aceleração</option>
+          <option value="qualidade">Qualidade da Solução</option>
+          <option value="robustez">Robustez & Limites</option>
+          <option value="eficiencia">Operações & Chamadas</option>
+          <option value="linguagem">CPython vs C++</option>
         </select>
       </div>
 
       <div style="margin-left: auto; display: flex; align-items: center; gap: 0.5rem;">
-        <span class="badge" id="visible-cards-count">Exibindo 9 de 9</span>
+        <span class="badge" id="visible-cards-count">Exibindo 19 de 19</span>
         <button type="button" class="btn btn-outline btn-sm" id="btn-reset-filter" title="Restaurar todos os gráficos">
           ↺ Ver Todos
         </button>
       </div>
     </div>
 
-    <!-- 3. Abas de Acesso Rápido -->
+    <!-- 3. Abas de Acesso Rápido por Experimento -->
     <nav class="bench-nav-tabs" aria-label="Navegação rápida por experimento">
-      <button type="button" class="bench-tab-btn is-active" data-target="all">Todos (9)</button>
-      <button type="button" class="bench-tab-btn" data-target="card-summary">Dashboard Geral</button>
-      <button type="button" class="bench-tab-btn" data-target="card-e1">E1 • Fibonacci</button>
-      <button type="button" class="bench-tab-btn" data-target="card-e2">E2 • Rod Cutting</button>
-      <button type="button" class="bench-tab-btn" data-target="card-e3">E3 • LCS Memória</button>
-      <button type="button" class="bench-tab-btn" data-target="card-e4">E4 • C++ vs Python</button>
-      <button type="button" class="bench-tab-btn" data-target="card-e5">E5 • Limite Recursão</button>
-      <button type="button" class="bench-tab-btn" data-target="card-e6">E6 • Falha do Guloso</button>
-      <button type="button" class="bench-tab-btn" data-target="card-e7">E7 • Matrix Chain</button>
-      <button type="button" class="bench-tab-btn" data-target="card-e8">E8 • Mochila 0/1</button>
+      <button type="button" class="bench-tab-btn is-active" data-target="all">Todos</button>
+      <button type="button" class="bench-tab-btn" data-target="card-summary_complexity_dashboard">Dashboard</button>
+      <button type="button" class="bench-tab-btn" data-exp="E1">E1 • Fibonacci</button>
+      <button type="button" class="bench-tab-btn" data-exp="E2">E2 • Rod Cutting</button>
+      <button type="button" class="bench-tab-btn" data-exp="E3">E3 • LCS Memória</button>
+      <button type="button" class="bench-tab-btn" data-exp="E4">E4 • C++ vs Python</button>
+      <button type="button" class="bench-tab-btn" data-exp="E5">E5 • Limite Recursão</button>
+      <button type="button" class="bench-tab-btn" data-exp="E6">E6 • Falha do Guloso</button>
+      <button type="button" class="bench-tab-btn" data-exp="E7">E7 • Matrix Chain</button>
+      <button type="button" class="bench-tab-btn" data-exp="E8">E8 • Mochila 0/1</button>
     </nav>
 
-    <!-- 4. Galeria de Gráficos Científicos -->
+    <!-- 4. Galeria de Gráficos Científicos Canônicos -->
     <div class="bench-gallery-grid" id="benchmarks-gallery">
 
       <!-- ==============================================================
            DASHBOARD GERAL DE COMPLEXIDADES
            ============================================================== -->
-      <article class="bench-fig-card" id="card-summary" data-category="dashboard" data-keywords="dashboard resumo síntese fibonacci rod cutting lcs cpp python c++">
+      <article class="bench-fig-card" id="card-summary_complexity_dashboard" data-exp="SUMMARY" data-category="dashboard" data-keywords="dashboard resumo síntese classes assintóticas exponencial cúbica quadrática linear cormen">
         <div class="bench-fig-header">
           <div class="bench-fig-title-area">
             <div class="bench-fig-num">
-              <span>★ Síntese Experimental</span>
-              <span>•</span>
-              <span>Visão Panorâmica</span>
+              <span>★ Síntese Experimental</span> • <span>Visão Panorâmica</span>
             </div>
-            <h3 class="bench-fig-title">Dashboard Geral de Complexidades e Desempenho</h3>
+            <h3 class="bench-fig-title">Síntese Geral das Classes Assintóticas em PD</h3>
+            <div class="bench-fig-subtitle">Exponencial vs Cúbica vs Quadrática vs Linear</div>
             <p class="bench-fig-desc">
-              Painel consolidado em 4 quadrantes ilustrando as principais teses teóricas de Cormen et al.:
-              a quebra da barreira exponencial no Fibonacci, a contenção polinomial no Corte de Hastes, a economia de memória de 2 linhas na LCS e a aceleração de compilação em código nativo C++.
+              Panorama empírico integrando as quatro classes assintóticas clássicas analisadas em AEDS-II.
+              Demonstra visualmente a ruptura entre a explosão inviável de algoritmos recursivos puros e a previsibilidade polinomial assegurada pela Programação Dinâmica.
             </p>
           </div>
           <div class="bench-fig-badges">
-            <span class="badge badge-accent">4 Painéis Integrados</span>
-            <span class="badge badge-secondary">Tempo & Memória</span>
-            <span class="badge">Escalas Adaptadas</span>
+            <span class="badge badge-accent">4 Classes Integradas</span>
+            <span class="badge badge-secondary">Tempo vs Entrada</span>
+            <span class="badge">Escala Logarítmica</span>
           </div>
         </div>
 
-        <div class="bench-fig-display" onclick="openModal('summary_complexity_dashboard.png', 'Dashboard Geral de Complexidades e Desempenho')">
-          <img src="figures/summary_complexity_dashboard.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/summary_complexity_dashboard.png';}" alt="Dashboard Geral de Complexidades" class="bench-fig-img" loading="lazy">
-          <div class="bench-fig-zoom-hint">
-            <span>🔍 Clique para ampliar</span>
-          </div>
+        <div class="bench-fig-display" onclick="openModal('summary_complexity_dashboard.png', 'Síntese Geral das Classes Assintóticas')">
+          <img src="figures/summary_complexity_dashboard.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/summary_complexity_dashboard.png';}" alt="Dashboard Síntese de Complexidades" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
         </div>
 
         <div class="bench-fig-actions">
           <div class="bench-fig-meta">
-            <span>Resolução: 200 DPI</span> • <span>Linhas contínuas</span> • <span>Paleta Dark Slate</span>
+            <span>Eixo X: Tamanho n (2 a 35)</span> • <span>Eixo Y: Tempo de CPU (s)</span> • <span>200 DPI</span>
           </div>
           <div class="bench-fig-btns">
-            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('summary_complexity_dashboard.png', 'Dashboard Geral de Complexidades')">
-              🔍 Ampliar Gráfico
-            </button>
-            <a href="figures/summary_complexity_dashboard.png" download="summary_complexity_dashboard.png" class="btn btn-primary btn-sm">
-              ⬇ Baixar Imagem
-            </a>
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('summary_complexity_dashboard.png', 'Síntese Geral das Classes Assintóticas')">🔍 Ampliar Gráfico</button>
+            <a href="figures/summary_complexity_dashboard.png" download="summary_complexity_dashboard.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
           </div>
         </div>
 
         <div class="bench-takeaway-box">
           <div class="bench-takeaway-title">💡 Conclusões Empíricas Fundamentais:</div>
           <ul class="bench-takeaway-list">
-            <li><strong>Fibonacci:</strong> A força bruta colapsa a partir de \(n = 25\), enquanto Memoização e Bottom-Up executam abaixo de 0.05 ms.</li>
-            <li><strong>Corte de Hastes:</strong> O algoritmo ingênuo atinge timeout de segurança em \(n \approx 22\), comprovando a inviabilidade de \(\Theta(2^n)\).</li>
-            <li><strong>LCS Memória:</strong> A versão otimizada de 2 linhas economiza mais de 95% de memória RAM em strings médias e longas.</li>
-            <li><strong>C++ vs Python:</strong> Implementação idêntica em C++ nativo (-O3) alcança speedup de até 40x sem alterar a complexidade assintótica.</li>
+            <li>A força bruta exponencial dispara verticalmente e atinge timeout por volta de n = 32.</li>
+            <li>Cadeia de Matrizes Theta(n^3) e Corte de Hastes Theta(n^2) mantêm crescimento suave e previsível.</li>
+            <li>Fibonacci linear Theta(n) executa em frações insignificantes de milissegundo.</li>
           </ul>
+          <div class="bench-limitations-note">Limitação: Compara problemas distintos normalizados pelo parâmetro de entrada n.</div>
         </div>
       </article>
 
       <!-- ==============================================================
-           EXPERIMENTO 1: FIBONACCI
+           E1: FIBONACCI TEMPO GERAL
            ============================================================== -->
-      <article class="bench-fig-card" id="card-e1" data-category="tempo" data-keywords="e1 fibonacci forca bruta memoizacao bottom-up o(1) tempo exponencial">
+      <article class="bench-fig-card" id="card-e1_fibonacci_tempo" data-exp="E1" data-category="tempo" data-keywords="e1 fibonacci tempo logarítmico forca bruta memoização bottom up o1 espaço">
         <div class="bench-fig-header">
           <div class="bench-fig-title-area">
-            <div class="bench-fig-num">
-              <span>Experimento 01</span>
-              <span>•</span>
-              <span>Cormen Cap. 15</span>
-            </div>
-            <h3 class="bench-fig-title">Fibonacci: Força Bruta vs Memoização vs Bottom-Up vs Espaço O(1)</h3>
+            <div class="bench-fig-num"><span>Experimento 01</span> • <span>Cormen Cap. 15</span></div>
+            <h3 class="bench-fig-title">Fibonacci: Explosão Exponencial vs. Programação Dinâmica</h3>
+            <div class="bench-fig-subtitle">Comparativo geral de tempo em escala semi-logarítmica</div>
             <p class="bench-fig-desc">
-              Avaliação empírica do tempo de CPU para calcular o \(n\)-ésimo termo da sequência. A força bruta cresce proporcionalmente à razão áurea \(\Theta(\phi^n)\), sofrendo explosão combinatorial. As três variantes de Programação Dinâmica mantêm comportamento estritamente linear \(\Theta(n)\).
+              Compara o tempo de computação do n-ésimo número de Fibonacci. A recursão ingênua cresce segundo Theta(phi^n) (~1.618^n), enquanto as variantes com Programação Dinâmica operam em tempo estritamente linear Theta(n).
             </p>
           </div>
           <div class="bench-fig-badges">
-            <span class="badge badge-accent">\(\Theta(2^n) \to \Theta(n)\)</span>
-            <span class="badge badge-secondary">Tempo de CPU (ms)</span>
-            <span class="badge">Timeout Ativo</span>
+            <span class="badge badge-accent">Theta(2^n) -> Theta(n)</span>
+            <span class="badge badge-secondary">Tempo de CPU (s)</span>
           </div>
         </div>
 
-        <div class="bench-fig-display" onclick="openModal('e1_fibonacci.png', 'E1 — Fibonacci: Força Bruta vs Memoização vs Bottom-Up vs Espaço O(1)')">
-          <img src="figures/e1_fibonacci.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e1_fibonacci.png';}" alt="Gráfico E1 - Fibonacci" class="bench-fig-img" loading="lazy">
-          <div class="bench-fig-zoom-hint">
-            <span>🔍 Clique para ampliar</span>
-          </div>
+        <div class="bench-fig-display" onclick="openModal('e1_fibonacci_tempo.png', 'E1: Fibonacci — Explosão Exponencial vs PD')">
+          <img src="figures/e1_fibonacci_tempo.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e1_fibonacci_tempo.png';}" alt="E1: Fibonacci Tempo Geral" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
         </div>
 
         <div class="bench-fig-actions">
-          <div class="bench-fig-meta">
-            <span>Amostras: 20 tamanhos</span> • <span>Delimitação de escala Y para viabilidade visual</span>
-          </div>
+          <div class="bench-fig-meta"><span>Variável: Termo n (2 a 2000)</span> • <span>Eixo Y: Tempo (s, log)</span></div>
           <div class="bench-fig-btns">
-            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e1_fibonacci.png', 'E1 — Fibonacci')">
-              🔍 Ampliar Gráfico
-            </button>
-            <a href="figures/e1_fibonacci.png" download="e1_fibonacci.png" class="btn btn-primary btn-sm">
-              ⬇ Baixar Imagem
-            </a>
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e1_fibonacci_tempo.png', 'E1: Fibonacci — Tempo Geral')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e1_fibonacci_tempo.png" download="e1_fibonacci_tempo.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
           </div>
         </div>
 
         <div class="bench-takeaway-box">
-          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
-            <li>Linhas sólidas contínuas e filtradas eliminam descontinuidades de amostragem.</li>
-            <li>A curva vermelha (Força Bruta) dispara exponencialmente para \(n > 25\), enquanto as três variantes de PD permanecem rentes ao eixo horizontal.</li>
-            <li>A versão com espaço \(O(1)\) utiliza apenas duas variáveis auxiliares, reduzindo o custo de alocação no heap a zero.</li>
+            <li>A força bruta sofre timeout aos 3 segundos para n >= 32, demonstrando inviabilidade prática.</li>
+            <li>Memoização, Tabulação e Espaço O(1) permanecem abaixo de 0.001s mesmo para n = 2000.</li>
           </ul>
         </div>
       </article>
 
       <!-- ==============================================================
-           EXPERIMENTO 2: ROD CUTTING
+           E1: FIBONACCI DP FINA (LINEAR)
            ============================================================== -->
-      <article class="bench-fig-card" id="card-e2" data-category="tempo" data-keywords="e2 rod cutting corte de hastes forca bruta memoizacao bottom up n2">
+      <article class="bench-fig-card" id="card-e1_fibonacci_dp" data-exp="E1" data-category="tempo" data-keywords="e1 fibonacci dp linear memoização bottom up espaço o1 microssegundos">
         <div class="bench-fig-header">
           <div class="bench-fig-title-area">
-            <div class="bench-fig-num">
-              <span>Experimento 02</span>
-              <span>•</span>
-              <span>Cormen Cap. 15.1</span>
-            </div>
-            <h3 class="bench-fig-title">Corte de Hastes: Força Bruta vs Programação Dinâmica</h3>
+            <div class="bench-fig-num"><span>Experimento 01</span> • <span>Análise de Variantes de PD</span></div>
+            <h3 class="bench-fig-title">Fibonacci: Comparação Fina das Variantes de PD</h3>
+            <div class="bench-fig-subtitle">Análise em escala linear (µs) com bandas de dispersão empírica</div>
             <p class="bench-fig-desc">
-              Comparação direta entre a decomposição recursiva pura com ramificação \(2^{n-1}\) e as versões estruturadas com subestrutura ótima (Memoização Top-Down e Tabulação Bottom-Up), ambas com complexidade \(\Theta(n^2)\).
+              Isola as três soluções eficientes de Programação Dinâmica em escala linear com batching adaptativo, evidenciando as diferenças reais de fator constante entre Top-Down, Bottom-Up e O(1) Espaço.
             </p>
           </div>
           <div class="bench-fig-badges">
-            <span class="badge badge-accent">\(\Theta(2^n) \to \Theta(n^2)\)</span>
-            <span class="badge badge-secondary">Tempo de CPU (ms)</span>
+            <span class="badge badge-accent">Escala Linear (µs)</span>
+            <span class="badge badge-success">Espaço O(1) Mais Rápido</span>
           </div>
         </div>
 
-        <div class="bench-fig-display" onclick="openModal('e2_rod_cutting.png', 'E2 — Corte de Hastes: Força Bruta vs Programação Dinâmica')">
-          <img src="figures/e2_rod_cutting.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e2_rod_cutting.png';}" alt="Gráfico E2 - Rod Cutting" class="bench-fig-img" loading="lazy">
-          <div class="bench-fig-zoom-hint">
-            <span>🔍 Clique para ampliar</span>
-          </div>
+        <div class="bench-fig-display" onclick="openModal('e1_fibonacci_dp.png', 'E1: Fibonacci — Comparação Fina das Variantes de PD')">
+          <img src="figures/e1_fibonacci_dp.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e1_fibonacci_dp.png';}" alt="E1: Fibonacci DP Linear" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
         </div>
 
         <div class="bench-fig-actions">
-          <div class="bench-fig-meta">
-            <span>Entrada: Hastes até n=30</span> • <span>Média aparada de 5 repetições</span>
-          </div>
+          <div class="bench-fig-meta"><span>Variável: Termo n (2 a 2000)</span> • <span>Eixo Y: Tempo (µs)</span> • <span>Bandas: Desvio Padrão Real</span></div>
           <div class="bench-fig-btns">
-            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e2_rod_cutting.png', 'E2 — Corte de Hastes')">
-              🔍 Ampliar Gráfico
-            </button>
-            <a href="figures/e2_rod_cutting.png" download="e2_rod_cutting.png" class="btn btn-primary btn-sm">
-              ⬇ Baixar Imagem
-            </a>
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e1_fibonacci_dp.png', 'E1: Fibonacci — DP Linear Fina')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e1_fibonacci_dp.png" download="e1_fibonacci_dp.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
           </div>
         </div>
 
         <div class="bench-takeaway-box">
-          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
-            <li>A versão ingênua sofre timeout a partir de \(n = 22\), ilustrando como problemas com repetição maciça de subproblemas são intratáveis sem memória.</li>
-            <li>Bottom-Up e Memoização apresentam tempos praticamente indistinguíveis, com ligeira vantagem para o loop iterativo que dispensa chamadas de função.</li>
+            <li>A versão com Espaço O(1) apresenta o menor tempo por evitar a alocação de listas no heap.</li>
+            <li>Bottom-Up iterativo supera Top-Down memoizado por eliminar o custo de despacho da pilha de chamadas.</li>
           </ul>
         </div>
       </article>
 
       <!-- ==============================================================
-           EXPERIMENTO 3: LCS MEMÓRIA
+           E1: FIBONACCI CHAMADAS
            ============================================================== -->
-      <article class="bench-fig-card" id="card-e3" data-category="memoria" data-keywords="e3 lcs memoria tracemalloc duas linhas tabela completa economizar">
+      <article class="bench-fig-card" id="card-e1_fibonacci_chamadas" data-exp="E1" data-category="eficiencia" data-keywords="e1 fibonacci chamadas recursivas invocações subproblemas">
         <div class="bench-fig-header">
           <div class="bench-fig-title-area">
-            <div class="bench-fig-num">
-              <span>Experimento 03</span>
-              <span>•</span>
-              <span>Cormen Cap. 15.4</span>
-            </div>
-            <h3 class="bench-fig-title">LCS: Consumo de Memória (Tabela Completa vs 2 Linhas)</h3>
+            <div class="bench-fig-num"><span>Experimento 01</span> • <span>Contagem de Operações</span></div>
+            <h3 class="bench-fig-title">Fibonacci: Contagem de Chamadas e Subproblemas</h3>
+            <div class="bench-fig-subtitle">Número de invocações de função registradas via CallCounter</div>
             <p class="bench-fig-desc">
-              Medição experimental do pico de memória alocada (em KB) através de <code>tracemalloc</code>. Ao calcular apenas o comprimento ótimo da maior subsequência comum, manter apenas duas linhas ativas na memória reduz o consumo de \(\Theta(m \cdot n)\) para \(\Theta(\min(m, n))\).
+              Contabiliza formalmente a quantidade de ativações de função. Revela como a memoização converte uma árvore de chamadas com mais de 4 milhões de nós em exatamente 2n - 1 invocações lineares.
             </p>
           </div>
           <div class="bench-fig-badges">
-            <span class="badge badge-accent">\(\Theta(m \cdot n) \to \Theta(\min(m, n))\)</span>
-            <span class="badge badge-secondary">Memória Pico (KB)</span>
-            <span class="badge badge-success">Economia &gt; 95%</span>
+            <span class="badge badge-accent">Operações Elementares</span>
+            <span class="badge">CallCounter Isolado</span>
           </div>
         </div>
 
-        <div class="bench-fig-display" onclick="openModal('e3_lcs_memory.png', 'E3 — LCS: Consumo de Memória (Tabela Completa vs 2 Linhas)')">
-          <img src="figures/e3_lcs_memory.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e3_lcs_memory.png';}" alt="Gráfico E3 - LCS Memória" class="bench-fig-img" loading="lazy">
-          <div class="bench-fig-zoom-hint">
-            <span>🔍 Clique para ampliar</span>
-          </div>
+        <div class="bench-fig-display" onclick="openModal('e1_fibonacci_chamadas.png', 'E1: Fibonacci — Chamadas e Subproblemas')">
+          <img src="figures/e1_fibonacci_chamadas.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e1_fibonacci_chamadas.png';}" alt="E1: Fibonacci Chamadas" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
         </div>
 
         <div class="bench-fig-actions">
-          <div class="bench-fig-meta">
-            <span>Métrica: tracemalloc peak</span> • <span>Strings de tamanho até 1000 caracteres</span>
-          </div>
+          <div class="bench-fig-meta"><span>Variável: Termo n</span> • <span>Eixo Y: Invocações (log)</span></div>
           <div class="bench-fig-btns">
-            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e3_lcs_memory.png', 'E3 — LCS Memória')">
-              🔍 Ampliar Gráfico
-            </button>
-            <a href="figures/e3_lcs_memory.png" download="e3_lcs_memory.png" class="btn btn-primary btn-sm">
-              ⬇ Baixar Imagem
-            </a>
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e1_fibonacci_chamadas.png', 'E1: Fibonacci — Chamadas')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e1_fibonacci_chamadas.png" download="e1_fibonacci_chamadas.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
           </div>
         </div>
 
         <div class="bench-takeaway-box">
-          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
-            <li>A tabela completa exibe curva quadrática acentuada, atingindo centenas de kilobytes rapidamente.</li>
-            <li>A estratégia de 2 linhas mantém crescimento estritamente horizontal/linear, provando o valor da redução de espaço quando a recuperação do caminho não é requerida.</li>
+            <li>Para n = 30, a força bruta realiza 2.692.537 chamadas; a memoização realiza apenas 59.</li>
+            <li>A tabulação Bottom-Up realiza 1 única chamada externa e resolve todos os estados via iteração linear.</li>
           </ul>
         </div>
       </article>
 
       <!-- ==============================================================
-           EXPERIMENTO 4: C++ VS PYTHON
+           E1: FIBONACCI SPEEDUP
            ============================================================== -->
-      <article class="bench-fig-card" id="card-e4" data-category="linguagem" data-keywords="e4 lcs cpp python compilar interpretador speedup tempo nativo">
+      <article class="bench-fig-card" id="card-e1_fibonacci_speedup" data-exp="E1" data-category="speedup" data-keywords="e1 fibonacci speedup aceleração ganho de desempenho">
         <div class="bench-fig-header">
           <div class="bench-fig-title-area">
-            <div class="bench-fig-num">
-              <span>Experimento 04</span>
-              <span>•</span>
-              <span>Engenharia de Software</span>
-            </div>
-            <h3 class="bench-fig-title">LCS: Desempenho C++ Nativo vs Python</h3>
+            <div class="bench-fig-num"><span>Experimento 01</span> • <span>Fator de Aceleração</span></div>
+            <h3 class="bench-fig-title">Fibonacci: Speedup Relativo da Programação Dinâmica</h3>
+            <div class="bench-fig-subtitle">Razão de aceleração empírica (T_naive / T_dp) no domínio de medição comum</div>
             <p class="bench-fig-desc">
-              Comparativo de tempo de execução entre implementações com lógica idêntica de Programação Dinâmica em Python e em C++ compilado com otimizações (`-O3`). Analisa o impacto do runtime, checagem dinâmica de tipos e abstrações de alto nível.
+              Calcula quantas vezes as versões de Programação Dinâmica são mais rápidas do que a força bruta recursiva ingênua nos tamanhos em que ambas concluíram sem timeout.
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">Speedup > 100.000x</span>
+            <span class="badge badge-secondary">Razão T_naive / T_dp</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e1_fibonacci_speedup.png', 'E1: Fibonacci — Speedup Relativo')">
+          <img src="figures/e1_fibonacci_speedup.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e1_fibonacci_speedup.png';}" alt="E1: Fibonacci Speedup" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta"><span>Domínio: n <= 32 (sem timeout)</span> • <span>Eixo Y: Fator de Speedup (log)</span></div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e1_fibonacci_speedup.png', 'E1: Fibonacci — Speedup')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e1_fibonacci_speedup.png" download="e1_fibonacci_speedup.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
+          <ul class="bench-takeaway-list">
+            <li>O speedup cresce exponencialmente com n, ultrapassando 100.000x para n = 30.</li>
+            <li>Demonstra quantitativamente o ganho obtido ao eliminar a recomputação de subproblemas sobrepostos.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           E2: ROD CUTTING TEMPO
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e2_rod_cutting_tempo" data-exp="E2" data-category="tempo" data-keywords="e2 rod cutting corte de hastes tempo exato naive memo bottom up">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num"><span>Experimento 02</span> • <span>Cormen Cap. 15.1</span></div>
+            <h3 class="bench-fig-title">Corte de Hastes: Desempenho dos Algoritmos Exatos</h3>
+            <div class="bench-fig-subtitle">Tempo de execução: Força Bruta Theta(2^n) vs PD Quadrática Theta(n^2)</div>
+            <p class="bench-fig-desc">
+              Compara a decomposição recursiva que explora todas as 2^(n-1) maneiras de cortar uma haste de comprimento n com as versões de Programação Dinâmica (Memoização e Bottom-Up).
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">Theta(2^n) -> Theta(n^2)</span>
+            <span class="badge badge-secondary">Tempo de CPU (s)</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e2_rod_cutting_tempo.png', 'E2: Corte de Hastes — Algoritmos Exatos')">
+          <img src="figures/e2_rod_cutting_tempo.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e2_rod_cutting_tempo.png';}" alt="E2: Corte de Hastes Tempo" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta"><span>Variável: Comprimento n (2 a 200)</span> • <span>Eixo Y: Tempo (s, log)</span></div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e2_rod_cutting_tempo.png', 'E2: Corte de Hastes — Tempo')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e2_rod_cutting_tempo.png" download="e2_rod_cutting_tempo.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
+          <ul class="bench-takeaway-list">
+            <li>A força bruta ingênua atinge o limite de timeout (3s) em n = 20.</li>
+            <li>Memoização e Bottom-Up resolvem hastes de tamanho n = 200 em menos de 0.01 segundo.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           E2: ROD CUTTING QUALIDADE
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e2_rod_cutting_qualidade" data-exp="E2" data-category="qualidade" data-keywords="e2 rod cutting qualidade receita gulosa heurística subotimalidade erro relativo">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num"><span>Experimento 02</span> • <span>Qualidade da Solução</span></div>
+            <h3 class="bench-fig-title">Corte de Hastes: Qualidade da Heurística Gulosa vs. PD Ótima</h3>
+            <div class="bench-fig-subtitle">Receita gerada ($) e erro relativo percentual ((Opt - Guloso) / Opt) %</div>
+            <p class="bench-fig-desc">
+              Analisa separadamente o desempenho e a qualidade da solução. Mostra que a heurística gulosa baseada na razão preço por centímetro (p_i / i) frequentemente fica presa em escolhas subótimas.
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">Qualidade da Solução</span>
+            <span class="badge badge-secondary">Defasagem Percentual</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e2_rod_cutting_qualidade.png', 'E2: Corte de Hastes — Qualidade Gulosa vs PD')">
+          <img src="figures/e2_rod_cutting_qualidade.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e2_rod_cutting_qualidade.png';}" alt="E2: Corte de Hastes Qualidade" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta"><span>Painel 1: Receita Absoluta ($)</span> • <span>Painel 2: Erro Relativo (%)</span></div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e2_rod_cutting_qualidade.png', 'E2: Corte de Hastes — Qualidade')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e2_rod_cutting_qualidade.png" download="e2_rod_cutting_qualidade.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
+          <ul class="bench-takeaway-list">
+            <li>A receita obtida pelo algoritmo guloso descola sistematicamente para baixo da solução ótima.</li>
+            <li>O erro relativo atinge picos de subotimalidade quando pedaços de alta densidade deixam restos mal aproveitados.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           E3: LCS MEMÓRIA
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e3_lcs_memoria" data-exp="E3" data-category="memoria" data-keywords="e3 lcs memória tracemalloc pico tabela completa duas linhas">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num"><span>Experimento 03</span> • <span>Cormen Cap. 15.4</span></div>
+            <h3 class="bench-fig-title">LCS: Consumo de Memória (Tabela Completa vs. Duas Linhas)</h3>
+            <div class="bench-fig-subtitle">Pico de memória em KB medido via tracemalloc em execução isolada</div>
+            <p class="bench-fig-desc">
+              Demonstra o ganho de espaço em memória ao calcular o comprimento da LCS. A matriz completa requer Theta(m*n), enquanto a versão com duas linhas descarta estados anteriores e consome apenas Theta(min(m, n)).
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">Theta(mn) -> Theta(min(m,n))</span>
+            <span class="badge badge-success">Economia > 95%</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e3_lcs_memoria.png', 'E3: LCS — Consumo de Memória')">
+          <img src="figures/e3_lcs_memoria.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e3_lcs_memoria.png';}" alt="E3: LCS Memória" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta"><span>Variável: Tamanho das Strings n (50 a 1000)</span> • <span>Eixo Y: Memória (KB)</span></div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e3_lcs_memoria.png', 'E3: LCS — Memória')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e3_lcs_memoria.png" download="e3_lcs_memoria.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
+          <ul class="bench-takeaway-list">
+            <li>A tabela completa escala quadraticamente em espaço, ultrapassando 4.000 KB para n = 1000.</li>
+            <li>A versão com duas linhas mantém crescimento estritamente linear, poupando mais de 95% de memória RAM.</li>
+          </ul>
+          <div class="bench-limitations-note">Nota: A versão com duas linhas calcula apenas o comprimento; a recuperação da subsequência exige a matriz completa.</div>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           E3: LCS TEMPO
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e3_lcs_tempo" data-exp="E3" data-category="tempo" data-keywords="e3 lcs tempo execução sequências longas">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num"><span>Experimento 03</span> • <span>Tempo de Execução</span></div>
+            <h3 class="bench-fig-title">LCS: Tempo de Execução em Sequências Longas</h3>
+            <div class="bench-fig-subtitle">Avaliação temporal do preenchimento tabular de LCS</div>
+            <p class="bench-fig-desc">
+              Compara o tempo de computação das duas abordagens em sequências de DNA de até 1.000 caracteres, apresentando o tempo isolado de qualquer interferência de instrumentação de memória.
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">Theta(m * n)</span>
+            <span class="badge">Tempo de CPU (s)</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e3_lcs_tempo.png', 'E3: LCS — Tempo de Execução')">
+          <img src="figures/e3_lcs_tempo.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e3_lcs_tempo.png';}" alt="E3: LCS Tempo" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta"><span>Variável: n = m (50 a 1000)</span> • <span>Eixo Y: Tempo (s)</span></div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e3_lcs_tempo.png', 'E3: LCS — Tempo')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e3_lcs_tempo.png" download="e3_lcs_tempo.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
+          <ul class="bench-takeaway-list">
+            <li>Ambas as implementações exibem o formato quadrático característico da recorrência Theta(m * n).</li>
+            <li>A otimização de 2 linhas apresenta tempo ligeiramente inferior por reduzir a pressão sobre o cache de CPU.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           E4: LCS PYTHON VS C++
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e4_lcs_python_cpp" data-exp="E4" data-category="linguagem" data-keywords="e4 lcs python c++ compilado interpretador overhead cpython g++">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num"><span>Experimento 04</span> • <span>Linguagem & Compilação</span></div>
+            <h3 class="bench-fig-title">LCS: Desempenho CPython 3.11 vs. C++17 Nativo (-O3)</h3>
+            <div class="bench-fig-subtitle">Medição empírica comparando código compilado de alta performance com interpretador</div>
+            <p class="bench-fig-desc">
+              Executa o mesmo algoritmo exato (Bottom-Up com traceback) nas mesmas instâncias de entrada em Python e C++. Ambas as saídas são estritamente validadas para garantir equivalência antes do registro temporal.
             </p>
           </div>
           <div class="bench-fig-badges">
             <span class="badge badge-accent">Compilado vs Interpretado</span>
-            <span class="badge badge-secondary">Tempo de CPU (ms)</span>
-            <span class="badge">Speedup ~35x</span>
+            <span class="badge badge-success">C++ Nativo Validado</span>
           </div>
         </div>
 
-        <div class="bench-fig-display" onclick="openModal('e4_lcs_cpp_vs_python.png', 'E4 — LCS: Desempenho C++ Nativo vs Python')">
-          <img src="figures/e4_lcs_cpp_vs_python.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e4_lcs_cpp_vs_python.png';}" alt="Gráfico E4 - C++ vs Python" class="bench-fig-img" loading="lazy">
-          <div class="bench-fig-zoom-hint">
-            <span>🔍 Clique para ampliar</span>
-          </div>
+        <div class="bench-fig-display" onclick="openModal('e4_lcs_python_cpp.png', 'E4: LCS — Python vs C++')">
+          <img src="figures/e4_lcs_python_cpp.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e4_lcs_python_cpp.png';}" alt="E4: LCS Python vs C++" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
         </div>
 
         <div class="bench-fig-actions">
-          <div class="bench-fig-meta">
-            <span>Mesmo algoritmo assintótico \(\Theta(m \cdot n)\)</span> • <span>Medição via perf_counter</span>
-          </div>
+          <div class="bench-fig-meta"><span>Compilador: MinGW GCC 6.3 (-O3)</span> • <span>Eixo Y: Tempo (s, log)</span></div>
           <div class="bench-fig-btns">
-            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e4_lcs_cpp_vs_python.png', 'E4 — C++ vs Python')">
-              🔍 Ampliar Gráfico
-            </button>
-            <a href="figures/e4_lcs_cpp_vs_python.png" download="e4_lcs_cpp_vs_python.png" class="btn btn-primary btn-sm">
-              ⬇ Baixar Imagem
-            </a>
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e4_lcs_python_cpp.png', 'E4: LCS — Python vs C++')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e4_lcs_python_cpp.png" download="e4_lcs_python_cpp.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
           </div>
         </div>
 
         <div class="bench-takeaway-box">
-          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
-            <li>Ambas as curvas preservam exatamente a inclinação quadrática, demonstrando que a teoria assintótica é universal independente da linguagem.</li>
-            <li>O código em C++ roda com fator constante significativamente menor devido ao acesso direto a arrays contíguos na memória e ausência de garbage collector.</li>
+            <li>Ambas as linguagens confirmam a inclinação assintótica Theta(m * n).</li>
+            <li>O código em C++ nativo opera ordens de magnitude mais rápido por dispensar o overhead de bytecode, checagem dinâmica de tipos e boxing do CPython.</li>
           </ul>
         </div>
       </article>
 
       <!-- ==============================================================
-           EXPERIMENTO 5: LIMITE DE RECURSÃO
+           E4: LCS SPEEDUP
            ============================================================== -->
-      <article class="bench-fig-card" id="card-e5" data-category="pilha" data-keywords="e5 limite recursao recursionerror stack overflow pilha top down bottom up">
+      <article class="bench-fig-card" id="card-e4_lcs_speedup" data-exp="E4" data-category="speedup" data-keywords="e4 lcs speedup c++ python aceleração relativa">
         <div class="bench-fig-header">
           <div class="bench-fig-title-area">
-            <div class="bench-fig-num">
-              <span>Experimento 05</span>
-              <span>•</span>
-              <span>Arquitetura de Execução</span>
-            </div>
-            <h3 class="bench-fig-title">Impacto do Limite de Recursão: Top-Down vs Bottom-Up</h3>
+            <div class="bench-fig-num"><span>Experimento 04</span> • <span>Fator de Aceleração</span></div>
+            <h3 class="bench-fig-title">LCS: Speedup Relativo do C++ sobre o CPython</h3>
+            <div class="bench-fig-subtitle">Razão de aceleração empírica (T_python / T_cpp) em função do comprimento n</div>
             <p class="bench-fig-desc">
-              Demonstração da robustez arquitetural entre abordagens recursivas e iterativas. Em Python, a pilha de chamadas possui limite padrão de 1.000 frames. O algoritmo Top-Down lança <code>RecursionError</code> para entradas grandes, enquanto o Bottom-Up itera sem restrições.
+              Calcula o speedup relativo direto entre as duas linguagens de programação. Demonstra como o fator constante de execução é influenciado pelo ecossistema de compilação.
             </p>
           </div>
           <div class="bench-fig-badges">
-            <span class="badge badge-accent">RecursionError</span>
-            <span class="badge badge-secondary">Estabilidade de Pilha</span>
-            <span class="badge badge-success">Bottom-Up &gt; 10.000</span>
+            <span class="badge badge-accent">Speedup ~ 35x a 70x</span>
+            <span class="badge badge-secondary">T_python / T_cpp</span>
           </div>
         </div>
 
-        <div class="bench-fig-display" onclick="openModal('e5_recursion_limit.png', 'E5 — Impacto do Limite de Recursão: Top-Down vs Bottom-Up')">
-          <img src="figures/e5_recursion_limit.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e5_recursion_limit.png';}" alt="Gráfico E5 - Limite de Recursão" class="bench-fig-img" loading="lazy">
-          <div class="bench-fig-zoom-hint">
-            <span>🔍 Clique para ampliar</span>
-          </div>
+        <div class="bench-fig-display" onclick="openModal('e4_lcs_speedup.png', 'E4: LCS — Speedup C++ / Python')">
+          <img src="figures/e4_lcs_speedup.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e4_lcs_speedup.png';}" alt="E4: LCS Speedup" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
         </div>
 
         <div class="bench-fig-actions">
-          <div class="bench-fig-meta">
-            <span>Barreira: 1000 chamadas em Python</span> • <span>Bottom-Up escala linearmente</span>
-          </div>
+          <div class="bench-fig-meta"><span>Variável: n = m (50 a 1000)</span> • <span>Eixo Y: Fator de Speedup</span></div>
           <div class="bench-fig-btns">
-            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e5_recursion_limit.png', 'E5 — Limite de Recursão')">
-              🔍 Ampliar Gráfico
-            </button>
-            <a href="figures/e5_recursion_limit.png" download="e5_recursion_limit.png" class="btn btn-primary btn-sm">
-              ⬇ Baixar Imagem
-            </a>
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e4_lcs_speedup.png', 'E4: LCS — Speedup')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e4_lcs_speedup.png" download="e4_lcs_speedup.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
           </div>
         </div>
 
         <div class="bench-takeaway-box">
-          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
-            <li>O gráfico evidencia a interrupção abrupta do método Top-Down exatamente na linha do limite de recursão da linguagem.</li>
-            <li>O método Bottom-Up continua executando estavelmente, provando porque a tabulação iterativa é a escolha preferencial para sistemas robustos de produção.</li>
+            <li>O C++ nativo apresenta aceleração consistente entre 35x e 70x em relação ao interpretador CPython.</li>
+            <li>A diferença reflete o custo do runtime dinâmico em laços aninhados intensivos de CPU.</li>
           </ul>
         </div>
       </article>
 
       <!-- ==============================================================
-           EXPERIMENTO 6: FALHA DO GULOSO
+           E5: LIMITE DE RECURSÃO TEMPO
            ============================================================== -->
-      <article class="bench-fig-card" id="card-e6" data-category="guloso" data-keywords="e6 falha do guloso greedy rod cutting receita densidade otimo global">
+      <article class="bench-fig-card" id="card-e5_recursao_tempo" data-exp="E5" data-category="tempo" data-keywords="e5 limite recursão tempo domínio válido top down bottom up">
         <div class="bench-fig-header">
           <div class="bench-fig-title-area">
-            <div class="bench-fig-num">
-              <span>Experimento 06</span>
-              <span>•</span>
-              <span>Paradigma Guloso vs PD</span>
-            </div>
-            <h3 class="bench-fig-title">Corte de Hastes: Prova Empírica da Falha da Abordagem Gulosa</h3>
+            <div class="bench-fig-num"><span>Experimento 05</span> • <span>Desempenho Válido</span></div>
+            <h3 class="bench-fig-title">Limite de Recursão: Desempenho no Domínio Válido (n < 1000)</h3>
+            <div class="bench-fig-subtitle">Comparação de tempo estritamente na faixa em que ambas as funções concluem sem erro</div>
             <p class="bench-fig-desc">
-              Comparação empírica de receita obtida entre a heurística gulosa (que escolhe o pedaço com maior densidade de valor por centímetro \(p_i / i\)) e a Programação Dinâmica. Revela visualmente as entradas onde a escolha gulosa atinge soluções subótimas.
+              Separa a análise de desempenho da análise de falhas de arquitetura. Compara o tempo de Top-Down e Bottom-Up exclusivamente para os tamanhos onde não há estouro de pilha.
             </p>
           </div>
           <div class="bench-fig-badges">
-            <span class="badge badge-accent">Guloso vs PD</span>
-            <span class="badge badge-secondary">Receita Gerada ($)</span>
-            <span class="badge badge-success">PD Sempre Ótima</span>
+            <span class="badge badge-accent">Domínio Seguro (n < 1000)</span>
+            <span class="badge">Tempo de CPU (s)</span>
           </div>
         </div>
 
-        <div class="bench-fig-display" onclick="openModal('e6_greedy_failure.png', 'E6 — Corte de Hastes: Prova Empírica da Falha da Abordagem Gulosa')">
-          <img src="figures/e6_greedy_failure.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e6_greedy_failure.png';}" alt="Gráfico E6 - Falha do Guloso" class="bench-fig-img" loading="lazy">
-          <div class="bench-fig-zoom-hint">
-            <span>🔍 Clique para ampliar</span>
-          </div>
+        <div class="bench-fig-display" onclick="openModal('e5_recursao_tempo.png', 'E5: Limite de Recursão — Tempo Válido')">
+          <img src="figures/e5_recursao_tempo.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e5_recursao_tempo.png';}" alt="E5: Recursão Tempo" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
         </div>
 
         <div class="bench-fig-actions">
-          <div class="bench-fig-meta">
-            <span>Tamanhos de haste até n=30</span> • <span>Linhas contínuas demonstrando defasagem</span>
-          </div>
+          <div class="bench-fig-meta"><span>Filtro: n < sys.getrecursionlimit()</span> • <span>Eixo Y: Tempo (s)</span></div>
           <div class="bench-fig-btns">
-            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e6_greedy_failure.png', 'E6 — Falha do Guloso')">
-              🔍 Ampliar Gráfico
-            </button>
-            <a href="figures/e6_greedy_failure.png" download="e6_greedy_failure.png" class="btn btn-primary btn-sm">
-              ⬇ Baixar Imagem
-            </a>
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e5_recursao_tempo.png', 'E5: Recursão Tempo')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e5_recursao_tempo.png" download="e5_recursao_tempo.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
           </div>
         </div>
 
         <div class="bench-takeaway-box">
-          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
-            <li>Em diversos tamanhos de haste, a curva cinza (Guloso) descola para baixo da curva verde (PD), comprovando que a escolha míope da melhor densidade local não compõe o ótimo global.</li>
-            <li>A Programação Dinâmica avalia todas as partições possíveis de subproblemas e garante rigorosamente 100% da receita máxima.</li>
+            <li>No intervalo seguro, o Bottom-Up é sistematicamente mais rápido do que a memoização recursiva.</li>
+            <li>Elimina a ambiguidade de desenhar curvas artificiais através da região de falha.</li>
           </ul>
         </div>
       </article>
 
       <!-- ==============================================================
-           EXPERIMENTO 7: MATRIX CHAIN
+           E5: LIMITE DE RECURSÃO LIMITES
            ============================================================== -->
-      <article class="bench-fig-card" id="card-e7" data-category="tempo" data-keywords="e7 matrix chain multiplicacao de matrizes parentizacao cubico n3 diagonais">
+      <article class="bench-fig-card" id="card-e5_recursao_limites" data-exp="E5" data-category="robustez" data-keywords="e5 limite recursão robustez recursionerror pilha python status">
         <div class="bench-fig-header">
           <div class="bench-fig-title-area">
-            <div class="bench-fig-num">
-              <span>Experimento 07</span>
-              <span>•</span>
-              <span>Cormen Cap. 15.2</span>
-            </div>
-            <h3 class="bench-fig-title">Matrix Chain: Custo Cúbico e Parentização Ótima</h3>
+            <div class="bench-fig-num"><span>Experimento 05</span> • <span>Robustez & Arquitetura</span></div>
+            <h3 class="bench-fig-title">Limite de Recursão: Robustez e Barreira da Pilha</h3>
+            <div class="bench-fig-subtitle">Mapeamento explícito de sucesso vs RecursionError ao redor de sys.getrecursionlimit()</div>
             <p class="bench-fig-desc">
-              Determinação da ordem ideal de parentização para o produto encadeado de \(n\) matrizes. A tabela de custos é preenchida por diagonais sucessivas, com complexidade de tempo \(\Theta(n^3)\) e espaço \(\Theta(n^2)\).
+              Visualização categórica ilustrando o colapso da abordagem Top-Down ao atingir a profundidade máxima permitida pelo interpretador Python, contraposta à resiliência indefinida do algoritmo Bottom-Up.
             </p>
           </div>
           <div class="bench-fig-badges">
-            <span class="badge badge-accent">\(\Theta(n^3)\) Tempo</span>
-            <span class="badge badge-secondary">\(\Theta(n^2)\) Espaço</span>
-            <span class="badge">Preenchimento Diagonal</span>
+            <span class="badge badge-accent">RecursionError em n = 1000</span>
+            <span class="badge badge-success">Bottom-Up Resiliente</span>
           </div>
         </div>
 
-        <div class="bench-fig-display" onclick="openModal('e7_matrix_chain.png', 'E7 — Matrix Chain: Custo Cúbico e Parentização Ótima')">
-          <img src="figures/e7_matrix_chain.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e7_matrix_chain.png';}" alt="Gráfico E7 - Matrix Chain" class="bench-fig-img" loading="lazy">
-          <div class="bench-fig-zoom-hint">
-            <span>🔍 Clique para ampliar</span>
-          </div>
+        <div class="bench-fig-display" onclick="openModal('e5_recursao_limites.png', 'E5: Limite de Recursão — Robustez e Status')">
+          <img src="figures/e5_recursao_limites.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e5_recursao_limites.png';}" alt="E5: Recursão Limites" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
         </div>
 
         <div class="bench-fig-actions">
-          <div class="bench-fig-meta">
-            <span>Cadeias de até 60 matrizes</span> • <span>Linha contínua sem ruídos</span>
-          </div>
+          <div class="bench-fig-meta"><span>Variável: Termo n (100 a 1300)</span> • <span>Status: Sucesso vs RecursionError</span></div>
           <div class="bench-fig-btns">
-            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e7_matrix_chain.png', 'E7 — Matrix Chain')">
-              🔍 Ampliar Gráfico
-            </button>
-            <a href="figures/e7_matrix_chain.png" download="e7_matrix_chain.png" class="btn btn-primary btn-sm">
-              ⬇ Baixar Imagem
-            </a>
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e5_recursao_limites.png', 'E5: Recursão Limites')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e5_recursao_limites.png" download="e5_recursao_limites.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
           </div>
         </div>
 
         <div class="bench-takeaway-box">
-          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
-            <li>A curva temporal confirma com precisão o crescimento cúbico esperado pelo triplo laço aninhado de computação.</li>
-            <li>O investimento em tempo cúbico para determinar a tabela \(s[i,j]\) compensa amplamente na prática: a parentização ótima poupa bilhões de operações escalares de ponto flutuante em pipelines de computação gráfica e aprendizado de máquina.</li>
+            <li>A memoização recursiva colapsa abruptamente ao atingir o limite de pilha de recursão.</li>
+            <li>A tabulação Bottom-Up segue executando normalmente em heap sem qualquer dependência da pilha do SO.</li>
           </ul>
         </div>
       </article>
 
       <!-- ==============================================================
-           EXPERIMENTO 8: MOCHILA 0/1
+           E6: FALHA DO GULOSO
            ============================================================== -->
-      <article class="bench-fig-card" id="card-e8" data-category="tempo" data-keywords="e8 knapsack mochila 01 capacidade w pseudo-polinomial tempo memoria">
+      <article class="bench-fig-card" id="card-e6_guloso_erro" data-exp="E6" data-category="qualidade" data-keywords="e6 falha do guloso taxa de erro perda média corte de hastes densidade">
         <div class="bench-fig-header">
           <div class="bench-fig-title-area">
-            <div class="bench-fig-num">
-              <span>Experimento 08</span>
-              <span>•</span>
-              <span>Cormen Exercícios</span>
-            </div>
-            <h3 class="bench-fig-title">Mochila 0/1: Comportamento Pseudo-Polinomial \(\Theta(n \cdot W)\)</h3>
+            <div class="bench-fig-num"><span>Experimento 06</span> • <span>Paradigma Guloso vs PD</span></div>
+            <h3 class="bench-fig-title">Corte de Hastes: Taxa de Erro e Perda Média da Heurística Gulosa</h3>
+            <div class="bench-fig-subtitle">Avaliação estatística sobre 200 instâncias aleatórias por tamanho de haste</div>
             <p class="bench-fig-desc">
-              Investigação experimental de tempo e consumo de memória do algoritmo clássico de Mochila 0/1 frente a variações do número de itens \(n\) e da capacidade limite da mochila \(W\). Como o custo depende do valor numérico de \(W\), trata-se de um algoritmo pseudo-polinomial.
+              Demonstra que a propriedade da escolha gulosa não se aplica ao problema de corte de hastes. Registra a frequência em que a heurística atinge soluções subótimas e a perda média de receita em relação à Programação Dinâmica.
             </p>
           </div>
           <div class="bench-fig-badges">
-            <span class="badge badge-accent">\(\Theta(n \cdot W)\)</span>
-            <span class="badge badge-secondary">Tempo e Matriz 2D</span>
-            <span class="badge">Capacidade Dinâmica</span>
+            <span class="badge badge-accent">Taxa de Falha > 60%</span>
+            <span class="badge badge-secondary">200 Amostras por n</span>
           </div>
         </div>
 
-        <div class="bench-fig-display" onclick="openModal('e8_knapsack.png', 'E8 — Mochila 0/1: Comportamento Pseudo-Polinomial')">
-          <img src="figures/e8_knapsack.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e8_knapsack.png';}" alt="Gráfico E8 - Mochila 0/1" class="bench-fig-img" loading="lazy">
-          <div class="bench-fig-zoom-hint">
-            <span>🔍 Clique para ampliar</span>
-          </div>
+        <div class="bench-fig-display" onclick="openModal('e6_guloso_erro.png', 'E6: Falha do Algoritmo Guloso')">
+          <img src="figures/e6_guloso_erro.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e6_guloso_erro.png';}" alt="E6: Falha do Guloso" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
         </div>
 
         <div class="bench-fig-actions">
-          <div class="bench-fig-meta">
-            <span>Subplots integrados</span> • <span>Eixo de itens e capacidade W</span>
-          </div>
+          <div class="bench-fig-meta"><span>Painel 1: Taxa de Falha (%)</span> • <span>Painel 2: Perda Média de Receita (%)</span></div>
           <div class="bench-fig-btns">
-            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e8_knapsack.png', 'E8 — Mochila 0/1')">
-              🔍 Ampliar Gráfico
-            </button>
-            <a href="figures/e8_knapsack.png" download="e8_knapsack.png" class="btn btn-primary btn-sm">
-              ⬇ Baixar Imagem
-            </a>
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e6_guloso_erro.png', 'E6: Falha do Guloso')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e6_guloso_erro.png" download="e6_guloso_erro.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
           </div>
         </div>
 
         <div class="bench-takeaway-box">
-          <div class="bench-takeaway-title">💡 Destaques Metodológicos:</div>
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
-            <li>O gráfico demonstra que o tempo e a tabela escalam linearmente com o produto do número de itens pela capacidade \(W\).</li>
-            <li>Quando \(W\) é exponencialmente grande em relação ao tamanho da entrada, a abordagem de Programação Dinâmica perde competitividade, exemplificando os limites da pseudo-polinomialidade em problemas NP-completos.</li>
+            <li>Em instâncias com variações de preço, a heurística gulosa falha em mais de 60% das vezes.</li>
+            <li>A perda média observada situa-se em torno de 5% a 15%, comprovando que escolhas locais míopes não garantem o ótimo global.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           E7: MATRIX CHAIN TEMPO
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e7_matrix_chain_tempo" data-exp="E7" data-category="tempo" data-keywords="e7 matrix chain cadeia de matrizes tempo cúbico theta n3 cormen">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num"><span>Experimento 07</span> • <span>Cormen Cap. 15.2</span></div>
+            <h3 class="bench-fig-title">Cadeia de Matrizes: Tempo de Execução Cúbico Theta(n^3)</h3>
+            <div class="bench-fig-subtitle">Comportamento empírico do algoritmo Bottom-Up por diagonais</div>
+            <p class="bench-fig-desc">
+              Avalia o crescimento do tempo de execução para determinar a ordem ótima de parentização do produto encadeado de n matrizes, confirmando o laço triplo de complexidade Theta(n^3).
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">Theta(n^3) Cúbico</span>
+            <span class="badge">Tempo de CPU (s)</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e7_matrix_chain_tempo.png', 'E7: Cadeia de Matrizes — Tempo Cúbico')">
+          <img src="figures/e7_matrix_chain_tempo.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e7_matrix_chain_tempo.png';}" alt="E7: Matrix Chain Tempo" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta"><span>Variável: Número de Matrizes n (2 a 75)</span> • <span>Eixo Y: Tempo (s, log)</span></div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e7_matrix_chain_tempo.png', 'E7: Cadeia de Matrizes — Tempo')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e7_matrix_chain_tempo.png" download="e7_matrix_chain_tempo.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
+          <ul class="bench-takeaway-list">
+            <li>A força bruta ingênua torna-se inviável para n > 9 devido à explosão de divisões possíveis.</li>
+            <li>A Programação Dinâmica Bottom-Up resolve cadeias de até 75 matrizes em menos de 0.05 segundo.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           E7: MATRIX CHAIN OPERAÇÕES & CATALAN
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e7_matrix_chain_operacoes" data-exp="E7" data-category="eficiencia" data-keywords="e7 matrix chain multiplicações escalares salvas catalan parentizações combinatória">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num"><span>Experimento 07</span> • <span>Multiplicações & Combinatória</span></div>
+            <h3 class="bench-fig-title">Cadeia de Matrizes: Multiplicações Salvas e Números de Catalan</h3>
+            <div class="bench-fig-subtitle">Operações escalares poupadas vs. explosão combinatória das parentizações C(n-1)</div>
+            <p class="bench-fig-desc">
+              Mostra o benefício computacional massivo de encontrar a parentização ótima em relação à multiplicação ingênua sequencial (A1*A2)*A3..., além do crescimento astronômico dos números de Catalan C(n-1).
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">Catalan C(n-1)</span>
+            <span class="badge badge-secondary">Operações Poupadas</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e7_matrix_chain_operacoes.png', 'E7: Cadeia de Matrizes — Operações e Catalan')">
+          <img src="figures/e7_matrix_chain_operacoes.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e7_matrix_chain_operacoes.png';}" alt="E7: Matrix Chain Operações" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta"><span>Painel 1: Multiplicações Escalares</span> • <span>Painel 2: Parentizações C(n-1)</span></div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e7_matrix_chain_operacoes.png', 'E7: Cadeia de Matrizes — Operações')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e7_matrix_chain_operacoes.png" download="e7_matrix_chain_operacoes.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
+          <ul class="bench-takeaway-list">
+            <li>A parentização ótima economiza ordens de magnitude em operações de ponto flutuante em matrizes heterogêneas.</li>
+            <li>O número de parentizações possíveis ultrapassa 10^10 para n = 20, justificando a busca polinomial de PD.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           E8: MOCHILA TEMPO W
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e8_knapsack_tempo_w" data-exp="E8" data-category="tempo" data-keywords="e8 knapsack mochila tempo capacidade w pseudo polinomial">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num"><span>Experimento 08</span> • <span>Cormen Exercícios</span></div>
+            <h3 class="bench-fig-title">Mochila 0/1: Comportamento Pseudo-Polinomial em W (n = 50 itens)</h3>
+            <div class="bench-fig-subtitle">Tempo de execução variando a capacidade máxima W mantendo os itens constantes</div>
+            <p class="bench-fig-desc">
+              Demonstração empírica da dependência direta de W: o tempo de resolução escala linearmente com o valor numérico da capacidade da mochila, o que caracteriza a complexidade pseudo-polinomial O(n * W).
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">Pseudo-Polinomial O(n*W)</span>
+            <span class="badge">n = 50 Itens Fixo</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e8_knapsack_tempo_w.png', 'E8: Mochila 0/1 — Tempo em Função de W')">
+          <img src="figures/e8_knapsack_tempo_w.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e8_knapsack_tempo_w.png';}" alt="E8: Mochila Tempo W" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta"><span>Variável: Capacidade W (50 a 1500)</span> • <span>Eixo Y: Tempo (s)</span></div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e8_knapsack_tempo_w.png', 'E8: Mochila — Tempo em W')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e8_knapsack_tempo_w.png" download="e8_knapsack_tempo_w.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
+          <ul class="bench-takeaway-list">
+            <li>Dobrar a capacidade numérica W dobra o tempo de execução da tabela e do vetor 1D.</li>
+            <li>Ilustra por que o problema é difícil quando W é representado em notação binária com valores exponenciais.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           E8: MOCHILA TEMPO N
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e8_knapsack_tempo_n" data-exp="E8" data-category="tempo" data-keywords="e8 knapsack mochila tempo quantidade itens n">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num"><span>Experimento 08</span> • <span>Variação de Itens</span></div>
+            <h3 class="bench-fig-title">Mochila 0/1: Tempo de Execução vs. Quantidade de Itens (n)</h3>
+            <div class="bench-fig-subtitle">Tempo variando o número de itens n com capacidade W = 200 fixa</div>
+            <p class="bench-fig-desc">
+              Isola a variável n para observar o crescimento temporal estritamente em função da quantidade de itens disponíveis, mantendo a capacidade da mochila inalterada.
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">O(n * W)</span>
+            <span class="badge">Capacidade W = 200 Fixa</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e8_knapsack_tempo_n.png', 'E8: Mochila 0/1 — Tempo em Função de n')">
+          <img src="figures/e8_knapsack_tempo_n.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e8_knapsack_tempo_n.png';}" alt="E8: Mochila Tempo n" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta"><span>Variável: Quantidade de Itens n (10 a 160)</span> • <span>Eixo Y: Tempo (s)</span></div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e8_knapsack_tempo_n.png', 'E8: Mochila — Tempo em n')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e8_knapsack_tempo_n.png" download="e8_knapsack_tempo_n.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
+          <ul class="bench-takeaway-list">
+            <li>Para capacidade constante, o tempo cresce linearmente com a inclusão de novos itens na mochila.</li>
+            <li>Confirma que cada item adiciona uma nova linha no preenchimento da matriz.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ==============================================================
+           E8: MOCHILA MEMÓRIA
+           ============================================================== -->
+      <article class="bench-fig-card" id="card-e8_knapsack_memoria" data-exp="E8" data-category="memoria" data-keywords="e8 knapsack mochila memória tabela 2d vetor 1d tracemalloc">
+        <div class="bench-fig-header">
+          <div class="bench-fig-title-area">
+            <div class="bench-fig-num"><span>Experimento 08</span> • <span>Espaço em Memória</span></div>
+            <h3 class="bench-fig-title">Mochila 0/1: Consumo de Memória (Tabela 2D vs. Vetor 1D)</h3>
+            <div class="bench-fig-subtitle">Pico de memória em KB medido via tracemalloc isolado</div>
+            <p class="bench-fig-desc">
+              Compara a versão com tabela bidimensional (n+1) x (W+1) com a versão de espaço otimizado que itera sobre um único vetor 1D de tamanho W+1 de trás para frente.
+            </p>
+          </div>
+          <div class="bench-fig-badges">
+            <span class="badge badge-accent">O(nW) vs O(W)</span>
+            <span class="badge badge-success">Economia até 90%</span>
+          </div>
+        </div>
+
+        <div class="bench-fig-display" onclick="openModal('e8_knapsack_memoria.png', 'E8: Mochila 0/1 — Consumo de Memória')">
+          <img src="figures/e8_knapsack_memoria.png" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='../docs/figures/e8_knapsack_memoria.png';}" alt="E8: Mochila Memória" class="bench-fig-img" loading="lazy">
+          <div class="bench-fig-zoom-hint">🔍 Clique para ampliar</div>
+        </div>
+
+        <div class="bench-fig-actions">
+          <div class="bench-fig-meta"><span>Variável: Capacidade W</span> • <span>Eixo Y: Memória (KB)</span></div>
+          <div class="bench-fig-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e8_knapsack_memoria.png', 'E8: Mochila — Memória')">🔍 Ampliar Gráfico</button>
+            <a href="figures/e8_knapsack_memoria.png" download="e8_knapsack_memoria.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
+          </div>
+        </div>
+
+        <div class="bench-takeaway-box">
+          <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
+          <ul class="bench-takeaway-list">
+            <li>A versão 1D economiza até 90% de memória RAM em capacidades moderadas e grandes.</li>
+            <li>A tabela 2D é estritamente necessária apenas se for preciso rastrear a lista de itens escolhidos.</li>
           </ul>
         </div>
       </article>
@@ -1011,39 +1339,37 @@
     <div class="lab-card" style="margin-top: 1.5rem; margin-bottom: 2rem;">
       <div class="lab-card-header">
         <div class="lab-card-title">
-          <span>Fundamentos da Análise Empírica</span>
-          <span class="badge badge-secondary">Metodologia Científica</span>
+          <span>Fundamentos da Metodologia Experimental</span>
+          <span class="badge badge-secondary">Rigor Científico</span>
         </div>
       </div>
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
         <div>
-          <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">1. Por que Medir Empiricamente?</h4>
+          <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">1. Medições Independentes</h4>
           <p style="margin: 0; font-size: 0.875rem; color: var(--text-secondary); line-height: 1.55;">
-            A notação assintótica \(\Theta(f(n))\) descreve o comportamento no limite para entradas arbitrariamente grandes, ocultando constantes multiplicativas e termos de menor ordem.
-            Na prática, o custo de alocação de tabelas, overhead de interpretação e hierarquia de cache de memória afetam o tempo real.
+            O rastreador de memória <code>tracemalloc</code> impõe um custo significativo sobre as instruções da CPU. O protocolo do PD LAB executa medições de tempo e de memória em rodadas estritamente isoladas para impedir contaminação do clock.
           </p>
         </div>
 
         <div>
-          <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">2. Média Aparada (Trimmed Mean)</h4>
+          <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">2. Batching para Sub-Microsegundos</h4>
           <p style="margin: 0; font-size: 0.875rem; color: var(--text-secondary); line-height: 1.55;">
-            Para neutralizar anomalias de escalonamento do sistema operacional, interrupções de hardware e pausas do coletor de lixo, executamos 5 repetições por ponto, descartando a menor e a maior medida, consolidando a média das 3 centrais.
+            Para funções com tempos inferiores a 200 µs, o cronômetro do sistema operacional introduz ruído de agendamento. O benchmark agrupa K iterações por lote e aplica aquecimento prévio, garantindo que o tempo decorrido supere a resolução do clock.
           </p>
         </div>
 
         <div>
-          <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">3. Trade-off: Tempo vs Memória</h4>
+          <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">3. Tratamento Estatístico e Dispersão</h4>
           <p style="margin: 0; font-size: 0.875rem; color: var(--text-secondary); line-height: 1.55;">
-            A essência da Programação Dinâmica é a memoização: investir espaço em memória para erradicar a recomputação de subproblemas.
-            As curvas de LCS evidenciam como a estratégia de 2 linhas economiza mais de 95% da memória sem comprometer o tempo de execução.
+            Adotamos média aparada (descarte de min e max nas 5 repetições) acompanhada de desvio padrão e bandas de incerteza. Não há suavização artificial de dados: as curvas representam observações empíricas autênticas.
           </p>
         </div>
 
         <div>
-          <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">4. Isolamento Estrito de Perf Counter</h4>
+          <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">4. Timeout Real com Subprocessos</h4>
           <p style="margin: 0; font-size: 0.875rem; color: var(--text-secondary); line-height: 1.55;">
-            O profiler de memória <code>tracemalloc</code> adiciona um overhead considerável às instruções de CPU. Por isso, a suíte executa uma rodada exclusiva para medição precisa de tempo de clock e outra separada para o pico de memória.
+            Algoritmos com complexidade exponencial Theta(2^n) são isolados em subprocessos <code>multiprocessing.Process</code> com encerramento forçado via SIGTERM/SIGKILL, impedindo processos órfãos ou travamentos do sistema.
           </p>
         </div>
       </div>
@@ -1064,7 +1390,7 @@
       <div class="bench-modal-footer">
         <span style="font-family: var(--font-mono); font-size: 0.8rem;">Gráfico Científico Gerado a 200 DPI</span>
         <div style="display: flex; gap: 0.5rem;">
-          <a href="#" download id="modal-download-link" class="btn btn-primary btn-sm">⬇ Baixar Arquivo PNG</a>
+          <a href="#" download id="modal-download-link" class="btn btn-primary btn-sm">⬇ Baixar Imagem PNG</a>
           <button type="button" class="btn btn-outline btn-sm" onclick="closeModal()">Fechar (Esc)</button>
         </div>
       </div>
@@ -1135,6 +1461,7 @@
       var visibleCountEl = document.getElementById('visible-cards-count');
       var tabButtons = document.querySelectorAll('.bench-tab-btn');
       var cards = document.querySelectorAll('.bench-fig-card');
+      var activeExpFilter = 'all';
 
       function filterCards() {
         var query = (searchInput ? searchInput.value : '').toLowerCase().trim();
@@ -1142,15 +1469,16 @@
         var visibleCount = 0;
 
         cards.forEach(function(card) {
-          var cardId = card.id;
-          var cardCategory = card.getAttribute('data-category') || '';
+          var cardExp = card.getAttribute('data-exp') || '';
+          var cardCat = card.getAttribute('data-category') || '';
           var keywords = (card.getAttribute('data-keywords') || '').toLowerCase();
           var cardText = card.innerText.toLowerCase();
 
-          var matchesCat = (selectedCat === 'all') || (cardCategory === selectedCat);
+          var matchesExp = (activeExpFilter === 'all') || (cardExp === activeExpFilter) || (card.id === activeExpFilter);
+          var matchesCat = (selectedCat === 'all') || (cardCat === selectedCat);
           var matchesQuery = !query || keywords.indexOf(query) !== -1 || cardText.indexOf(query) !== -1;
 
-          if (matchesCat && matchesQuery) {
+          if (matchesExp && matchesCat && matchesQuery) {
             card.style.display = '';
             visibleCount++;
           } else {
@@ -1169,7 +1497,15 @@
 
       if (categorySelect) {
         categorySelect.addEventListener('change', function() {
-          // Atualiza as abas caso a categoria mude
+          filterCards();
+        });
+      }
+
+      if (btnReset) {
+        btnReset.addEventListener('click', function() {
+          if (searchInput) searchInput.value = '';
+          if (categorySelect) categorySelect.value = 'all';
+          activeExpFilter = 'all';
           tabButtons.forEach(function(btn) {
             btn.classList.remove('is-active');
             if (btn.getAttribute('data-target') === 'all') {
@@ -1180,52 +1516,24 @@
         });
       }
 
-      if (btnReset) {
-        btnReset.addEventListener('click', function() {
-          if (searchInput) searchInput.value = '';
-          if (categorySelect) categorySelect.value = 'all';
-          tabButtons.forEach(function(btn) {
-            btn.classList.remove('is-active');
-            if (btn.getAttribute('data-target') === 'all') {
-              btn.classList.add('is-active');
-            }
-          });
-          cards.forEach(function(card) {
-            card.style.display = '';
-          });
-          if (visibleCountEl) {
-            visibleCountEl.textContent = 'Exibindo ' + cards.length + ' de ' + cards.length;
-          }
-        });
-      }
-
-      // Navegação por Abas Rápidas
+      // Navegação por Abas
       tabButtons.forEach(function(btn) {
         btn.addEventListener('click', function() {
           var targetId = this.getAttribute('data-target');
+          var expId = this.getAttribute('data-exp');
 
           tabButtons.forEach(function(b) { b.classList.remove('is-active'); });
           this.classList.add('is-active');
 
           if (targetId === 'all') {
-            if (searchInput) searchInput.value = '';
-            if (categorySelect) categorySelect.value = 'all';
-            cards.forEach(function(card) { card.style.display = ''; });
-            if (visibleCountEl) visibleCountEl.textContent = 'Exibindo ' + cards.length + ' de ' + cards.length;
-          } else {
-            var targetCard = document.getElementById(targetId);
-            cards.forEach(function(card) {
-              if (card.id === targetId) {
-                card.style.display = '';
-              } else {
-                card.style.display = 'none';
-              }
-            });
-            if (visibleCountEl) visibleCountEl.textContent = 'Exibindo 1 de ' + cards.length;
-            if (targetCard) {
-              targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            activeExpFilter = 'all';
+          } else if (expId) {
+            activeExpFilter = expId;
+          } else if (targetId) {
+            activeExpFilter = targetId;
           }
+
+          filterCards();
         });
       });
 

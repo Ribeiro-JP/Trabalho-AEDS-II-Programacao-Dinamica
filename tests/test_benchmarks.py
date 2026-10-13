@@ -34,9 +34,12 @@ import pytest
 from benchmarks.run_benchmarks import (
     calculate_trimmed_mean,
     measure_execution,
+    measure_execution_with_stats,
+    detect_and_compile_cpp,
     execute_with_process_timeout,
     upsert_consolidated,
     export_web_results_json,
+    export_web_manifest_json,
     atomic_write_csv,
     CallCounter,
     CONSOLIDATED_COLUMNS,
@@ -363,3 +366,111 @@ class TestBenchmarkInfrastructure:
         assert "E1" in EXPERIMENTS
         assert "E8" in EXPERIMENTS
         assert len(EXPERIMENTS) == 8
+
+    def test_16_adaptive_batching_precision(self) -> None:
+        """16. Valida que batching adaptativo mede sub-microsegundos sem zerar tempo."""
+        def fast_op() -> int:
+            return 2 + 2
+
+        t_mean, t_std, t_min, t_max, mem, status = measure_execution_with_stats(
+            fast_op, repeats=5, warmup=True
+        )
+        assert status == "success"
+        assert t_mean is not None and t_mean > 0.0
+        assert t_std is not None and t_std >= 0.0
+        assert t_min is not None and t_max is not None
+        assert t_min <= t_mean <= t_max
+
+    def test_17_cpp_compilation_and_correctness(self) -> None:
+        """17. Valida detecção, compilação de C++ e equivalência exata com Python LCS."""
+        available, binary_path, meta = detect_and_compile_cpp()
+        if not available:
+            pytest.skip(f"Compilador C++ não disponível: {meta.get('message')}")
+
+        assert binary_path is not None
+        assert os.path.exists(binary_path)
+
+        s1 = "ACCGTAGC"
+        s2 = "TCGATAG"
+        cmd = [binary_path, "--json", s1, s2]
+        proc = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        data = json.loads(proc.stdout)
+
+        assert data["length"] == lcs_length_two_rows(s1, s2)
+        assert data["time_seconds"] > 0.0
+        assert "lcs" in data
+
+    def test_18_manifest_json_integrity(self) -> None:
+        """18. Valida integridade do catálogo e metadados no manifest.json da web."""
+        manifest_path = os.path.join(os.path.dirname(__file__), "..", "web", "data", "manifest.json")
+        assert os.path.exists(manifest_path)
+
+        with open(manifest_path, "r", encoding="utf-8") as f:
+            manifest = json.load(f)
+
+        assert isinstance(manifest, list)
+        assert len(manifest) >= 19
+
+        exp_ids = set()
+        for item in manifest:
+            assert "id" in item
+            assert "filename" in item
+            assert "experiment" in item
+            assert "category" in item
+            assert "title" in item
+            assert "x_axis" in item
+            assert "y_axis" in item
+            assert "takeaways" in item
+            assert isinstance(item["takeaways"], list)
+            exp_ids.add(item["experiment"])
+
+        for expected_exp in ["E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "SUMMARY"]:
+            assert expected_exp in exp_ids
+
+    def test_19_all_figures_generated_and_synchronized(self) -> None:
+        """19. Valida que os 19 gráficos científicos foram sincronizados nas 3 pastas."""
+        root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        dirs = [
+            os.path.join(root, "docs", "figures"),
+            os.path.join(root, "relatorio", "figuras"),
+            os.path.join(root, "web", "figures"),
+        ]
+        key_figures = [
+            "e1_fibonacci_tempo.png",
+            "e1_fibonacci_dp.png",
+            "e2_rod_cutting_tempo.png",
+            "e3_lcs_memoria.png",
+            "e4_lcs_python_cpp.png",
+            "e5_recursao_limites.png",
+            "e6_guloso_erro.png",
+            "e7_matrix_chain_tempo.png",
+            "e8_knapsack_tempo_w.png",
+            "summary_complexity_dashboard.png",
+        ]
+        for d in dirs:
+            assert os.path.exists(d), f"Diretório {d} não existe"
+            files = os.listdir(d)
+            assert len(files) >= 19, f"Diretório {d} tem apenas {len(files)} imagens"
+            for kf in key_figures:
+                assert os.path.exists(os.path.join(d, kf)), f"Figura {kf} ausente em {d}"
+
+    def test_20_no_nan_or_inf_in_results(self) -> None:
+        """20. Garante ausência total de NaN, Infinity ou corrupções nos dados exportados."""
+        web_json_path = os.path.join(os.path.dirname(__file__), "..", "web", "data", "results.json")
+        assert os.path.exists(web_json_path)
+
+        with open(web_json_path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        assert "NaN" not in content
+        assert "Infinity" not in content
+        assert "-Infinity" not in content
+        assert "<<<<<<<" not in content
+        assert ">>>>>>>" not in content
+
+        # Validação do CSV consolidado
+        csv_path = os.path.join(os.path.dirname(__file__), "..", "benchmarks", "results", "all_benchmarks.csv")
+        assert os.path.exists(csv_path)
+        with open(csv_path, "r", encoding="utf-8") as f:
+            csv_text = f.read()
+        assert "<<<<<<<" not in csv_text

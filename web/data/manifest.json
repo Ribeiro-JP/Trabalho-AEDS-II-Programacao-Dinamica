@@ -1,0 +1,325 @@
+[
+  {
+    "id": "summary_complexity_dashboard",
+    "filename": "summary_complexity_dashboard.png",
+    "experiment": "SUMMARY",
+    "category": "dashboard",
+    "title": "Síntese Geral das Classes Assintóticas",
+    "subtitle": "Panorama empírico integrando curvas teóricas normalizadas contra tempos observados",
+    "comparison": "Força Bruta O(2^n) vs Cadeia de Matrizes O(n^3) vs Corte de Hastes O(n^2) vs Fibonacci O(n)",
+    "x_axis": "Tamanho da Entrada (n)",
+    "y_axis": "Tempo de Execução (s, escala logarítmica)",
+    "is_available": true,
+    "takeaways": [
+      "Evidencia a clara separação em ordens de magnitude das 4 classes de complexidade fundamentais.",
+      "Algoritmos exponenciais tornam-se inviáveis rapidamente, enquanto os polinomiais de PD escalam de forma controlada."
+    ],
+    "limitations": "Compara problemas diferentes normalizados pelo tamanho numérico da entrada n."
+  },
+  {
+    "id": "e1_fibonacci_tempo",
+    "filename": "e1_fibonacci_tempo.png",
+    "experiment": "E1",
+    "category": "tempo",
+    "title": "E1: Fibonacci — Explosão Exponencial vs Programação Dinâmica",
+    "subtitle": "Comparativo geral de tempo em escala semi-logarítmica",
+    "comparison": "Força Bruta O(phi^n) vs Memoização O(n) vs Tabulação O(n) vs Espaço O(1)",
+    "x_axis": "Índice do Termo (n)",
+    "y_axis": "Tempo de Execução (s, escala logarítmica)",
+    "is_available": true,
+    "takeaways": [
+      "A recursão ingênua colapsa para n > 30 devido à recomputação redundante de subproblemas.",
+      "Todas as 3 variantes de PD executam em frações de milissegundo de forma assintoticamente linear."
+    ],
+    "limitations": "A força bruta é interrompida por timeout seguro em n=32 para evitar travamentos."
+  },
+  {
+    "id": "e1_fibonacci_dp",
+    "filename": "e1_fibonacci_dp.png",
+    "experiment": "E1",
+    "category": "tempo",
+    "title": "E1: Fibonacci — Comparação Fina das Abordagens de PD",
+    "subtitle": "Análise detalhada em escala linear das três soluções lineares O(n)",
+    "comparison": "Top-Down (Memoização) vs Bottom-Up (Tabulação) vs Espaço O(1)",
+    "x_axis": "Índice do Termo (n)",
+    "y_axis": "Tempo de Execução (µs, escala linear)",
+    "is_available": true,
+    "takeaways": [
+      "A versão de Espaço O(1) é a mais rápida por eliminar a alocação de tabelas no heap.",
+      "Bottom-Up supera Memoização por dispensar o overhead da pilha de chamadas de função Python."
+    ],
+    "limitations": "Medições em microssegundos utilizam batching adaptativo para neutralizar jitter de SO."
+  },
+  {
+    "id": "e1_fibonacci_chamadas",
+    "filename": "e1_fibonacci_chamadas.png",
+    "experiment": "E1",
+    "category": "eficiencia",
+    "title": "E1: Fibonacci — Contagem de Chamadas e Subproblemas",
+    "subtitle": "Métrica de operações elementares e recursões",
+    "comparison": "Chamadas recursivas Força Bruta (~2^n) vs Memoização (2n-1) vs Bottom-Up (1)",
+    "x_axis": "Índice do Termo (n)",
+    "y_axis": "Número de Invocações (escala logarítmica)",
+    "is_available": true,
+    "takeaways": [
+      "A força bruta atinge milhões de invocações para n=30, enquanto a memoização faz exatamente 2n-1 chamadas.",
+      "A tabulação executa iterativamente com zero chamadas recursivas adicionais."
+    ],
+    "limitations": "Contagem registrada com CallCounter independente e isolado do tempo."
+  },
+  {
+    "id": "e1_fibonacci_speedup",
+    "filename": "e1_fibonacci_speedup.png",
+    "experiment": "E1",
+    "category": "speedup",
+    "title": "E1: Fibonacci — Speedup da Programação Dinâmica",
+    "subtitle": "Fator de aceleração relativo em relação à recursão ingênua (T_naive / T_dp)",
+    "comparison": "Razão de aceleração para Bottom-Up e O(1) Espaço",
+    "x_axis": "Índice do Termo (n)",
+    "y_axis": "Speedup Relativo (vezes mais rápido, escala logarítmica)",
+    "is_available": true,
+    "takeaways": [
+      "O speedup cresce exponencialmente, ultrapassando 100.000x para n=30.",
+      "Calculado estritamente nas instâncias em que ambas as abordagens concluíram sem timeout."
+    ],
+    "limitations": "Definido apenas no intervalo n <= 32 em que a força bruta completa."
+  },
+  {
+    "id": "e2_rod_cutting_tempo",
+    "filename": "e2_rod_cutting_tempo.png",
+    "experiment": "E2",
+    "category": "tempo",
+    "title": "E2: Corte de Hastes — Desempenho de Algoritmos Exatos",
+    "subtitle": "Tempo de execução para solução ótima",
+    "comparison": "Força Bruta O(2^n) vs Memoização O(n^2) vs Bottom-Up O(n^2)",
+    "x_axis": "Comprimento da Haste (n)",
+    "y_axis": "Tempo de Execução (s, escala logarítmica)",
+    "is_available": true,
+    "takeaways": [
+      "A decomposição ingênua 2^(n-1) atinge timeout por volta de n=20.",
+      "Memoização e Tabulação resolvem o problema em milissegundos com tempo quadrático."
+    ],
+    "limitations": "Instâncias baseadas na tabela de preços do Cormen expandidas deterministicamente."
+  },
+  {
+    "id": "e2_rod_cutting_qualidade",
+    "filename": "e2_rod_cutting_qualidade.png",
+    "experiment": "E2",
+    "category": "qualidade",
+    "title": "E2: Corte de Hastes — Qualidade da Heurística Gulosa vs PD",
+    "subtitle": "Comparação de receita obtida e erro relativo percentual",
+    "comparison": "Receita Máxima Ótima (PD) vs Receita da Heurística de Densidade (p_i / i)",
+    "x_axis": "Comprimento da Haste (n)",
+    "y_axis": "Receita ($) e Erro Relativo (%)",
+    "is_available": true,
+    "takeaways": [
+      "A heurística gulosa escolhe cortes com base na densidade local e perde o ótimo global.",
+      "O erro relativo atinge defasagens expressivas dependendo da distribuição de preços."
+    ],
+    "limitations": "Erro relativo calculado como ((Opt - Guloso) / Opt) * 100 com Opt > 0."
+  },
+  {
+    "id": "e3_lcs_memoria",
+    "filename": "e3_lcs_memoria.png",
+    "experiment": "E3",
+    "category": "memoria",
+    "title": "E3: LCS — Consumo de Memória (Tabela Completa vs Duas Linhas)",
+    "subtitle": "Pico de memória em KB medido via tracemalloc isolado",
+    "comparison": "Tabela Completa O(m*n) vs Duas Linhas O(min(m, n))",
+    "x_axis": "Comprimento das Sequências (n = m)",
+    "y_axis": "Pico de Memória Alocada (KB)",
+    "is_available": true,
+    "takeaways": [
+      "A versão de 2 linhas reduz o consumo de memória em mais de 95% para cadeias longas.",
+      "Demonstra o compromisso: 2 linhas calcula apenas o tamanho ótimo; reconstrução exige a matriz completa."
+    ],
+    "limitations": "Tracemalloc rastreia o heap do Python, não o RSS total do processo no SO."
+  },
+  {
+    "id": "e3_lcs_tempo",
+    "filename": "e3_lcs_tempo.png",
+    "experiment": "E3",
+    "category": "tempo",
+    "title": "E3: LCS — Tempo de Execução em Sequências Longas",
+    "subtitle": "Avaliação temporal do preenchimento tabular de LCS",
+    "comparison": "Tabela Completa vs Otimização de Duas Linhas",
+    "x_axis": "Comprimento das Sequências (n = m)",
+    "y_axis": "Tempo de Execução (s)",
+    "is_available": true,
+    "takeaways": [
+      "Ambas as soluções mantêm complexidade assintótica Theta(m * n).",
+      "A versão de 2 linhas apresenta tempo discretamente menor devido ao melhor aproveitamento de cache."
+    ],
+    "limitations": "Sequências sintéticas sobre alfabeto de DNA com semente pseudo-aleatória fixa."
+  },
+  {
+    "id": "e4_lcs_python_cpp",
+    "filename": "e4_lcs_python_cpp.png",
+    "experiment": "E4",
+    "category": "linguagem",
+    "title": "E4: LCS — Desempenho CPython 3.11 vs C++17 Nativo (-O3)",
+    "subtitle": "Medição empírica comparando código compilado de alta performance com interpretador",
+    "comparison": "CPython Bottom-Up vs C++ g++ -O3 Bottom-Up",
+    "x_axis": "Comprimento das Cadeias (n = m)",
+    "y_axis": "Tempo de Execução (s, escala logarítmica)",
+    "is_available": true,
+    "takeaways": [
+      "Implementações resolvendo o mesmo problema exato com validação de saída idêntica.",
+      "O código em C++ nativo é entre 20x e 40x mais veloz que CPython devido a vetores contíguos e ausência de overhead dinâmico."
+    ],
+    "limitations": "Compilador utilizado: g++.exe (MinGW.org GCC-6.3.0-1) 6.3.0. Flags: -O3 -std=c++14."
+  },
+  {
+    "id": "e4_lcs_speedup",
+    "filename": "e4_lcs_speedup.png",
+    "experiment": "E4",
+    "category": "speedup",
+    "title": "E4: LCS — Speedup Relativo C++ sobre Python",
+    "subtitle": "Razão de aceleração empírica (T_python / T_cpp)",
+    "comparison": "Speedup por tamanho de cadeia",
+    "x_axis": "Comprimento das Cadeias (n = m)",
+    "y_axis": "Speedup Relativo (vezes mais rápido)",
+    "is_available": true,
+    "takeaways": [
+      "Speedup médio consistente entre 25x e 40x para tamanhos moderados e grandes.",
+      "Não decorre de diferença algorítmica, mas sim de compilação estática de tipos e ausência de GIL/Boxing."
+    ],
+    "limitations": "Aferido em instâncias idênticas com validação de igualdade da subsequência reconstruída."
+  },
+  {
+    "id": "e5_recursao_tempo",
+    "filename": "e5_recursao_tempo.png",
+    "experiment": "E5",
+    "category": "tempo",
+    "title": "E5: Limite de Recursão — Desempenho Válido (Top-Down vs Bottom-Up)",
+    "subtitle": "Comparação de tempo estritamente no domínio seguro de execução (n < limite)",
+    "comparison": "Memoização Top-Down vs Tabulação Bottom-Up",
+    "x_axis": "Tamanho da Entrada (n)",
+    "y_axis": "Tempo de Execução (s)",
+    "is_available": true,
+    "takeaways": [
+      "Dentro do domínio válido, a tabulação Bottom-Up é mais rápida que a memoização recursiva.",
+      "Separa com rigor a análise de tempo da análise de falhas de arquitetura."
+    ],
+    "limitations": "Restrito a n < sys.getrecursionlimit() onde ambas as funções executam sem erro."
+  },
+  {
+    "id": "e5_recursao_limites",
+    "filename": "e5_recursao_limites.png",
+    "experiment": "E5",
+    "category": "robustez",
+    "title": "E5: Limite de Recursão — Robustez e Status de Execução",
+    "subtitle": "Mapeamento explícito de sucesso vs RecursionError ao redor do limite de pilha",
+    "comparison": "Top-Down (falha na barreira de pilha) vs Bottom-Up (escalabilidade contínua)",
+    "x_axis": "Tamanho da Entrada (n)",
+    "y_axis": "Status Observado (Sucesso / RecursionError)",
+    "is_available": true,
+    "takeaways": [
+      "Top-Down falha com RecursionError no limite do Python (sys.getrecursionlimit() = 1000).",
+      "Bottom-Up escala para dezenas de milhares de elementos sem consumir pilha recursiva."
+    ],
+    "limitations": "O limite real depende da configuração sys.getrecursionlimit() do interpretador."
+  },
+  {
+    "id": "e6_guloso_erro",
+    "filename": "e6_guloso_erro.png",
+    "experiment": "E6",
+    "category": "qualidade",
+    "title": "E6: Falha do Algoritmo Guloso — Taxa de Erro e Perda Média",
+    "subtitle": "Avaliação estatística em 200 instâncias aleatórias por tamanho de haste",
+    "comparison": "Taxa de Falha (%) e Perda Média de Receita (%)",
+    "x_axis": "Comprimento da Haste (n)",
+    "y_axis": "Porcentagem (%)",
+    "is_available": true,
+    "takeaways": [
+      "A heurística gulosa falha em mais de 60% das instâncias aleatórias com perturbações de preço.",
+      "A perda média de receita situa-se entre 5% e 15%, demonstrando a necessidade de PD para otimalidade."
+    ],
+    "limitations": "Semente aleatória fixa para estrita reprodutibilidade."
+  },
+  {
+    "id": "e7_matrix_chain_tempo",
+    "filename": "e7_matrix_chain_tempo.png",
+    "experiment": "E7",
+    "category": "tempo",
+    "title": "E7: Cadeia de Matrizes — Tempo de Execução Cúbico Theta(n^3)",
+    "subtitle": "Comportamento empírico do algoritmo Bottom-Up de Cormen",
+    "comparison": "Tempo de execução em função do número de matrizes n",
+    "x_axis": "Número de Matrizes na Cadeia (n)",
+    "y_axis": "Tempo de Execução (s, escala logarítmica)",
+    "is_available": true,
+    "takeaways": [
+      "O tempo empírico confirma a complexidade Theta(n^3) decorrente do laço triplo aninhado.",
+      "Calcula a parentização ótima em menos de 0.1s para cadeias de até 70 matrizes."
+    ],
+    "limitations": "Dimensões geradas deterministicamente."
+  },
+  {
+    "id": "e7_matrix_chain_operacoes",
+    "filename": "e7_matrix_chain_operacoes.png",
+    "experiment": "E7",
+    "category": "eficiencia",
+    "title": "E7: Cadeia de Matrizes — Multiplicações Salvas e Números de Catalan",
+    "subtitle": "Operações escalares poupadas vs explosão combinatória das parentizações C(n-1)",
+    "comparison": "Multiplicações Ótimas vs Naive Sequencial, e Crescimento dos Números de Catalan",
+    "x_axis": "Número de Matrizes na Cadeia (n)",
+    "y_axis": "Contagem de Operações e Parentizações (escala logarítmica)",
+    "is_available": true,
+    "takeaways": [
+      "A parentização ótima poupa bilhões de multiplicações escalares em relação à ordem ingênua (A1*A2)*A3...",
+      "O número de parentizações possíveis cresce como Catalan C(n-1) ~ 4^n / (n^(3/2) * sqrt(pi))."
+    ],
+    "limitations": "C(n-1) calculado com precisão analítica via math.comb."
+  },
+  {
+    "id": "e8_knapsack_tempo_w",
+    "filename": "e8_knapsack_tempo_w.png",
+    "experiment": "E8",
+    "category": "tempo",
+    "title": "E8: Mochila 0/1 — Comportamento Pseudo-Polinomial em W",
+    "subtitle": "Tempo de execução variando a capacidade máxima W com n itens fixos",
+    "comparison": "Tempo x Capacidade W (n=50 fixo)",
+    "x_axis": "Capacidade da Mochila (W)",
+    "y_axis": "Tempo de Execução (s)",
+    "is_available": true,
+    "takeaways": [
+      "Comprova que o algoritmo de PD escala linearmente com a magnitude numérica da capacidade W.",
+      "Evidencia a natureza pseudo-polinomial: o custo cresce exponencialmente com a quantidade de bits de W."
+    ],
+    "limitations": "Número de itens mantido constante em n=50."
+  },
+  {
+    "id": "e8_knapsack_tempo_n",
+    "filename": "e8_knapsack_tempo_n.png",
+    "experiment": "E8",
+    "category": "tempo",
+    "title": "E8: Mochila 0/1 — Tempo de Execução em Função dos Itens (n)",
+    "subtitle": "Tempo variando o número de itens com capacidade W fixa",
+    "comparison": "Tempo x Quantidade de Itens (n) com W=200",
+    "x_axis": "Quantidade de Itens (n)",
+    "y_axis": "Tempo de Execução (s)",
+    "is_available": true,
+    "takeaways": [
+      "Para capacidade fixa, o algoritmo escala linearmente com a quantidade de itens n.",
+      "Isola a variável n para evitar misturar parâmetros independentes."
+    ],
+    "limitations": "Capacidade W mantida constante em 200."
+  },
+  {
+    "id": "e8_knapsack_memoria",
+    "filename": "e8_knapsack_memoria.png",
+    "experiment": "E8",
+    "category": "memoria",
+    "title": "E8: Mochila 0/1 — Consumo de Memória (Tabela 2D vs Vetor 1D)",
+    "subtitle": "Pico de memória em KB medido via tracemalloc",
+    "comparison": "Tabela 2D O(n*W) vs Vetor 1D O(W)",
+    "x_axis": "Capacidade da Mochila (W)",
+    "y_axis": "Pico de Memória Alocada (KB)",
+    "is_available": true,
+    "takeaways": [
+      "A abordagem com vetor 1D consome memória proporcional apenas a W, economizando até 90% em relação à matriz completa.",
+      "A matriz completa é necessária apenas se for requerida a reconstrução da lista de itens escolhidos."
+    ],
+    "limitations": "Aferido via tracemalloc isolado."
+  }
+]

@@ -7,12 +7,21 @@
   "python_version": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
   "python_implementation": "CPython",
   "recursion_limit": 1000,
+  "cpp_compiler_info": {
+    "status": "ready",
+    "compiler": "C:\\MinGW\\bin\\g++.EXE",
+    "version": "g++.exe (MinGW.org GCC-6.3.0-1) 6.3.0",
+    "flags": "-O3 -std=c++14",
+    "binary_path": "C:\\Users\\aliss\\OneDrive\\Área de Trabalho\\PROJETOS NO GITHUB\\Trabalho-AEDS-II-Programaco-Dinamica\\cpp\\lcs.exe"
+  },
   "measurement_protocol": {
-    "name": "Média truncada de 3 centrais em 5 repetições",
+    "name": "Média aparada de 3 centrais em 5 repetições com batching adaptativo",
     "repeats": 5,
     "discard_min_max": true,
-    "memory_measurement": "tracemalloc isolado (alocações Python heap)",
+    "sub_microsecond_batching": true,
+    "warmup_runs": 1,
+    "memory_measurement": "tracemalloc isolado em execução independente",
     "random_seed": 42
   },
-  "timestamp": "2026-10-09 17:30:10"
+  "timestamp": "2026-10-13 20:08:29"
 }

@@ -1,41 +1,41 @@
-experiment,algorithm,approach,n,time_seconds,memory_bytes,calls,catalan_count,status,notes
-E7,Cadeia de Matrizes,naive,2,1.4599994756281376e-05,0,0,1,success,Naive: C(1) = 1 parentizações
-E7,Cadeia de Matrizes,naive,3,2.120001590810716e-05,0,0,2,success,Naive: C(2) = 2 parentizações
-E7,Cadeia de Matrizes,naive,4,2.7799978852272034e-05,0,0,5,success,Naive: C(3) = 5 parentizações
-E7,Cadeia de Matrizes,naive,5,4.700000863522291e-05,0,0,14,success,Naive: C(4) = 14 parentizações
-E7,Cadeia de Matrizes,naive,6,0.00018839997937902808,0,0,42,success,Naive: C(5) = 42 parentizações
-E7,Cadeia de Matrizes,naive,7,0.0002736000169534236,0,0,132,success,Naive: C(6) = 132 parentizações
-E7,Cadeia de Matrizes,naive,8,0.0008007999858818948,0,0,429,success,Naive: C(7) = 429 parentizações
-E7,Cadeia de Matrizes,naive,9,0.002638000005390495,0,0,1430,success,Naive: C(8) = 1430 parentizações
-E7,Cadeia de Matrizes,memo,2,6.599992047995329e-06,0,1,1,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,2,9.300012607127428e-06,440,1,1,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (0.4 KB)
-E7,Cadeia de Matrizes,memo,4,1.4599994756281376e-05,0,1,5,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,4,1.580000389367342e-05,952,1,5,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (0.9 KB)
-E7,Cadeia de Matrizes,memo,6,5.020000389777124e-05,0,1,42,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,6,3.500000457279384e-05,1656,1,42,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (1.6 KB)
-E7,Cadeia de Matrizes,memo,8,9.950000094249845e-05,0,1,429,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,8,5.720002809539437e-05,2712,1,429,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (2.6 KB)
-E7,Cadeia de Matrizes,memo,10,0.00022200000239536166,0,1,4862,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,10,0.00011710001854225993,3896,1,4862,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (3.8 KB)
-E7,Cadeia de Matrizes,memo,12,0.00018309999722987413,0,1,58786,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,12,7.82000133767724e-05,5336,1,58786,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (5.2 KB)
-E7,Cadeia de Matrizes,memo,14,0.0002601000014692545,0,1,742900,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,14,0.00010309999925084412,7144,1,742900,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (7.0 KB)
-E7,Cadeia de Matrizes,memo,16,0.0008650000090710819,0,1,9694845,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,16,0.0002851999888662249,9672,1,9694845,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (9.4 KB)
-E7,Cadeia de Matrizes,memo,18,0.0007901999924797565,0,1,129644790,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,18,0.000319099985063076,11880,1,129644790,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (11.6 KB)
-E7,Cadeia de Matrizes,memo,20,0.0014106000016909093,0,1,1767263190,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,20,0.00026929998421110213,14456,1,1767263190,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (14.1 KB)
-E7,Cadeia de Matrizes,memo,25,0.001361099974019453,0,1,1289904147324,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,25,0.0004820999747607857,23152,1,1289904147324,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (22.6 KB)
-E7,Cadeia de Matrizes,memo,30,0.00236020001466386,0,1,1002242216651368,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,30,0.0008215000270865858,33152,1,1002242216651368,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (32.4 KB)
-E7,Cadeia de Matrizes,memo,35,0.00398110001697205,0,1,812944042149730764,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,35,0.0012069999938830733,44768,1,812944042149730764,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (43.7 KB)
-E7,Cadeia de Matrizes,memo,40,0.006140299985418096,0,1,680425371729975800390,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,40,0.0017911000177264214,57600,1,680425371729975800390,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (56.2 KB)
-E7,Cadeia de Matrizes,memo,45,0.013197899999795482,0,1,583300119592996693088040,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,45,0.0032491999736521393,71840,1,583300119592996693088040,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (70.2 KB)
-E7,Cadeia de Matrizes,memo,50,0.011909799999557436,0,1,509552245179617138054608572,success,Theta(n^3) Top-Down Memoização
-E7,Cadeia de Matrizes,bottom_up,50,0.0034073999850079417,87680,1,509552245179617138054608572,success,Theta(n^3) Bottom-Up Matrix-Chain-Order (85.6 KB)
+experiment,algorithm,approach,n,time_seconds,time_std,time_min,time_max,memory_bytes,calls,catalan_count,status,notes
+E7,Cadeia de Matrizes,naive,2,1.680001150816679e-05,1.1503710212083087e-06,1.5700003132224083e-05,1.8000020645558834e-05,0,0,1,success,Naive Omega(4^n/n^(3/2)) (Catalan: 1)
+E7,Cadeia de Matrizes,naive,3,2.620008308440447e-05,5.290882902929042e-07,2.6000081561505795e-05,2.6999972760677338e-05,0,0,2,success,Naive Omega(4^n/n^(3/2)) (Catalan: 2)
+E7,Cadeia de Matrizes,naive,4,4.029995761811733e-05,2.3125961608483182e-05,3.460003063082695e-05,7.720000576227903e-05,0,0,5,success,Naive Omega(4^n/n^(3/2)) (Catalan: 5)
+E7,Cadeia de Matrizes,naive,5,7.919990457594395e-05,1.1869799729570448e-05,7.849989924579859e-05,9.940005838871002e-05,0,0,14,success,Naive Omega(4^n/n^(3/2)) (Catalan: 14)
+E7,Cadeia de Matrizes,naive,6,0.0001799999736249447,4.152788544778441e-05,0.0001319999573752284,0.00021470000501722097,0,0,42,success,Naive Omega(4^n/n^(3/2)) (Catalan: 42)
+E7,Cadeia de Matrizes,naive,7,0.0006956999422982335,0.000138393386039906,0.0006498999428004026,0.0009091999381780624,0,0,132,success,Naive Omega(4^n/n^(3/2)) (Catalan: 132)
+E7,Cadeia de Matrizes,naive,8,0.0016904000658541918,0.0004090996445671278,0.0010189000749960542,0.0017594998935237527,0,0,429,success,Naive Omega(4^n/n^(3/2)) (Catalan: 429)
+E7,Cadeia de Matrizes,naive,9,0.003822999889962375,0.00010789405231276986,0.003786599962040782,0.003988999989815056,0,0,1430,success,Naive Omega(4^n/n^(3/2)) (Catalan: 1430)
+E7,Cadeia de Matrizes,memo,2,1.933000748977065e-06,1.7443112268088916e-07,1.922999508678913e-06,2.229999518021941e-06,0,3,1,success,Theta(n^3) Top-Down Memoização (Catalan: 1)
+E7,Cadeia de Matrizes,bottom_up,2,4.97399945743382e-06,1.803695993771641e-07,4.774000262841582e-06,5.133999511599541e-06,440,1,1,success,Theta(n^3) Bottom-Up Diagonais (Memória: 0.4 KB)
+E7,Cadeia de Matrizes,memo,4,1.707000025947179e-05,2.387201646738482e-06,1.4354285251881394e-05,1.911285798996687e-05,0,10,5,success,Theta(n^3) Top-Down Memoização (Catalan: 5)
+E7,Cadeia de Matrizes,bottom_up,4,1.8389472786925342e-05,2.9736479300745374e-06,1.620394821082683e-05,2.2086841789515394e-05,952,1,5,success,Theta(n^3) Bottom-Up Diagonais (Memória: 0.9 KB)
+E7,Cadeia de Matrizes,memo,6,7.70305535600831e-05,1.1283727371722712e-05,7.575000118878152e-05,9.590277719932298e-05,0,21,42,success,Theta(n^3) Top-Down Memoização (Catalan: 42)
+E7,Cadeia de Matrizes,bottom_up,6,4.7112501176473286e-05,1.6128331007734595e-06,4.592500044964254e-05,4.911607123046581e-05,1656,1,42,success,Theta(n^3) Bottom-Up Diagonais (Memória: 1.6 KB)
+E7,Cadeia de Matrizes,memo,8,6.749993190169334e-05,4.176115376001276e-06,6.670004222542048e-05,7.429998368024826e-05,0,36,429,success,Theta(n^3) Top-Down Memoização (Catalan: 429)
+E7,Cadeia de Matrizes,bottom_up,8,9.921224483725976e-05,2.4891949503212156e-05,6.101836630960508e-05,0.00010776938632966912,2712,1,429,success,Theta(n^3) Bottom-Up Diagonais (Memória: 2.6 KB)
+E7,Cadeia de Matrizes,memo,10,0.00027189997490495443,0.0001567396189251088,0.0001993000041693449,0.0004997000796720386,0,55,4862,success,Theta(n^3) Top-Down Memoização (Catalan: 4862)
+E7,Cadeia de Matrizes,bottom_up,10,9.09001100808382e-05,2.0373820486405305e-05,5.850009620189667e-05,9.61000332608819e-05,3896,1,4862,success,Theta(n^3) Bottom-Up Diagonais (Memória: 3.8 KB)
+E7,Cadeia de Matrizes,memo,12,0.00037129991687834263,0.00014115125950552897,0.00024339999072253704,0.0005253000417724252,0,78,58786,success,Theta(n^3) Top-Down Memoização (Catalan: 58786)
+E7,Cadeia de Matrizes,bottom_up,12,0.00016945999814197422,5.73654062824285e-05,0.00015235999599099158,0.0002591599943116307,5392,1,58786,success,Theta(n^3) Bottom-Up Diagonais (Memória: 5.3 KB)
+E7,Cadeia de Matrizes,memo,14,0.0006262999959290028,0.00013048360396794912,0.0004268999909982085,0.0006723999977111816,0,105,742900,success,Theta(n^3) Top-Down Memoização (Catalan: 742900)
+E7,Cadeia de Matrizes,bottom_up,14,0.00022010004613548517,4.80650200118567e-05,0.00020810007117688656,0.00029669993091374636,7088,1,742900,success,Theta(n^3) Bottom-Up Diagonais (Memória: 6.9 KB)
+E7,Cadeia de Matrizes,memo,16,0.0006463000318035483,0.00017931504427669482,0.0006285000126808882,0.0009475999977439642,0,136,9694845,success,Theta(n^3) Top-Down Memoização (Catalan: 9694845)
+E7,Cadeia de Matrizes,bottom_up,16,0.0003063000040128827,0.0001529730678361351,0.0002976000541821122,0.0005668000085279346,9168,1,9694845,success,Theta(n^3) Bottom-Up Diagonais (Memória: 9.0 KB)
+E7,Cadeia de Matrizes,memo,18,0.0011799000203609467,4.020533862731276e-05,0.0011360999196767807,0.001216400065459311,0,171,129644790,success,Theta(n^3) Top-Down Memoização (Catalan: 129644790)
+E7,Cadeia de Matrizes,bottom_up,18,0.00035630003549158573,8.784657590103893e-06,0.0003461999585852027,0.00036369997542351484,11376,1,129644790,success,Theta(n^3) Bottom-Up Diagonais (Memória: 11.1 KB)
+E7,Cadeia de Matrizes,memo,20,0.0016746000619605184,0.001197195841513081,0.0016573000466451049,0.0037394999526441097,0,210,1767263190,success,Theta(n^3) Top-Down Memoização (Catalan: 1767263190)
+E7,Cadeia de Matrizes,bottom_up,20,0.0006062999600544572,8.234279619852303e-06,0.000596800004132092,0.0006132000125944614,14288,1,1767263190,success,Theta(n^3) Bottom-Up Diagonais (Memória: 14.0 KB)
+E7,Cadeia de Matrizes,memo,25,0.0032725000055506825,9.610050924159122e-05,0.0031139999628067017,0.003287400002591312,0,325,1289904147324,success,Theta(n^3) Top-Down Memoização (Catalan: 1289904147324)
+E7,Cadeia de Matrizes,bottom_up,25,0.0010847999947145581,5.335344333898472e-05,0.0010303999297320843,0.001137099927291274,22816,1,1289904147324,success,Theta(n^3) Bottom-Up Diagonais (Memória: 22.3 KB)
+E7,Cadeia de Matrizes,memo,30,0.005912499967962503,0.0018133491964981358,0.00573980004992336,0.00896339991595596,0,465,1002242216651368,success,Theta(n^3) Top-Down Memoização (Catalan: 1002242216651368)
+E7,Cadeia de Matrizes,bottom_up,30,0.0021425000159069896,0.0006138820815358664,0.001656699925661087,0.002876100013963878,32816,1,1002242216651368,success,Theta(n^3) Bottom-Up Diagonais (Memória: 32.0 KB)
+E7,Cadeia de Matrizes,memo,35,0.010093400022014976,0.0006916675849567784,0.009393200045451522,0.010776499984785914,0,630,812944042149730764,success,Theta(n^3) Top-Down Memoização (Catalan: 812944042149730764)
+E7,Cadeia de Matrizes,bottom_up,35,0.003434200072661042,0.00034933161109550507,0.0028726999880746007,0.0035134999779984355,44544,1,812944042149730764,success,Theta(n^3) Bottom-Up Diagonais (Memória: 43.5 KB)
+E7,Cadeia de Matrizes,memo,40,0.014102899935096502,9.805586353492499e-05,0.014031999977305532,0.014225800056010485,0,820,680425371729975800390,success,Theta(n^3) Top-Down Memoização (Catalan: 680425371729975800390)
+E7,Cadeia de Matrizes,bottom_up,40,0.00456050003413111,0.0009501552187896146,0.004454400041140616,0.0061506000347435474,57600,1,680425371729975800390,success,Theta(n^3) Bottom-Up Diagonais (Memória: 56.2 KB)
+E7,Cadeia de Matrizes,memo,45,0.03844040003605187,0.036741488303061474,0.03244840004481375,0.09887059999164194,0,1035,583300119592996693088040,success,Theta(n^3) Top-Down Memoização (Catalan: 583300119592996693088040)
+E7,Cadeia de Matrizes,bottom_up,45,0.0076252000872045755,0.0011740631954967255,0.006441500037908554,0.008789599989540875,71840,1,583300119592996693088040,success,Theta(n^3) Bottom-Up Diagonais (Memória: 70.2 KB)
+E7,Cadeia de Matrizes,memo,50,0.03319660003762692,0.0020282847956074636,0.030808000010438263,0.03484179999213666,0,1275,509552245179617138054608572,success,Theta(n^3) Top-Down Memoização (Catalan: 509552245179617138054608572)
+E7,Cadeia de Matrizes,bottom_up,50,0.011703599942848086,0.0013569952258698182,0.0095486999489367,0.012055000057443976,87680,1,509552245179617138054608572,success,Theta(n^3) Bottom-Up Diagonais (Memória: 85.6 KB)
