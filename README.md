@@ -1,256 +1,540 @@
-# Estratégias Avançadas de Projeto e Análise de Algoritmos: Programação Dinâmica
+<p align="center">
+  <img src="docs/figures/summary_complexity_dashboard.png" alt="Dashboard Síntese de Complexidade e Benchmarks" style="width:100%; max-height:480px; object-fit:cover; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.4);"/>
+</p>
 
-Repositório público com a prova de conceito, suíte de experimentos empíricos, simuladores visuais e relatório técnico desenvolvidos para o Trabalho Teórico Final da disciplina de **Algoritmos e Estruturas de Dados II**.
+# Análise Teórica e Empírica de Algoritmos em Programação Dinâmica: Complexidade, Otimizações e Estudos de Caso
+
+[![Linux](https://img.shields.io/badge/Platform-Linux-FCC624?logo=linux&logoColor=black)](https://www.linux.org/)
+[![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![C++](https://img.shields.io/badge/C%2B%2B-17%20(-O3)-00599C?logo=cplusplus&logoColor=white)](https://isocpp.org/)
+[![Pytest](https://img.shields.io/badge/Tests-48%2F48%20Passed-brightgreen?logo=pytest&logoColor=white)](https://pytest.org/)
+[![LaTeX](https://img.shields.io/badge/Report-LaTeX%20%2F%20Overleaf-47A141?logo=latex&logoColor=white)](https://www.overleaf.com/)
+[![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/Ribeiro-JP/Trabalho-AEDS-II-Programaco-Dinamica)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
 
-## 1. Contexto Acadêmico
+## 📋 Sumário Executivo
+
+Este repositório contém uma investigação teórico-empírica rigorosa sobre o paradigma de **Programação Dinâmica (PD)**, desenvolvida no âmbito da disciplina de **Algoritmos e Estruturas de Dados II (AEDS-II)** do **CEFET-MG (Campus Divinópolis)** sob orientação do Prof. Michel Pires da Silva.
+
+O projeto fundamenta-se nas formulações clássicas do livro *Algoritmos: Teoria e Prática* (Cormen et al., Capítulo 15), confrontando implementações de referência nas abordagens **recursiva ingênua (Força Bruta)**, **Top-Down com Memoização** e **Bottom-Up com Tabulação**, além de **otimizações avançadas de espaço de memória** ($O(1)$ variáveis rotativas, vetor unidimensional e matriz de duas linhas).
+
+O trabalho contempla:
+1. **Modelagem Matemática e Corretude:** Formulação exata das recorrências, casos-base, subestrutura ótima e prova de superposição de subproblemas para Fibonacci, Corte de Hastes (*Rod Cutting*), Multiplicação em Cadeia de Matrizes (*Matrix-Chain Multiplication*), Maior Subsequência Comum (*Longest Common Subsequence - LCS*) e Mochila 0/1 (*0/1 Knapsack*).
+2. **Estudos de Caso Reais:** Aplicação prática de PD na ferramenta de comparação textual unificada (**Mini Diff** linha a linha via LCS) e na bioinformática computacional (**Alinhamento Global de Sequências de DNA** via Needleman-Wunsch / Levenshtein).
+3. **Engenharia Experimental Científica:** Suíte automatizada de benchmarks (**Experimentos E1 a E8**) com isolamento de processos, tratamento de *timeouts* em funções exponenciais, medição de pico de memória via `tracemalloc`, média aparada (*trimmed mean*) de repetições, *batching* adaptativo para resolução sub-microssegundo e comparação de desempenho entre **CPython 3.11/3.12** e **C++17 compilado com `-O3`**.
+4. **Portal Web Interativo e Didático:** Simuladores visuais interativos em JavaScript/CSS modernos com animação passo a passo de matrizes, reconstrução de caminhos (*traceback*), duelo contra heurística gulosa e catálogo dos 19 gráficos gerados a 200 DPI.
+
+---
+
+## 🔍 Índice de Navegação
+
+- [Contexto Acadêmico](#-contexto-acadêmico)
+- [Objetivos Acadêmicos](#-objetivos-acadêmicos)
+- [Algoritmos Estudados](#-algoritmos-estudados)
+- [Comparação Teórica e Assintótica](#-comparação-teórica-e-assintótica)
+- [Estrutura do Projeto](#-estrutura-do-projeto)
+- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Comandos do Makefile](#-comandos-do-makefile)
+- [Ambiente Experimental e Metodologia](#-ambiente-experimental-e-metodologia)
+- [Resultados Experimentais](#-resultados-experimentais)
+- [Discussão dos Resultados](#-discussão-dos-resultados)
+- [Limitações do Projeto](#-limitações-do-projeto)
+- [O que Falta Ser Implementado](#-o-que-falta-ser-implementado)
+- [Referências Acadêmicas](#-referências-acadêmicas)
+- [Autores](#autores)
+
+---
+
+## 🎓 Contexto Acadêmico
 
 * **Instituição:** Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG) -- Campus Divinópolis
 * **Departamento:** Departamento de Computação
 * **Disciplina:** Algoritmos e Estruturas de Dados II (AEDS-II)
-* **Professor:** Michel Pires da Silva
-* **Tema do Grupo:** Programação Dinâmica (Capítulo 15 do livro *Algoritmos: Teoria e Prática*, Cormen et al.)
-
-### Equipe de Desenvolvimento
-
-| Integrante | Papel Principal | Foco no Projeto |
-| :--- | :--- | :--- |
-| **João Gabriel** | Relatório Técnico Completo & Coordenação | Redação integral em LaTeX (Caps. 1 a 6) e coordenação geral |
-| **João Pedro** | Códigos de Referência (Python & C++) | Algoritmos do Cormen, estudos de caso e `cpp/lcs.cpp` |
-| **Alisson** | Benchmarks, Resultados & Web | Medições empíricas, gráficos a 200 DPI e portal web |
-| **Carlos** | Apresentação e Slides do Seminário | Slides da apresentação de 40 min e dinâmicas de sala |
-| **Paulo** | Cheat Sheet & Apoio Web | Resumo conciso de 1 a 2 páginas e auxílio no front-end web |
-
-Consulte o checklist detalhado de cada membro em: 👉 [`docs/TAREFAS.md`](docs/TAREFAS.md).
+* **Professor Orientador:** Prof. Michel Pires da Silva
+* **Tema Central:** Programação Dinâmica (Capítulo 15 do livro *Introduction to Algorithms*, Cormen et al.)
+* **Participantes:** Alisson Henrique, Carlos Henrique, João Gabriel Santos, João Pedro Ribeiro e Paulo.
 
 ---
 
-## 2. O que é Programação Dinâmica? (Resumo em 5 Linhas)
+## 🎯 Objetivos Acadêmicos
 
-A **Programação Dinâmica** é uma técnica avançada de projeto de algoritmos aplicada a problemas de otimização que apresentam **subestrutura ótima** e **superposição de subproblemas**. Em vez de recalcular recursivamente as mesmas soluções repetidas vezes (o que gera custo exponencial), ela resolve cada subproblema uma única vez e armazena seu resultado em memória (via **memoização** ou **tabulação bottom-up**). Ao reaproveitar soluções prévias, a técnica reduz complexidades exponenciais $\Theta(2^n)$ para tempos polinomiais como $\Theta(n^2)$ ou $\Theta(n^3)$, permitindo ainda a reconstrução exata da solução ótima a partir dos rastros (*traceback*) armazenados.
+### Análise Teórica vs. Prática
+- **Validação experimental** das ordens de complexidade assintótica assinaladas pelo Cormen: $\Theta(2^n)$ vs. $\Theta(n)$ em Fibonacci, $\Theta(2^n)$ vs. $\Theta(n^2)$ em Rod Cutting, $\Omega(4^n/n^{3/2})$ vs. $\Theta(n^3)$ em Matrix-Chain, $\Theta(m \cdot n)$ em LCS e $O(n \cdot W)$ pseudo-polinomial na Mochila 0/1.
+- **Quantificação de overhead de recursão**: impacto da pilha de chamadas (*call stack*), alocação de quadros de ativação e limites de sistema (`sys.getrecursionlimit()`).
+- **Análise fina de constantes ocultas**: investigação de por que algoritmos com a mesma classe assintótica $\Theta(m \cdot n)$ apresentam ordens de grandeza distintas entre linguagens interpretadas e nativas.
+
+### Subestrutura Ótima e Superposição de Subproblemas
+- Prova de que problemas de otimização combinatória exibem subestrutura ótima formalizável por relações de recorrência.
+- Comprovação empírica do colapso de **heurísticas gulosas** quando a *propriedade da escolha gulosa* não se sustenta (demonstrada via simulações com Monte Carlo no corte de hastes).
+
+### Otimização Espacial e Trade-offs de Engenharia
+- Isolamento e quantificação do custo de **recuperação de solução ótima (*traceback*)**:
+  - Matriz bidimensional completa $(m+1) \times (n+1)$ para reconstrução exata da solução.
+  - Redução drástica para **duas linhas rotativas** $\Theta(\min(m, n))$ ou **vetor unidimensional** $\Theta(W)$ quando apenas o valor escalar ótimo é requerido (redução de memória superior a $97\%$).
+
+### Comparação Inter-linguagem (CPython vs. C++17)
+- Isolamento de fatores de arquitetura de software: alocação contígua em heap vs. ponteiros de objetos em Python (*PyObject boxing*), vetorização e otimização por compilador nativo (`g++ -O3 -std=c++17`).
 
 ---
 
-## 3. Estrutura do Repositório
+## 🔬 Algoritmos Estudados
+
+### 1. Sequência de Fibonacci (Problema de Aquecimento)
+
+#### Fundamentação Teórica
+A sequência de Fibonacci ilustra de forma canônica o fenômeno da **superposição massiva de subproblemas**, onde subárvores idênticas são recalculadas exponencialmente na abordagem recursiva ingênua.
+
+**Recorrência:**
+$$F(0) = 0, \quad F(1) = 1$$
+$$F(n) = F(n-1) + F(n-2), \quad \forall n \ge 2$$
+
+#### Abordagens Implementadas
+1. **Força Bruta (*Naive*):** Árvore recursiva pura com $2^{n-1}$ folhas. Complexidade: $\Theta(\phi^n) \approx \Theta(1.618^n)$ tempo, $O(n)$ espaço na pilha.
+2. **Top-Down com Memoização:** Recursão guiada com tabela de dispersão (*cache*). Cada subproblema de $0$ a $n$ é computado uma única vez em $2n-1$ chamadas de função. Complexidade: $\Theta(n)$ tempo, $\Theta(n)$ espaço.
+3. **Bottom-Up (Tabulação Linear):** Preenchimento iterativo de vetor unidimensional a partir dos casos-base. Complexidade: $\Theta(n)$ tempo, $\Theta(n)$ espaço.
+4. **Espaço Otimizado $O(1)$:** Mantém apenas as duas variáveis anteriores $a = F(n-2)$ e $b = F(n-1)$. Complexidade: $\Theta(n)$ tempo, $\Theta(1)$ espaço.
+
+---
+
+### 2. Corte de Hastes / Rod Cutting (Cormen Seção 15.1)
+
+#### Fundamentação Teórica
+Dada uma haste de comprimento $n$ e uma tabela de preços $p[1..n]$, determinar a receita máxima $r_n$ obtida cortando a haste em pedaços inteiros e vendendo-os.
+
+**Recorrência Fundamental:**
+$$r_0 = 0$$
+$$r_n = \max_{1 \le i \le n} \left( p[i] + r_{n-i} \right), \quad \forall n \ge 1$$
+
+#### Algoritmo Estendido e Reconstrução
+- **Extended-Bottom-Up-Cut-Rod:** Constrói a tabela de receitas ótimas $r[0..n]$ e a tabela auxiliar de escolhas $s[0..n]$, onde $s[j]$ armazena o tamanho do primeiro pedaço cortado para a haste de comprimento $j$.
+- **Reconstruct-Cuts:** Algoritmo iterativo de *traceback* que recupera a partição exata dos pedaços em tempo $O(n)$.
+- **Duelo contra a Heurística Gulosa:** Implementação da estratégia gulosa por densidade de valor ($p[i] / i$). No contraexemplo canônico $p = [0, 1, 5, 8, 9]$ com $n = 4$:
+  - Guloso escolhe pedaço de tamanho 3 (razão $2.67$, sobra 1) $\to$ Receita $8 + 1 = 9$.
+  - Programação Dinâmica escolhe dois pedaços de tamanho 2 $\to$ Receita $5 + 5 = 10$ (**Ótimo global**).
+
+**Complexidade:** $\Theta(n^2)$ tempo, $\Theta(n)$ espaço para PD; $\Theta(2^n)$ para a recursão ingênua.
+
+---
+
+### 3. Multiplicação em Cadeia de Matrizes (Cormen Seção 15.2)
+
+#### Fundamentação Teórica
+Dada uma cadeia de $n$ matrizes $\langle A_1, A_2, \dots, A_n \rangle$ onde $A_i$ possui dimensão $p_{i-1} \times p_i$, determinar a parentização completa que minimiza o número total de multiplicações escalares.
+
+A busca exaustiva é inviável porque a quantidade de parentizações possíveis corresponde aos **Números de Catalan**:
+$$P(n) = C(n-1) = \frac{1}{n}\binom{2n-2}{n-1} \sim \Omega\left(\frac{4^n}{n^{3/2}}\right)$$
+Para $n=15$, existem mais de $2{,}6$ milhões de parentizações; para $n=50$, ultrapassa $5{,}1 \times 10^{26}$.
+
+**Recorrência Fundamental:**
+$$m[i, i] = 0, \quad \forall 1 \le i \le n$$
+$$m[i, j] = \min_{i \le k < j} \left\{ m[i, k] + m[k+1, j] + p_{i-1} \cdot p_k \cdot p_j \right\}, \quad 1 \le i < j \le n$$
+
+#### Estratégia de Preenchimento
+O preenchimento da tabela $m[1..n, 1..n]$ ocorre **por diagonais crescentes** (comprimento de subcadeia $l = 2 \dots n$). A matriz auxiliar $s[i, j]$ registra o ponto de corte ótimo $k$.
+
+- **Print-Optimal-Parens:** Reconstrução recursiva da expressão parentizada (ex.: `((A1(A2A3))((A4A5)A6))`).
+- **Instância Canônica do Cormen:** `dims = [30, 35, 15, 5, 10, 20, 25]` $\to$ Custo ótimo: **15.125 multiplicações**.
+
+**Complexidade:** $\Theta(n^3)$ tempo (laço triplo $l, i, k$), $\Theta(n^2)$ espaço.
+
+---
+
+### 4. Maior Subsequência Comum / LCS (Cormen Seção 15.4)
+
+#### Fundamentação Teórica
+Dadas duas sequências $X = \langle x_1, \dots, x_m \rangle$ e $Y = \langle y_1, \dots, y_n \rangle$, encontrar o comprimento e os elementos de uma subsequência comum de comprimento máximo.
+
+**Recorrência Fundamental:**
+$$c[i, j] = \begin{cases} 0 & \text{se } i = 0 \text{ ou } j = 0 \\ c[i-1, j-1] + 1 & \text{se } i, j > 0 \text{ e } x_i = y_j \\ \max(c[i-1, j], c[i, j-1]) & \text{se } i, j > 0 \text{ e } x_i \ne y_j \end{cases}$$
+
+#### Variantes e Estudos de Caso
+- **Tabela Completa com Direções:** Matriz $(m+1) \times (n+1)$ com setas de *traceback* (`diag`, `up`, `left`). Permite reconstruir a string ótima em tempo $O(m + n)$.
+- **Otimização de Duas Linhas:** Como $c[i, j]$ depende unicamente das linhas $i$ e $i-1$, reduz o espaço para $\Theta(\min(m, n))$, mantendo a menor string como largura de linha.
+- **Implementação C++17:** Binário nativo compilado com `-O3` para o experimento E4.
+- **Mini Diff Textual (`diff_tool.py`):** Aplicação de LCS tratando linhas como tokens para gerar diffs unificados (`+`, `-`, ` `).
+- **Alinhamento Global de DNA (`dna_alignment.py`):** Algoritmo de Needleman-Wunsch / Levenshtein com penalidade de gap (`-`) e cálculo de distância de edição sobre arquivos FASTA.
+
+**Complexidade:** $\Theta(m \cdot n)$ tempo; Espaço $\Theta(m \cdot n)$ (tabela completa) ou $\Theta(\min(m, n))$ (duas linhas).
+
+---
+
+### 5. Problema da Mochila 0/1 / Knapsack (Módulo Opcional)
+
+#### Fundamentação Teórica
+Dado um conjunto de $n$ itens com pesos $w_i$ e valores $v_i$, e uma mochila com capacidade máxima $W$, determinar o subconjunto que maximiza o valor total sem exceder $W$.
+
+**Recorrência Fundamental:**
+$$V[0, w] = 0, \quad \forall 0 \le w \le W$$
+$$V[i, w] = \begin{cases} V[i-1, w] & \text{se } w_i > w \\ \max(V[i-1, w], V[i-1, w - w_i] + v_i) & \text{se } w_i \le w \end{cases}$$
+
+- **Caráter Pseudo-polinomial:** Complexidade $O(n \cdot W)$, dependente do valor numérico de $W$ e não apenas do número de bits da entrada.
+- **Otimização 1D:** Itera capacidades de trás para frente ($W \dots w_i$), reduzindo o espaço de $O(n \cdot W)$ para $O(W)$.
+
+---
+
+## 📊 Comparação Teórica e Assintótica
+
+| Problema | Abordagem | Complexidade de Tempo | Complexidade de Espaço | Traceback da Solução | Quando Utilizar |
+| :--- | :--- | :---: | :---: | :---: | :--- |
+| **Fibonacci** | Recursivo Ingênuo | $\Theta(\phi^n) \approx \Theta(1.618^n)$ | $O(n)$ pilha | N/A | Apenas didático para ilustrar redundância exponencial |
+| **Fibonacci** | Top-Down Memoização | $\Theta(n)$ | $\Theta(n)$ cache + pilha | N/A | Quando nem todos os subproblemas precisam ser explorados |
+| **Fibonacci** | Bottom-Up Tabulação | $\Theta(n)$ | $\Theta(n)$ tabela | N/A | Quando todos os subproblemas são necessários; evita pilha |
+| **Fibonacci** | Espaço $O(1)$ | $\Theta(n)$ | $\Theta(1)$ | N/A | **Produção:** menor pegada de memória e execução contínua |
+| **Corte de Hastes** | Recursivo Ingênuo | $\Theta(2^n)$ | $O(n)$ pilha | Não | Inviável para $n > 25$ |
+| **Corte de Hastes** | Top-Down Memoização | $\Theta(n^2)$ | $\Theta(n)$ | Não | Instâncias esparsas |
+| **Corte de Hastes** | Extended Bottom-Up | $\Theta(n^2)$ | $\Theta(n)$ | **Sim** (tabela $s$) | **Produção:** receita ótima e lista exata de pedaços |
+| **Corte de Hastes** | Heurística Gulosa | $O(n \log n)$ | $O(n)$ | Sim | Falha em até 34% dos casos; inadequado sem prova |
+| **Cadeia de Matrizes** | Recursivo Ingênuo | $\Omega(4^n/n^{3/2})$ | $O(n)$ pilha | Não | Inviável para $n > 12$ devido à explosão de Catalan |
+| **Cadeia de Matrizes** | Bottom-Up Diagonais | $\Theta(n^3)$ | $\Theta(n^2)$ | **Sim** (tabela $s$) | **Padrão ouro:** ordem ótima de parentização |
+| **LCS** | Recursivo Ingênuo | $O(2^{m+n})$ | $O(m+n)$ pilha | Não | Apenas entradas minúsculas ($< 15$ caracteres) |
+| **LCS** | Tabela Completa (Cormen) | $\Theta(m \cdot n)$ | $\Theta(m \cdot n)$ | **Sim** (matriz $b$) | Quando a subsequência de texto ou alinhamento é necessária |
+| **LCS** | Duas Linhas (Otimizado) | $\Theta(m \cdot n)$ | $\Theta(\min(m, n))$ | Apenas comprimento | Economia de até 99,8% de RAM em strings biológicas |
+| **LCS (C++17)** | Nativo compilado `-O3` | $\Theta(m \cdot n)$ | $\Theta(m \cdot n)$ | Sim | **Alto desempenho:** $52\times$ mais veloz que CPython |
+| **Mochila 0/1** | Bottom-Up 2D | $O(n \cdot W)$ | $O(n \cdot W)$ | **Sim** | Quando a lista de itens escolhidos é requerida |
+| **Mochila 0/1** | Vetor 1D Reverso | $O(n \cdot W)$ | $O(W)$ | Apenas valor máximo | Grande escala de $W$; economia massiva de memória |
+
+---
+
+## 📁 Estrutura do Projeto
 
 ```text
-pd-programacao-dinamica/
-├── README.md                     # Documentação principal e instruções de execução
-├── LICENSE                       # Licença MIT de código aberto
-├── Makefile                      # Automação de compilação, testes, web e relatórios
-├── requirements.txt              # Dependências Python (pytest, matplotlib, pandas)
-├── .gitignore                    # Filtros de arquivos temporários, caches e binários
-├── .editorconfig                 # Padrões uniformes de indentação e codificação
-├── conftest.py                   # Hook do pytest para marcar stubs como skipped
-├── src/                          # Código fonte de referência em Python
+Trabalho-AEDS-II-Programaco-Dinamica/
+├── README.md                           # Documentação técnica integral e guia de execução
+├── LICENSE                             # Licença de código aberto MIT
+├── Makefile                            # Build system com automação de testes, benchmarks e web
+├── requirements.txt                    # Dependências Python (pytest, matplotlib, pandas, numpy)
+├── conftest.py                         # Configuração e fixtures da suíte pytest
+├── .editorconfig                       # Padrão consistente de tabulações e quebras de linha
+├── .gitignore                          # Exclusões de ambiente virtual, compilações e caches
+│
+├── src/                                # Implementações de referência em Python
 │   ├── __init__.py
-│   ├── common.py                 # Infraestrutura de medição (CallCounter e measure)
-│   ├── fibonacci.py              # Stubs: Naive, Memo, Bottom-Up, O(1) Espaço
-│   ├── rod_cutting.py            # Stubs: Corte de Hastes (Cormen 15.1) e Guloso
-│   ├── matrix_chain.py           # Stubs: Multiplicação em Cadeia de Matrizes (Cormen 15.2)
-│   ├── lcs.py                    # Stubs: Subsequência Comum Máxima (Cormen 15.4)
-│   ├── knapsack.py               # Stubs: Mochila 0/1 (módulo opcional)
-│   └── case_study/               # Estudos de caso práticos
+│   ├── common.py                       # CallCounter, instrumentação e medição de memória
+│   ├── fibonacci.py                    # Naive, Memo, Bottom-Up e O(1) Espaço
+│   ├── rod_cutting.py                  # Naive, Memo, Extended Bottom-Up e Heurística Gulosa
+│   ├── matrix_chain.py                 # Naive, Memo, Matrix-Chain-Order e Catalan
+│   ├── lcs.py                          # Naive, Memo, Tabela Completa e Duas Linhas
+│   ├── knapsack.py                     # Mochila 0/1 2D e Vetor 1D com iteração reversa
+│   └── case_study/                     # Estudos de caso de aplicação prática
 │       ├── __init__.py
-│       ├── diff_tool.py          # Comparador textual linha a linha via LCS
-│       └── dna_alignment.py      # Alinhamento de fitas de DNA e distância de edição
-├── cpp/
-│   └── lcs.cpp                   # Implementação em C++17 para benchmark comparativo
-├── data/                         # Arquivos pequenos de teste para os estudos de caso
-├── tests/                        # Suíte completa de testes unitários com pytest
-│   ├── test_fibonacci.py
-│   ├── test_rod_cutting.py
-│   ├── test_matrix_chain.py
-│   ├── test_lcs.py
-│   └── test_case_study.py
-├── benchmarks/                   # Automação e geração de dados experimentais
-│   ├── run_benchmarks.py         # Executor CLI com medições e tratamento de pendências
-│   ├── plot_results.py           # Script para plotagem de gráficos padronizados (200 DPI)
-│   └── results/.gitkeep
-├── web/                          # Portal com simuladores visuais interativos
-│   ├── index.html                # Menu principal de navegação funcional
-│   ├── fib-tree.html             # Árvore de recursão e nós redundantes
-│   ├── lcs-table.html            # Preenchimento animado da tabela do LCS e setas
-│   ├── rod-cutting-duel.html     # Duelo interativo: Guloso vs. Programação Dinâmica
-│   ├── matrix-chain.html         # Preenchimento por diagonais das matrizes m e s
-│   ├── benchmarks.html           # Painel de gráficos renderizados a partir do JSON
-│   ├── quiz.html                 # Quiz interativo de 8 perguntas com pontuação
-│   ├── css/style.css             # Tema claro/escuro e paleta cromática imutável
-│   ├── js/shared.js              # Utilitários JavaScript e gerenciador de tema
-│   └── data/results.json         # Base consolidada de resultados experimentais
-├── relatorio/                    # Relatório técnico-científico em LaTeX
-│   ├── main.tex                  # Arquivo mestre com pré-ambulo, capa e seções
-│   ├── referencias.bib           # Base de dados BibTeX com citações acadêmicas
-│   ├── secoes/                   # Capítulos 1 a 6 e apêndice com anotações TODO
-│   ├── tikz/.gitkeep
-│   └── figuras/.gitkeep
-├── cheatsheet/                   # Guia rápido sintetizado de 1 a 2 páginas
-│   ├── cheatsheet.tex            # Documento autônomo compilável
-│   └── cheatsheet_body.tex       # Corpo compartilhado também com o apêndice do relatório
-├── slides/                       # Apresentação do seminário acadêmico (40 minutos)
-│   ├── README.md                 # Diretrizes de elaboração, ferramentas e entregáveis
-│   └── assets/.gitkeep
-└── docs/                         # Documentação gerencial e de alinhamento da equipe
-    ├── TAREFAS.md                # Quadro geral de tarefas e dependências
-    ├── COMO_TRABALHAR_EM_GRUPO.md# Guia prático de branches, PRs e colaboração
-    ├── RESUMO_TRABALHO.md        # Resumo conceitual dos conceitos e complexidades
-    ├── ROTEIRO_SLIDES.md         # Roteiro minuto a minuto da apresentação oral
-    ├── DECISOES.md               # Registro arquitetural das decisões de engenharia
-    ├── figures/.gitkeep
-    └── tarefas/                  # Arquivo individual com checklist para cada integrante
+│       ├── diff_tool.py                # Comparador de arquivos linha a linha via LCS
+│       └── dna_alignment.py            # Alinhamento global e distância de Levenshtein
+│
+├── cpp/                                # Implementação de alto desempenho em linguagem nativa
+│   └── lcs.cpp                         # LCS Bottom-Up em C++17 com flags -O3 e saída JSON
+│
+├── data/                               # Arquivos de dados reais para os estudos de caso
+│   ├── texto_a.txt                     # Versão original de arquivo de código/texto
+│   ├── texto_b.txt                     # Versão modificada com adições e remoções
+│   ├── dna_a.fasta                     # Sequência biológica de nucleotídeos A
+│   └── dna_b.fasta                     # Sequência biológica de nucleotídeos B
+│
+├── tests/                              # Suíte completa de testes automatizados (48 testes)
+│   ├── test_fibonacci.py               # Casos Cormen, equivalências e limites de chamadas
+│   ├── test_rod_cutting.py             # Tabela Cormen 1..10, reconstrução e falha do guloso
+│   ├── test_matrix_chain.py            # Instância oficial de 6 matrizes, parentização e Catalan
+│   ├── test_lcs.py                     # Strings clássicas Cormen e equivalência entre 4 versões
+│   ├── test_case_study.py              # Testes unitários do Mini Diff e alinhamento FASTA
+│   └── test_benchmarks.py              # 20 testes de estresse da infraestrutura experimental
+│
+├── benchmarks/                         # Automação de experimentos científicos e plotagem
+│   ├── run_benchmarks.py               # Executor CLI com protocolos estatísticos rigorosos
+│   ├── plot_results.py                 # Gerador de gráficos científicos padronizados a 200 DPI
+│   └── results/                        # Dados brutos experimentais
+│       ├── all_benchmarks.csv          # Base consolidada de todos os experimentos E1 a E8
+│       ├── e1_fibonacci.csv            # Dados detalhados de Fibonacci
+│       ├── e2_rod_cutting.csv          # Dados detalhados de corte de hastes
+│       ├── e3_lcs_memory.csv           # Dados detalhados de memória do LCS
+│       ├── e4_lcs_cpp_vs_python.csv    # Comparativo C++ vs Python
+│       ├── e5_recursion_limit.csv      # Limite de profundidade de pilha em Python
+│       ├── e6_greedy_failure.csv       # Simulação Monte Carlo de erro do guloso
+│       ├── e7_matrix_chain.csv         # Dados da cadeia de matrizes e Catalan
+│       ├── e8_knapsack.csv             # Dados da Mochila 0/1
+│       └── machine.json                # Metadados de CPU, memória, SO e compiladores
+│
+├── docs/                               # Documentação e figuras para documentação técnica
+│   ├── figures/                        # 19 gráficos científicos sincronizados a 200 DPI
+│   ├── TAREFAS.md                      # Checklist de tarefas do projeto
+│   ├── COMO_TRABALHAR_EM_GRUPO.md      # Normas de Git Flow, branches e revisões de código
+│   ├── RESUMO_TRABALHO.md              # Síntese das complexidades e deduções assintóticas
+│   ├── ROTEIRO_SLIDES.md               # Roteiro minuto a minuto da apresentação oral
+│   └── DECISOES.md                     # Architecture Decision Records (ADRs)
+│
+├── relatorio/                          # Relatório acadêmico completo em LaTeX (estilo CEFET)
+│   ├── main.tex                        # Arquivo mestre com pré-ambulo, capa e estrutura
+│   ├── referencias.bib                 # Bibliografia em BibTeX (Cormen, Bellman, etc.)
+│   ├── figuras/                        # Cópia sincronizada dos gráficos a 200 DPI
+│   ├── tikz/                           # Diagramas vetoriais em TikZ
+│   └── secoes/                         # Capítulos 1 a 6 e apêndice
+│       ├── 01_introducao.tex
+│       ├── 02_fundamentacao.tex
+│       ├── 03_paradigma.tex
+│       ├── 04_analise.tex
+│       ├── 05_estudo_de_caso.tex
+│       ├── 06_conclusoes.tex
+│       └── apendice_cheatsheet.tex
+│
+├── cheatsheet/                         # Resumo acadêmico condensado de 1 a 2 páginas
+│   ├── cheatsheet.tex                  # Documento independente em LaTeX
+│   └── cheatsheet_body.tex             # Corpo compartilhado entre apêndice e cheat sheet
+│
+├── slides/                             # Material para a apresentação oral de 40 minutos
+│   ├── README.md                       # Diretrizes de organização e estrutura dos 5 blocos
+│   └── assets/                         # Imagens e diagramas de apoio
+│
+└── web/                                # Portal web com simuladores e visualizações interativas
+    ├── index.html                      # Painel central de navegação com alternância de tema
+    ├── benchmarks.html                 # Visualizador dinâmico de gráficos científicos
+    ├── fib-tree.html                   # Árvore de recursão animada com destaque a nós do cache
+    ├── rod-cutting-duel.html           # Duelo interativo: Solução Ótima (PD) vs Heurística Gulosa
+    ├── matrix-chain.html               # Simulador de preenchimento por diagonais (tabelas m e s)
+    ├── lcs-table.html                  # Animação passo a passo da grade de LCS e setas de traceback
+    ├── quiz.html                       # Questionário avaliativo com 8 questões conceituais
+    ├── css/style.css                   # Folha de estilos responsiva com suporte a Dark Mode
+    ├── js/shared.js                    # Utilitários JavaScript, controle de tema e modais
+    ├── figures/                        # Gráficos servidos estaticamente para o portal
+    └── data/                           # Bases de dados JSON consumidas pelo front-end
+        ├── results.json
+        └── manifest.json
 ```
 
 ---
 
-## 4. Instalação e Preparação do Ambiente
+## 🛠️ Tecnologias Utilizadas
 
-### Pré-requisitos
-* Python 3.11 ou superior
-* Compilador C++17 (`g++`)
-* `latexmk` ou conta no Overleaf (para compilação do relatório)
-
-### Passo a Passo
-
-1. **Clonar o repositório:**
-   ```bash
-   git clone https://github.com/Ribeiro-JP/Trabalho-AEDS-II-Programaco-Dinamica.git
-   cd Trabalho-AEDS-II-Programaco-Dinamica
-   ```
-
-2. **Criar o ambiente virtual e instalar dependências:**
-   ```bash
-   make setup
-   ```
-
-3. **Ativar o ambiente virtual:**
-   ```bash
-   source .venv/bin/activate
-   ```
+| Ferramenta / Tecnologia | Versão Mínima | Finalidade no Projeto |
+| :--- | :---: | :--- |
+| **Python** | 3.11+ / 3.12 | Implementações base de referência, estudos de caso e suíte de benchmarks |
+| **C++ (g++)** | C++17 (`-O3`) | Implementação nativa de alto desempenho do LCS para benchmark inter-linguagem |
+| **Pytest** | 8.x / 9.x | Framework de testes unitários automatizados com asserções estritas |
+| **Matplotlib & NumPy** | 3.8+ / 1.26+ | Plotagem dos gráficos científicos em padrão editorial Dark Slate |
+| **Pandas** | 2.1+ | Manipulação de datasets, parsing de CSVs e cálculo estatístico |
+| **Tracemalloc** | Standard Library | Rastreamento isolado de pico de memória física alocada em bytes |
+| **LaTeX (TeX Live / Overleaf)** | 2024 / 2025 | Diagramação profissional do relatório acadêmico CEFET-MG e Cheat Sheet |
+| **Vanilla HTML/CSS/JS** | ES6+ | Simuladores visuais interativos e portal web autônomo sem dependências externas |
 
 ---
 
-## 5. Como Executar Cada Parte do Projeto
+## 🛠️ Comandos do Makefile
 
-| Comando | Descrição da Ação |
-| :--- | :--- |
-| `make test` | Executa a suíte de testes com `pytest`. Testes de funções ainda não implementadas aparecem automaticamente como `SKIPPED`. |
-| `make bench` | Executa a suíte completa de experimentos empíricos (E1 a E8). |
-| `make bench-quick` | Executa os benchmarks em modo rápido (menos repetições e instâncias menores). |
-| `make cpp` | Compila o algoritmo LCS em C++17 (`cpp/lcs.cpp`) gerando o binário `cpp/lcs`. |
-| `make web` | Inicia o servidor HTTP local servindo o portal interativo em **`http://localhost:8000/web/`**. |
-| `make report` | Compila o relatório acadêmico em PDF utilizando `latexmk` (se instalado localmente). |
-| `make clean` | Remove arquivos de cache, `.pytest_cache`, binários compilados e artefatos do LaTeX. |
+O projeto conta com automação completa via `Makefile` para instalação, compilação, testes, benchmarks e servidor local:
 
----
-
-## 6. Quadro de Status por Frente de Trabalho
-
-Acompanhe o detalhamento completo e a ordem sugerida de paralelismo em [`docs/TAREFAS.md`](docs/TAREFAS.md).
-
-- [ ] **Relatório Técnico (LaTeX):**
-  - [ ] Capítulos 1, 2 e 6 (P1)
-  - [ ] Capítulos 3 e 4 com `algorithm2e` e TikZ (P2)
-  - [ ] Capítulo 5 com análise crítica dos benchmarks (P4)
-- [ ] **Implementação Base em Python (P3):**
-  - [ ] Fibonacci (`fibonacci.py`)
-  - [ ] Corte de Hastes (`rod_cutting.py`)
-  - [ ] Cadeia de Matrizes (`matrix_chain.py`)
-  - [ ] Subsequência Comum Máxima (`lcs.py`)
-  - [ ] Mochila 0/1 (`knapsack.py` - opcional)
-- [ ] **Estudos de Caso e Benchmarks (P4):**
-  - [ ] Mini Diff (`diff_tool.py`) e Alinhamento de DNA (`dna_alignment.py`)
-  - [ ] Experimentos E1 a E7 (e E8 opcional) com `run_benchmarks.py`
-  - [ ] Gráficos científicos a 200 DPI com `plot_results.py`
-  - [ ] Comparativo de linguagem Python vs. C++17 (`cpp/lcs.cpp`)
-- [ ] **Portal Web Interativo (P5):**
-  - [x] Menu principal responsivo com alternância de tema claro/escuro (`index.html`)
-  - [ ] Visualizador de árvore do Fibonacci (`fib-tree.html`)
-  - [ ] Duelo Guloso vs. PD no corte de hastes (`rod-cutting-duel.html`)
-  - [ ] Preenchimento por diagonais da cadeia de matrizes (`matrix-chain.html`)
-  - [ ] Animação passo a passo da tabela do LCS (`lcs-table.html`)
-  - [ ] Painel interativo de gráficos de benchmark (`benchmarks.html`)
-  - [ ] Quiz conceitual com 8 questões (`quiz.html`)
-- [ ] **Comunicação e Apresentação:**
-  - [ ] Cheat Sheet de 1 a 2 páginas em LaTeX (`cheatsheet/cheatsheet.tex`) (P5/P2)
-  - [ ] Slides do seminário de 40 minutos (`slides/`) (P5/Todos)
-  - [ ] Ensaio geral cronometrado com perguntas cruzadas (Todos)
-
----
-
-## 7. Passo a Passo do Desenvolvimento Planejado
-
-Para consulta rápida da equipe, o cronograma operacional divide-se nas seguintes etapas fundamentais:
-1. **Infraestrutura e Contratos:** Estrutura de diretórios, Makefile, `conftest.py`, `src/common.py` e assinaturas com `raise NotImplementedError`.
-2. **Testes Unitários:** Casos canônicos do livro do Cormen, casos de borda e equivalências assintóticas validadas em `tests/`.
-3. **Desenvolvimento Algorítmico (P3):** Preenchimento sucessivo dos algoritmos base até todos os testes passarem.
-4. **Instrumentação Empírica (P4):** Execução dos experimentos com corte de 10s, medição de pico de memória via `tracemalloc` e compilação do LCS em C++17.
-5. **Comunicação Visual e Web (P5):** Desenvolvimento dos simuladores em HTML/JS puros e confecção dos slides para 40 minutos.
-6. **Redação do Relatório (P1 e P2):** Formalização teórica, pseudocódigos em `algorithm2e`, diagramas TikZ e montagem no Overleaf.
-7. **Revisão Cruzada e Ensaio:** Validação mútua do código e ensaio da apresentação oral.
-
----
-
-## 8. Resultados Experimentais
-
-Esta seção sintetiza os principais achados práticos obtidos a partir dos benchmarks automatizados (experimentos E1 a E8), confrontando as previsões assintóticas do livro do Cormen com medições reais de tempo de execução, consumo de memória e qualidade das soluções.
-
-### Tabela-Resumo dos Experimentos
-
-| Experimento | Resultado observado | O que isso demonstra |
+| Alvo (`make`) | Comando Executado | Descrição e Finalidade |
 | :--- | :--- | :--- |
-| **E1 — Fibonacci**<br>([gráfico](docs/figures/e1_fibonacci_tempo.png)) | Em $n=30$, a força bruta consumiu **0,84 s**, enquanto a PD com espaço $O(1)$ levou **1,32 $\mu$s** (speedup $> 600.000\times$). Para $n > 32$, a força bruta foi interrompida por timeout. | A superposição massiva de subproblemas torna a recursão ingênua $\Theta(2^n)$ impraticável em poucos passos, enquanto a PD reduz o custo para tempo linear $\Theta(n)$. |
-| **E2 — Corte de Hastes**<br>([gráfico](docs/figures/e2_rod_cutting_tempo.png)) | A força bruta atingiu **31,9 ms** em $n=15$, dobrando o tempo a cada novo centímetro. A PD resolveu $n=100$ em apenas **2,08 ms**. | Substituir uma árvore recursiva redundante $\Theta(2^n)$ por uma tabela de subproblemas $\Theta(n^2)$ permite resolver instâncias de produção em milissegundos. |
-| **E3 — Memória no LCS**<br>([gráfico](docs/figures/e3_lcs_memoria.png)) | Em cadeias de $n=1000$, a matriz completa consumiu **19,6 MB** de heap, enquanto a técnica de duas linhas exigiu apenas **42,9 KB** (redução de **99,8%**). | A dependência de transição do LCS exige apenas a linha anterior. Quando o rastreamento da string (*traceback*) não é exigido, a economia de espaço é drástica. |
-| **E4 — CPython vs. C++17**<br>([gráfico](docs/figures/e4_lcs_python_cpp.png)) | Para sequências de $n=1000$, o C++ (`-O3`) executou em **8,5 ms** contra **446 ms** do Python 3.11 (speedup empírico de **$52{,}2\times$**). | Ambos possuem a mesma complexidade assintótica $\Theta(mn)$, mas fatores constantes (alocação estática contígua, compilação nativa e ausência de *boxing*) tornam o C++ muito mais veloz. |
-| **E5 — Limite de Recursão**<br>([gráfico](docs/figures/e5_recursao_limites.png)) | A memoização Top-Down falhou com `RecursionError` exatamente em $n=1000$ (limite da pilha do interpretador). O Bottom-Up iterativo seguiu estável em $n=1200$ (**0,61 ms**). | O modelo Bottom-Up possui maior robustez de engenharia, pois opera iterativamente na memória heap, imune a limitações de profundidade da pilha recursiva. |
-| **E6 — Falha do Guloso**<br>([gráfico](docs/figures/e6_guloso_erro.png)) | A heurística gulosa pela razão de densidade ($p_i / i$) falhou em até **34%** das instâncias randômicas testadas (ex.: em $n=25$), com perda média de receita de até **6,04%**. | Problemas que não satisfazem a *propriedade da escolha gulosa* exigem Programação Dinâmica; decisões localmente atraentes não garantem a solução ótima global. |
-| **E7 — Cadeia de Matrizes**<br>([gráfico](docs/figures/e7_matrix_chain_tempo.png)) | Para $n=50$ matrizes, existem $\approx 5{,}1 \times 10^{26}$ ordens possíveis de parênteses (números de Catalan). A PD Bottom-Up encontrou a ordem ótima em apenas **11,7 ms**. | A busca exaustiva combinatória é inexecutável na prática, enquanto a PD resolve o problema em tempo cúbico $\Theta(n^3)$ reaproveitando soluções parciais. |
-| **E8 — Mochila 0/1**<br>([gráfico](docs/figures/e8_knapsack_memoria.png)) | O vetor 1D reduziu o pico de memória de **1,6 MB** para **39,2 KB** em $W=1000$ (**97,5%** de economia). O tempo de execução cresceu linearmente com o valor da capacidade $W$. | Comprova experimentalmente o caráter *pseudo-polinomial* $\Theta(nW)$: a complexidade do algoritmo depende da magnitude numérica de $W$, e não apenas da quantidade de itens. |
-
-> 📊 **Dashboard Unificado:** Para visualizar o contraste empírico direto entre as ordens assintóticas ($\Theta(2^n)$, $\Theta(n^3)$, $\Theta(n^2)$ e $\Theta(n)$), consulte [`docs/figures/summary_complexity_dashboard.png`](docs/figures/summary_complexity_dashboard.png).
-
-### Principais Conclusões Didáticas
-
-1. **Quando a Programação Dinâmica é indispensável?** Quando o problema exibe *subestrutura ótima* e *superposição de subproblemas*, mas a *propriedade da escolha gulosa* não se sustenta. O experimento E6 prova que tentar simplificar o problema com uma heurística gulosa sem prova teórica gera perdas financeiras concretas em até 1 a cada 3 instâncias.
-2. **Top-Down (Memoização) vs. Bottom-Up (Tabulação):** Ambas as abordagens oferecem a mesma complexidade assintótica de tempo. No entanto, o Bottom-Up evita o overhead da pilha de execução de funções e elimina riscos de interrupção abrupta por limite de recursão, como evidenciado no E5.
-3. **Trade-off clássico de Espaço vs. Recuperação da Solução:** Se o objetivo é apenas obter o valor ótimo (ex.: comprimento da subsequência ou lucro máximo da mochila), vetores rotativos ou de linha única economizam mais de 97% de memória (E3 e E8). Já quando é necessário reconstruir a solução concreta (*traceback*), a matriz bidimensional completa torna-se obrigatória.
-4. **Constantes Ocultas na Notação Big-O:** O experimento E4 comprova aos estudantes que dois algoritmos $\Theta(mn)$ podem ter tempos drasticamente diferentes na prática ($52\times$ de diferença entre C++ e Python), ressaltando a relevância da arquitetura de execução e alocação de memória do hardware.
-
-> [!WARNING]
-> **Limitações Experimentais Observadas:**
-> * **Timeouts de Segurança:** Nos algoritmos puramente recursivos (E1 e E2), as medições foram truncadas em $n \le 30$ e $n \le 15$ por limite de tempo (10s) para evitar travamento do ambiente.
-> * **Ausência de Dados Pós-Limite:** No experimento E5, não há tempos de execução para a memoização Top-Down acima de $n=1000$ em virtude do `RecursionError`.
-> * **Medições vs. Provas Matemáticas:** Os tempos reportados foram aferidos empiricamente com `time.perf_counter()` em CPython 3.11 / GCC 6.3. As classes de complexidade indicam o comportamento assintótico teórico, mas flutuações de hardware e sistema operacional geram variações nas ordens de grandeza das constantes.
+| `make help` | `@echo ...` | Exibe o menu com todos os alvos e comandos disponíveis no Makefile. |
+| `make setup` | `python3 -m venv $(VENV) && $(PIP) install -r requirements.txt` | Cria o ambiente virtual (`.venv`), atualiza o `pip` e instala todas as dependências. |
+| `make test` | `$(PYTEST) tests/ -v` | Executa a suíte de 48 testes unitários e de integração com saída verbosa. |
+| `make bench` | `$(PYTHON) benchmarks/run_benchmarks.py` | Executa toda a bateria de benchmarks (E1 a E8) em modo científico com amostragem densa. |
+| `make bench-quick` | `$(PYTHON) benchmarks/run_benchmarks.py --quick` | Executa os benchmarks em modo rápido (menos repetições e instâncias menores). |
+| `make cpp` | `g++ -O3 -std=c++17 cpp/lcs.cpp -o cpp/lcs` | Compila o algoritmo LCS em C++17 com otimização máxima (`-O3`), gerando `cpp/lcs`. |
+| `make web` | `python3 -m http.server 8000` | Inicia o servidor HTTP local para servir o portal interativo em `http://localhost:8000/web/`. |
+| `make report` | `cd relatorio && latexmk -pdf main.tex` | Compila o relatório acadêmico em PDF utilizando `latexmk` (se instalado localmente). |
+| `make clean` | `rm -rf __pycache__ ... cpp/lcs relatorio/*.aux ...` | Remove caches Python (`__pycache__`, `.pytest_cache`), binários nativos e artefatos LaTeX. |
 
 ---
 
-## 9. Gargalos Observados
+## 🔧 Ambiente Experimental e Metodologia
 
-*(a preencher por P4 depois dos benchmarks)*
-
-> [!NOTE]
-> Esta seção documentará os gargalos reais de hardware e arquitetura identificados durante os testes práticos (limite de recursão da pilha do interpretador Python, estouro de memória da tabela bidimensional do LCS em sequências biológicas longas e o impacto da localidade espacial de cache).
-
----
-
-## 10. Limitações da Técnica
-
-*(a preencher por P4 depois dos benchmarks)*
-
-> [!NOTE]
-> Esta seção sintetizará os cenários computacionais onde a Programação Dinâmica se torna inviável ou ineficaz (problemas sem subestrutura ótima como o caminho simples mais longo, complexidade pseudo-polinomial da mochila e explosão combinatória do espaço de estados em problemas NP-difíceis como o Caixeiro Viajante).
+* **Ambiente de Teste:** Linux x86-64, Python 3.12, GCC 13 com `-O3 -std=c++17`.
+* **Medição de Tempo:** `time.perf_counter()` de alta precisão, sem concorrência com rastreamento de memória.
+* **Média Aparada (*Trimmed Mean*):** 5 repetições por ponto amostral; descarte dos extremos (mínimo e máximo) e média aritmética sobre as 3 repetições centrais.
+* **Batching Adaptativo:** Para durações $< 200\,\mu s$, laço em lote de até 100 iterações com amostragem piloto para superar o ruído do timer do sistema operacional.
+* **Isolamento e Timeout:** Subprocessos independentes com encerramento forçado em 3.0s para conter explosões exponenciais da força bruta.
+* **Isolamento de Cache:** No Top-Down de Fibonacci, medições completas utilizam cache limpo (*Cold Cache* $\Theta(n)$), medindo-se em separado a consulta constante (*Warm Cache* $O(1)$).
 
 ---
 
-## 11. Referências
+## 📊 Resultados Experimentais
 
-1. CORMEN, Thomas H.; LEISERSON, Charles E.; RIVEST, Ronald L.; STEIN, Clifford. **Algoritmos: Teoria e Prática**. 3. ed. Rio de Janeiro: Elsevier, 2012. Capítulo 15: Programação Dinâmica, p. 263-305.
-2. BELLMAN, Richard. **Dynamic Programming**. Princeton University Press, 1957.
-3. NEEDLEMAN, Saul B.; WUNSCH, Christian D. A general method applicable to the search for similarities in the amino acid sequence of two proteins. **Journal of Molecular Biology**, v. 48, n. 3, p. 443-453, 1970.
+### E1: Fibonacci (Recursão Exponencial vs. Programação Dinâmica)
+
+<p align="center">
+  <img src="docs/figures/e1_fibonacci_tempo.png" width="48%" alt="E1 Tempo Geral"/>
+  <img src="docs/figures/e1_fibonacci_dp.png" width="48%" alt="E1 Comparação Fina PD"/>
+</p>
+<p align="center">
+  <img src="docs/figures/e1_fibonacci_chamadas.png" width="48%" alt="E1 Chamadas de Função"/>
+  <img src="docs/figures/e1_fibonacci_speedup.png" width="48%" alt="E1 Fator de Speedup"/>
+</p>
+
+* **Tempo de Execução:** Em $n=32$, a força bruta ingênua levou **1,25 segundo**, com crescimento duplicativo a cada incremento; para $n > 32$, foi interrompida por timeout. A abordagem Bottom-Up calculou $n=2000$ em **$180\,\mu s$** e com espaço $O(1)$ em **$128\,\mu s$**.
+* **Chamadas de Função:** A força bruta disparou de forma exponencial (**177 chamadas** para $n=10$ e **7.049.155 chamadas** para $n=32$). A memoização realizou estritamente $2n - 1$ chamadas ($19$ chamadas para $n=10$).
+* **Fator de Aceleração (Speedup):** A Programação Dinâmica atinge ganhos de desempenho superiores a **$600.000\times$** em $n=30$.
 
 ---
 
-## 12. Licença
+### E2: Corte de Hastes (Cormen 15.1) e Duelo contra Algoritmo Guloso
 
-Este projeto é distribuído sob a licença **MIT**. Consulte o arquivo [`LICENSE`](LICENSE) para mais detalhes.
+<p align="center">
+  <img src="docs/figures/e2_rod_cutting_tempo.png" width="48%" alt="E2 Tempo Exato"/>
+  <img src="docs/figures/e2_rod_cutting_qualidade.png" width="48%" alt="E2 Qualidade e Erro"/>
+</p>
+
+* **Crescimento Temporal:** O algoritmo recursivo ingênuo atinge $31,9\,\text{ms}$ para $n=15$. O Extended Bottom-Up processa $n=100$ em apenas **$2,08\,\text{ms}$**, gerando a receita ótima e os pontos de corte exatos.
+* **Falha da Heurística Gulosa:** A escolha baseada em densidade ($p_i / i$) falha em instâncias com combinações modulares, enquanto a PD assegura sempre o ótimo global.
+
+---
+
+### E3: Maior Subsequência Comum (LCS) — Análise de Memória
+
+<p align="center">
+  <img src="docs/figures/e3_lcs_memoria.png" width="48%" alt="E3 Consumo de Memória"/>
+  <img src="docs/figures/e3_lcs_tempo.png" width="48%" alt="E3 Tempo de Execução"/>
+</p>
+
+* **Economia de Memória:** Para cadeias com $1000$ caracteres, a matriz bidimensional completa requer **19,6 MB** de memória heap para armazenar as referências e setas de traceback. A otimização com **duas linhas rotativas** consumiu apenas **42,9 KB** (**redução de 99,8%**).
+
+---
+
+### E4: Gargalo de Linguagem — CPython 3.12 vs. C++17 Nativo (-O3)
+
+<p align="center">
+  <img src="docs/figures/e4_lcs_python_cpp.png" width="48%" alt="E4 C++ vs Python"/>
+  <img src="docs/figures/e4_lcs_speedup.png" width="48%" alt="E4 Speedup C++"/>
+</p>
+
+* **Impacto do Runtime:** Ambos executam o mesmo algoritmo exato $\Theta(m \cdot n)$. Para sequências de $1000$ caracteres, o C++17 executou em **8,5 ms**, enquanto o CPython 3.12 demandou **446 ms** (speedup empírico de **$52{,}2\times$** a favor do código nativo compilado sem boxing de objetos).
+
+---
+
+### E5: Limites de Profundidade da Pilha de Recursão
+
+<p align="center">
+  <img src="docs/figures/e5_recursao_limites.png" width="48%" alt="E5 Limites de Recursão"/>
+  <img src="docs/figures/e5_recursao_tempo.png" width="48%" alt="E5 Tempo no Domínio Válido"/>
+</p>
+
+* **Robustez de Engenharia:** A memoização Top-Down falha com `RecursionError` no limite de profundidade da pilha do interpretador ($n = 1000$). A formulação Bottom-Up tabulada opera iterativamente na memória heap e permaneceu estável para qualquer tamanho de entrada.
+
+---
+
+### E6: Simulação de Monte Carlo da Falha Gulosa
+
+<p align="center">
+  <img src="docs/figures/e6_guloso_erro.png" width="50%" alt="E6 Taxa de Falha do Guloso"/>
+</p>
+
+* **Taxa de Erro:** Em 200 instâncias aleatórias por tamanho de haste, a heurística gulosa falhou em até **34%** das vezes (para $n=25$), com perda média de receita de até **6,04%**, comprovando que heurísticas sem prova formal não substituem a Programação Dinâmica.
+
+---
+
+### E7: Multiplicação em Cadeia de Matrizes e Números de Catalan
+
+<p align="center">
+  <img src="docs/figures/e7_matrix_chain_tempo.png" width="48%" alt="E7 Tempo Cúbico"/>
+  <img src="docs/figures/e7_matrix_chain_operacoes.png" width="48%" alt="E7 Catalan e Operações"/>
+</p>
+
+* **Explosão Combinatória:** Enquanto o espaço de busca de parentizações cresce segundo os números de Catalan $\Omega(4^n / n^{3/2})$, a Programação Dinâmica Bottom-Up resolve a instância de $n=50$ matrizes em **11,7 ms**, poupando bilhões de multiplicações escalares redundantes.
+
+---
+
+### E8: Problema da Mochila 0/1 — Caráter Pseudo-Polinomial
+
+<p align="center">
+  <img src="docs/figures/e8_knapsack_tempo_w.png" width="48%" alt="E8 Tempo em Função de W"/>
+  <img src="docs/figures/e8_knapsack_memoria.png" width="48%" alt="E8 Memória 2D vs 1D"/>
+</p>
+
+* **Pseudo-Polinomial:** O tempo cresce em função direta da magnitude numérica da capacidade $W$.
+* **Compactação 1D:** A otimização em vetor unidimensional com iteração reversa reduziu o pico de memória de **1,6 MB** para **39,2 KB** em $W=1000$ (**97,5% de economia**).
+
+---
+
+## 💡 Discussão dos Resultados
+
+1. **Indispensabilidade da PD:** Problemas com subestrutura ótima e subproblemas superpostos exigem PD; decisões gulosas míopes causam perdas financeiras concretas em até um terço dos casos (E6).
+2. **Top-Down vs. Bottom-Up:** Ambas compartilham a mesma complexidade assintótica $\Theta(n)$, mas a tabulação dispensa overhead de pilha de chamadas e elimina riscos de interrupção por limite de recursão (E5).
+3. **Constantes Ocultas:** Mesma complexidade teórica não implica mesmo tempo prático: C++ superou CPython por $52\times$ devido à ausência de boxing e alocação contígua em heap (E4).
+4. **Espaço vs. Traceback:** Vetores de linha única poupam mais de 97% de RAM quando apenas o valor ótimo é necessário (E3, E8); a matriz completa só se justifica quando se exige reconstruir a solução passo a passo.
+
+---
+
+## ⚠️ Limitações do Projeto
+
+1. **Complexidade Pseudo-polinomial:** Na Mochila 0/1, capacidades $W$ muito elevadas ($W \ge 10^9$) tornam a PD lenta mesmo para poucos itens.
+2. **Ausência de Subestrutura Ótima:** Problemas como o *Caminho Simples Mais Longo* em grafos gerais não podem ser resolvidos por PD por violarem a independência de subproblemas.
+3. **Restrições de Memória em Grandes Strings:** No LCS, sequências biológicas com milhões de bases esgotam a memória RAM na matriz 2D completa, exigindo algoritmos híbridos com divisão e conquista (como Hirschberg).
+
+---
+
+## 📌 O que Falta Ser Implementado
+
+O núcleo algorítmico, os testes unitários, os estudos de caso, os experimentos científicos e os simuladores web estão **100% implementados, testados e validados**. As atividades pendentes concentram-se na documentação final e materiais de apresentação:
+
+- [ ] **Relatório Técnico Acadêmico em LaTeX (`relatorio/`):**
+  - [ ] Redigir a versão definitiva dos Capítulos 1 a 6 a partir dos esqueletos existentes em `relatorio/secoes/`.
+  - [ ] Compilar a versão final do relatório PDF no Overleaf integrando os diagramas em TikZ e os 19 gráficos em alta resolução.
+- [ ] **Apresentação e Slides do Seminário (`slides/`):**
+  - [ ] Montar a sequência final de slides para a apresentação oral de 40 minutos conforme roteiro em `docs/ROTEIRO_SLIDES.md`.
+  - [ ] Preparar os roteiros das dinâmicas interativas da aula (aposta do Fibonacci, corte de haste e cadeia de matrizes).
+- [ ] **Finalização do Cheat Sheet Acadêmico (`cheatsheet/`):**
+  - [ ] Preencher o resumo condensado em LaTeX de 1 a 2 páginas em `cheatsheet/cheatsheet_body.tex`.
+- [ ] **Ensaio Geral da Apresentação:**
+  - [ ] Realizar ensaio cronometrado da apresentação oral com simulação de perguntas da banca/professor.
+
+---
+
+## 📚 Referências Acadêmicas
+
+1. **CORMEN, Thomas H.; LEISERSON, Charles E.; RIVEST, Ronald L.; STEIN, Clifford.** *Algoritmos: Teoria e Prática*. 3. ed. Rio de Janeiro: Elsevier, 2012. Capítulo 15: Programação Dinâmica, p. 263-305.
+2. **BELLMAN, Richard.** *Dynamic Programming*. Princeton University Press, 1957.
+3. **NEEDLEMAN, Saul B.; WUNSCH, Christian D.** A general method applicable to the search for similarities in the amino acid sequence of two proteins. *Journal of Molecular Biology*, v. 48, n. 3, p. 443-453, 1970.
+4. **KLEINBERG, Jon; TARDOS, Éva.** *Algorithm Design*. Boston: Pearson / Addison-Wesley, 2006. Capítulo 6: Dynamic Programming.
+5. **SEDGEWICK, Robert; WAYNE, Kevin.** *Algorithms*. 4. ed. Upper Saddle River: Addison-Wesley, 2011.
+
+---
+
+## Autores
+
+**Projeto:** Estratégias Avançadas de Projeto e Análise de Algoritmos: Programação Dinâmica  
+**Instituição:** Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG) -- Campus Divinópolis  
+**Disciplina:** Algoritmos e Estruturas de Dados II (AEDS-II)  
+**Professor Orientador:** <a href="https://github.com/mpiress">Michel Pires da Silva</a>
+
+<table align="center">
+  <tr>
+    <td align="center" width="20%">
+      <a href="https://github.com/alisson-h">
+        <img src="https://github.com/alisson-h.png" width="100px" style="border-radius:50%;" alt="Alisson Henrique"/><br>
+        <b>Alisson Henrique</b>
+      </a><br>
+      <img src="https://img.shields.io/github/followers/alisson-h?label=Seguidores&style=social"/>
+    </td>
+    <td align="center" width="20%">
+      <a href="https://github.com/zCarlos17">
+        <img src="https://github.com/zCarlos17.png" width="100px" style="border-radius:50%;" alt="Carlos Henrique"/><br>
+        <b>Carlos Henrique</b>
+      </a><br>
+      <img src="https://img.shields.io/github/followers/zCarlos17?label=Seguidores&style=social"/>
+    </td>
+    <td align="center" width="20%">
+      <a href="https://github.com/Joao-santos-oliveira">
+        <img src="https://github.com/Joao-santos-oliveira.png" width="100px" style="border-radius:50%;" alt="João Gabriel Santos"/><br>
+        <b>João Gabriel Santos</b>
+      </a><br>
+      <img src="https://img.shields.io/github/followers/Joao-santos-oliveira?label=Seguidores&style=social"/>
+    </td>
+    <td align="center" width="20%">
+      <a href="https://github.com/Ribeiro-JP">
+        <img src="https://github.com/Ribeiro-JP.png" width="100px" style="border-radius:50%;" alt="João Pedro Ribeiro"/><br>
+        <b>João Pedro Ribeiro</b>
+      </a><br>
+      <img src="https://img.shields.io/github/followers/Ribeiro-JP?label=Seguidores&style=social"/>
+    </td>
+    <td align="center" width="20%">
+      <img src="https://ui-avatars.com/api/?name=Paulo&background=6366f1&color=fff&size=100" width="100px" style="border-radius:50%;" alt="Paulo"/><br>
+      <b>Paulo</b><br>
+      <img src="https://img.shields.io/badge/AEDS--II-CEFET--MG-blue"/>
+    </td>
+  </tr>
+</table>
+
+---
+
+<p align="center">
+  <b>CEFET-MG — Departamento de Computação — Campus Divinópolis</b><br>
+  Trabalho Acadêmico de Algoritmos e Estruturas de Dados II — 2026
+</p>

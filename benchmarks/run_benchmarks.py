@@ -140,11 +140,12 @@ def _worker_process_runner(
         t0 = time.perf_counter()
         res = fn(*args, **kwargs)
         elapsed = time.perf_counter() - t0
-        out_q.put(("success", elapsed, res))
+        counter_calls = getattr(kwargs.get("counter"), "calls", None)
+        out_q.put(("success", elapsed, res, counter_calls))
     except RecursionError:
-        out_q.put(("recursion_error", None, None))
+        out_q.put(("recursion_error", None, None, None))
     except Exception as err:
-        out_q.put(("execution_error", None, str(err)))
+        out_q.put(("execution_error", None, str(err), None))
 
 
 def execute_with_process_timeout(
@@ -174,8 +175,15 @@ def execute_with_process_timeout(
         return None, None, "timeout"
 
     try:
-        status, elapsed, res = out_q.get_nowait()
-        return elapsed, res, status
+        raw_res = out_q.get_nowait()
+        if len(raw_res) == 4:
+            status, elapsed, res, calls = raw_res
+            if "counter" in kwargs and kwargs["counter"] is not None and calls is not None:
+                kwargs["counter"].calls = calls
+            return elapsed, res, status
+        else:
+            status, elapsed, res = raw_res
+            return elapsed, res, status
     except (queue.Empty, Exception):
         return None, None, "execution_error"
 
@@ -963,21 +971,15 @@ def exp_e1_fibonacci(quick: bool = False) -> None:
             sys.setrecursionlimit(max_needed_limit)
 
         for n in pd_ns:
-            # Top-Down Memoização
-            times_memo: list[float] = []
-            calls_memo: list[int] = []
-            for _ in range(repeats):
-                c = CallCounter()
-                # Memory limpa a cada repetição para refletir nova resolução
-                t, _, _, _, _, st = measure_execution_with_stats(
-                    fib_mod.fib_memo, n, counter=c, memory={}, repeats=1, warmup=False
-                )
-                if t is not None and st == "success":
-                    times_memo.append(t)
-                    calls_memo.append(c.calls)
+            # Contagem determinística de chamadas para computação completa do zero
+            c_memo = CallCounter()
+            fib_mod.fib_memo(n, counter=c_memo)
+            calls_memo_val = c_memo.calls
 
-            t_memo = calculate_trimmed_mean(times_memo) if times_memo else None
-            std_memo = statistics.stdev(times_memo) if len(times_memo) >= 2 else 0.0
+            # Top-Down Memoização (computação completa do zero com cache limpo a cada invocação)
+            t_memo, std_memo, min_memo, max_memo, _, st_memo = measure_execution_with_stats(
+                fib_mod.fib_memo, n, repeats=repeats, warmup=False
+            )
 
             results.append({
                 "experiment": "E1",
@@ -986,12 +988,33 @@ def exp_e1_fibonacci(quick: bool = False) -> None:
                 "n": n,
                 "time_seconds": t_memo,
                 "time_std": std_memo,
-                "time_min": min(times_memo) if times_memo else None,
-                "time_max": max(times_memo) if times_memo else None,
+                "time_min": min_memo,
+                "time_max": max_memo,
                 "memory_bytes": 0,
-                "calls": int(round(statistics.mean(calls_memo))) if calls_memo else 2 * n - 1,
-                "status": "success",
+                "calls": calls_memo_val,
+                "status": st_memo,
                 "notes": "Theta(n) Top-Down com Memoização",
+            })
+
+            # Consulta ao cache pré-computado (Warm Cache O(1))
+            warm_cache = {}
+            fib_mod.fib_memo(n, memory=warm_cache)
+            t_warm, std_warm, min_warm, max_warm, _, st_warm = measure_execution_with_stats(
+                fib_mod.fib_memo, n, memory=warm_cache, repeats=repeats, warmup=True
+            )
+            results.append({
+                "experiment": "E1",
+                "algorithm": "Fibonacci",
+                "approach": "memo_warm",
+                "n": n,
+                "time_seconds": t_warm,
+                "time_std": std_warm,
+                "time_min": min_warm,
+                "time_max": max_warm,
+                "memory_bytes": 0,
+                "calls": 1,
+                "status": st_warm,
+                "notes": "O(1) Consulta ao Cache Pré-Computado (Warm Cache)",
             })
 
             # Bottom-Up Tabulação

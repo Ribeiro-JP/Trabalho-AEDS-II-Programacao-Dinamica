@@ -34,6 +34,7 @@ WEB_FIGURES_DIR = os.path.join(ROOT_DIR, "web", "figures")
 PALETTE: dict[str, str] = {
     "naive": "#ef4444",         # Vermelho Alerta (Força Bruta Exponencial)
     "memo": "#0284c7",          # Azul Ciano (Top-Down com Memoização)
+    "memo_warm": "#06b6d4",     # Ciano Suave (Consulta Cache O(1))
     "bottom_up": "#16a34a",     # Verde Esmeralda (Bottom-Up Tabulação)
     "bottom_up_cpp": "#f59e0b", # Âmbar/Dourado (C++ Nativo -O3)
     "two_rows": "#9333ea",      # Roxo Técnico (Otimização de Duas Linhas)
@@ -174,9 +175,10 @@ def plot_e1_fibonacci_dp() -> None:
     fig, ax = plt.subplots(figsize=(8.5, 5.0))
 
     series = [
-        ("memo", "Memoização (Top-Down)", PALETTE["memo"]),
+        ("memo", "Memoização (Top-Down, do zero)", PALETTE["memo"]),
         ("bottom_up", "Tabulação (Bottom-Up)", PALETTE["bottom_up"]),
         ("o1_space", "Espaço O(1)", PALETTE["o1_space"]),
+        ("memo_warm", "Memoização (Consulta Cache O(1))", PALETTE["memo_warm"]),
     ]
 
     for app_id, label, color in series:

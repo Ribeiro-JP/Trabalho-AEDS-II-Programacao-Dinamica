@@ -167,7 +167,7 @@
       "Implementações resolvendo o mesmo problema exato com validação de saída idêntica.",
       "O código em C++ nativo é entre 20x e 40x mais veloz que CPython devido a vetores contíguos e ausência de overhead dinâmico."
     ],
-    "limitations": "Compilador utilizado: g++.exe (MinGW.org GCC-6.3.0-1) 6.3.0. Flags: -O3 -std=c++14."
+    "limitations": "Compilador utilizado: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0. Flags: -O3 -std=c++14."
   },
   {
     "id": "e4_lcs_speedup",
