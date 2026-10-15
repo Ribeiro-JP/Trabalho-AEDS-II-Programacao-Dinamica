@@ -61,7 +61,7 @@ O trabalho contempla:
 ## 🎯 Objetivos Acadêmicos
 
 ### Análise Teórica vs. Prática
-- **Validação experimental** das ordens de complexidade assintótica assinaladas pelo Cormen: $\Theta(2^n)$ vs. $\Theta(n)$ em Fibonacci, $\Theta(2^n)$ vs. $\Theta(n^2)$ em Rod Cutting, $\Omega(4^n/n^{3/2})$ vs. $\Theta(n^3)$ em Matrix-Chain, $\Theta(m \cdot n)$ em LCS e $O(n \cdot W)$ pseudo-polinomial na Mochila 0/1.
+- **Validação experimental** das ordens de complexidade assintótica assinaladas pelo Cormen: $\Theta(\phi^n)$ vs. $\Theta(n)$ em Fibonacci, $\Theta(2^n)$ vs. $\Theta(n^2)$ em Rod Cutting, $\Theta(4^n/n^{3/2})$ vs. $\Theta(n^3)$ em Matrix-Chain, $\Theta(m \cdot n)$ em LCS e $O(n \cdot W)$ pseudo-polinomial na Mochila 0/1.
 - **Quantificação de overhead de recursão**: impacto da pilha de chamadas (*call stack*), alocação de quadros de ativação e limites de sistema (`sys.getrecursionlimit()`).
 - **Análise fina de constantes ocultas**: investigação de por que algoritmos com a mesma classe assintótica $\Theta(m \cdot n)$ apresentam ordens de grandeza distintas entre linguagens interpretadas e nativas.
 
@@ -91,7 +91,7 @@ $$F(0) = 0, \quad F(1) = 1$$
 $$F(n) = F(n-1) + F(n-2), \quad \forall n \ge 2$$
 
 #### Abordagens Implementadas
-1. **Força Bruta (*Naive*):** Árvore recursiva pura com $2^{n-1}$ folhas. Complexidade: $\Theta(\phi^n) \approx \Theta(1.618^n)$ tempo, $O(n)$ espaço na pilha.
+1. **Força Bruta (*Naive*):** Árvore recursiva pura com exatamente $F(n+1)$ folhas e $2F(n+1) - 1$ chamadas totais. Complexidade: $\Theta(\phi^n) \approx \Theta(1.618^n)$ tempo, $O(n)$ espaço na pilha.
 2. **Top-Down com Memoização:** Recursão guiada com tabela de dispersão (*cache*). Cada subproblema de $0$ a $n$ é computado uma única vez em $2n-1$ chamadas de função. Complexidade: $\Theta(n)$ tempo, $\Theta(n)$ espaço.
 3. **Bottom-Up (Tabulação Linear):** Preenchimento iterativo de vetor unidimensional a partir dos casos-base. Complexidade: $\Theta(n)$ tempo, $\Theta(n)$ espaço.
 4. **Espaço Otimizado $O(1)$:** Mantém apenas as duas variáveis anteriores $a = F(n-2)$ e $b = F(n-1)$. Complexidade: $\Theta(n)$ tempo, $\Theta(1)$ espaço.
@@ -124,7 +124,7 @@ $$r_n = \max_{1 \le i \le n} \left( p[i] + r_{n-i} \right), \quad \forall n \ge 
 Dada uma cadeia de $n$ matrizes $\langle A_1, A_2, \dots, A_n \rangle$ onde $A_i$ possui dimensão $p_{i-1} \times p_i$, determinar a parentização completa que minimiza o número total de multiplicações escalares.
 
 A busca exaustiva é inviável porque a quantidade de parentizações possíveis corresponde aos **Números de Catalan**:
-$$P(n) = C(n-1) = \frac{1}{n}\binom{2n-2}{n-1} \sim \Omega\left(\frac{4^n}{n^{3/2}}\right)$$
+$$P(n) = C(n-1) = \frac{1}{n}\binom{2n-2}{n-1} \sim \Theta\left(\frac{4^n}{n^{3/2}}\right)$$
 Para $n=15$, existem mais de $2{,}6$ milhões de parentizações; para $n=50$, ultrapassa $5{,}1 \times 10^{26}$.
 
 **Recorrência Fundamental:**
@@ -186,7 +186,7 @@ $$V[i, w] = \begin{cases} V[i-1, w] & \text{se } w_i > w \\ \max(V[i-1, w], V[i-
 | **Corte de Hastes** | Top-Down Memoização | $\Theta(n^2)$ | $\Theta(n)$ | Não | Instâncias esparsas |
 | **Corte de Hastes** | Extended Bottom-Up | $\Theta(n^2)$ | $\Theta(n)$ | **Sim** (tabela $s$) | **Produção:** receita ótima e lista exata de pedaços |
 | **Corte de Hastes** | Heurística Gulosa | $O(n \log n)$ | $O(n)$ | Sim | Falha em até 34% dos casos; inadequado sem prova |
-| **Cadeia de Matrizes** | Recursivo Ingênuo | $3^{n-1}$ chamadas recursivas (espaço de Catalan $\Omega(4^n/n^{3/2})$) | $O(n)$ pilha | Não | Inviável para $n > 12$ devido às $3^{n-1}$ chamadas recursivas |
+| **Cadeia de Matrizes** | Recursivo Ingênuo | $3^{n-1}$ chamadas recursivas (espaço de Catalan $\Theta(4^n/n^{3/2})$) | $O(n)$ pilha | Não | Inviável para $n > 12$ devido às $3^{n-1}$ chamadas recursivas |
 | **Cadeia de Matrizes** | Bottom-Up Diagonais | $\Theta(n^3)$ | $\Theta(n^2)$ | **Sim** (tabela $s$) | **Padrão ouro:** ordem ótima de parentização |
 | **LCS** | Recursivo Ingênuo | $O(2^{m+n})$ | $O(m+n)$ pilha | Não | Apenas entradas minúsculas ($< 15$ caracteres) |
 | **LCS** | Tabela Completa (Cormen) | $\Theta(m \cdot n)$ | $\Theta(m \cdot n)$ | **Sim** (matriz $b$) | Quando a subsequência de texto ou alinhamento é necessária |
@@ -337,7 +337,7 @@ O projeto conta com automação completa via `Makefile` para instalação, compi
 
 ## 🔧 Ambiente Experimental e Metodologia
 
-* **Ambiente de Teste:** Linux x86_64 (WSL2, kernel 6.18.54), Processador AMD Ryzen 5 4600G with Radeon Graphics, CPython 3.12.3, GCC 13.3.0 com `-O3 -std=c++17`.
+* **Ambiente de Teste:** Linux x86_64 (WSL2, kernel 6.18.54), CPU AMD Ryzen 5 4600G (6C/12T), GPU dedicada NVIDIA GeForce RTX 3060, CPython 3.12.3, GCC 13.3.0 com `-O3 -std=c++17`.
 * **Medição de Tempo:** `time.perf_counter()` de alta precisão, sem concorrência com rastreamento de memória.
 * **Média Aparada (*Trimmed Mean*):** 5 repetições por ponto amostral; descarte dos extremos (mínimo e máximo) e média aritmética sobre as 3 repetições centrais.
 * **Batching Adaptativo:** Para durações $< 200\,\mu s$, laço em lote de até 100 iterações com amostragem piloto para superar o ruído do timer do sistema operacional.
@@ -427,7 +427,7 @@ O projeto conta com automação completa via `Makefile` para instalação, compi
   <img src="docs/figures/e7_matrix_chain_operacoes.png" width="48%" alt="E7 Catalan e Operações"/>
 </p>
 
-* **Explosão Combinatória:** Enquanto o espaço de busca de todas as parentizações possíveis cresce segundo os números de Catalan $C_{n-1} = \Omega(4^n / n^{3/2})$ e a recursão ingênua efetua $3^{n-1}$ chamadas recursivas redundantes, a Programação Dinâmica Bottom-Up resolve a instância de $n=50$ matrizes em **3,13 ms** (e Memoização em **11,5 ms**), poupando bilhões de multiplicações escalares redundantes.
+* **Explosão Combinatória:** Enquanto o espaço de busca de todas as parentizações possíveis cresce segundo os números de Catalan $C_{n-1} = \Theta(4^n / n^{3/2})$ e a recursão ingênua efetua $3^{n-1}$ chamadas recursivas redundantes, a Programação Dinâmica Bottom-Up resolve a instância de $n=50$ matrizes em **3,13 ms** (e Memoização em **11,5 ms**), poupando bilhões de multiplicações escalares redundantes.
 
 ---
 

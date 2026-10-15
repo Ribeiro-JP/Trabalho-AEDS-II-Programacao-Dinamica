@@ -899,6 +899,7 @@ def save_machine_metadata(cpp_info: dict[str, Any] | None = None) -> None:
         "version": platform.version(),
         "machine": platform.machine(),
         "processor": cpu_model,
+        "gpu": "NVIDIA GeForce RTX 3060",
         "python_version": sys.version,
         "python_implementation": platform.python_implementation(),
         "recursion_limit": sys.getrecursionlimit(),

@@ -309,7 +309,7 @@ def plot_e2_rod_cutting_tempo() -> None:
     fig, ax = plt.subplots(figsize=(8.5, 5.0))
 
     series = [
-        ("naive", "Força Bruta (Naive, Θ(2ⁿ))", PALETTE["naive"]),
+        ("naive", "Força Bruta (Corte Exaustivo, Θ(2ⁿ))", PALETTE["naive"]),
         ("memo", "Memoização (Top-Down, Θ(n²))", PALETTE["memo"]),
         ("bottom_up", "Tabulação (Bottom-Up, Θ(n²))", PALETTE["bottom_up"]),
     ]

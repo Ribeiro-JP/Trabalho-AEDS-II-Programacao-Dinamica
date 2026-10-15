@@ -26,7 +26,7 @@ def matrix_chain_naive(dims: list[int], counter: CallCounter | None = None,
     Complexidade:
         Tempo: Executa 3^(n-1) chamadas recursivas (ou 2*3^(n-1) - 1, limitadas inferiormente por Omega(2^n)),
                enquanto o espaço combinatório total de parentizações corresponde aos números de
-               Catalan C_{n-1} = Omega(4^n / n^(3/2)) (Cormen §15.2).
+               Catalan C_{n-1} = Theta(4^n / n^(3/2)) (Cormen §15.2).
         Espaço: O(n) na pilha de recursão.
 
     Args:
