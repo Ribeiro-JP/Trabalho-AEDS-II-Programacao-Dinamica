@@ -31,8 +31,8 @@
   <header class="site-header">
     <div class="header-inner">
       <a href="index.html" class="logo-area" aria-label="PD LAB - Início">
-        <span class="logo-mark">PD</span>
-        <span class="logo-title">PD LAB</span>
+        <span class="logo-mark" aria-hidden="true">PD</span>
+        <span class="logo-title">LAB</span>
         <span class="logo-subtitle">Laboratório de Algoritmos</span>
       </a>
 
@@ -109,7 +109,7 @@
         </div>
         <div style="display: flex; gap: 0.5rem; align-items: center;">
           <span class="badge badge-primary">Recursão Real</span>
-          <span class="badge">Complexidade: O(2ⁿ) vs O(n)</span>
+          <span class="badge">Complexidade: Θ(φⁿ) vs Θ(n)</span>
         </div>
       </div>
       
@@ -118,6 +118,9 @@
           <h2>Fibonacci: Recursão e Subproblemas Redundantes</h2>
           <p style="margin: 0; font-size: 0.95rem;">
             Observe a expansão da árvore de chamadas recursivas reais, identifique a repetição inútil de subproblemas e experimente o impacto da memoização.
+          </p>
+          <p style="margin: 0.35rem 0 0; font-size: 0.85rem; color: var(--text-muted);">
+            <strong>Convenção adotada:</strong> <code>F(0) = 0</code>, <code>F(1) = 1</code> e <code>F(n) = F(n-1) + F(n-2)</code> para <code>n ≥ 2</code>. A recursão ingênua possui complexidade de tempo <strong>Θ(φⁿ)</strong> (cota superior <em>O(2ⁿ)</em>) com exatamente <strong>2F(n+1) − 1</strong> chamadas recursivas. A memoização reduz o tempo para <strong>Θ(n)</strong> com consumo de espaço adicional <strong>O(n)</strong> (tabela de cache e profundidade de pilha).
           </p>
         </div>
       </div>
@@ -185,9 +188,9 @@
         <div class="sim-tree-viewport" id="tree-viewport">
           <!-- Controles Flutuantes de Zoom e Centralização -->
           <div class="floating-zoom-bar">
-            <button type="button" class="floating-zoom-btn" id="btn-zoom-in" title="Aproximar (+)">+</button>
-            <button type="button" class="floating-zoom-btn" id="btn-zoom-out" title="Afastar (-)">−</button>
-            <button type="button" class="floating-zoom-btn" id="btn-zoom-fit" title="Enquadrar árvore">Fit</button>
+            <button type="button" class="floating-zoom-btn" id="btn-zoom-in" title="Aproximar (+)" aria-label="Aproximar zoom">+</button>
+            <button type="button" class="floating-zoom-btn" id="btn-zoom-out" title="Afastar (-)" aria-label="Afastar zoom">−</button>
+            <button type="button" class="floating-zoom-btn" id="btn-zoom-fit" title="Enquadrar árvore" aria-label="Enquadrar árvore no visor">Fit</button>
           </div>
 
           <!-- Elemento SVG dinâmico gerado pelo algoritmo -->
@@ -258,7 +261,7 @@
             <div class="comparison-col" id="col-no-memo">
               <span class="comparison-col-title">Sem Memoização</span>
               <span class="comparison-col-val" id="stat-calls-no-memo">15</span>
-              <span class="comparison-col-meta">Chamadas: O(2ⁿ)</span>
+              <span class="comparison-col-meta">Tempo: Θ(φⁿ) | Espaço: O(n)</span>
               <span style="font-size: 0.7rem; color: var(--color-error); font-weight: 600;" id="stat-redundant-count">
                 ↻ 9 redundantes
               </span>
@@ -268,7 +271,7 @@
             <div class="comparison-col" id="col-with-memo">
               <span class="comparison-col-title">Com Memoização</span>
               <span class="comparison-col-val" id="stat-calls-with-memo" style="color: var(--color-secondary);">9</span>
-              <span class="comparison-col-meta">Chamadas: O(n)</span>
+              <span class="comparison-col-meta">Tempo: Θ(n) | Espaço: O(n)</span>
               <span style="font-size: 0.7rem; color: var(--color-secondary); font-weight: 600;" id="stat-memo-hits">
                 ⚡ 2 podas em O(1)
               </span>
@@ -288,7 +291,7 @@
             <span class="badge" id="memo-status-badge">Desativada</span>
           </div>
           <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">
-            Valores de <code>fib(k)</code> armazenados após o primeiro cálculo:
+            Valores de <code>fib(k)</code> armazenados após o primeiro cálculo (Consumo de memória auxiliar: <strong>O(n)</strong>):
           </p>
           <div class="memo-entries-list" id="memo-entries-container">
             <span class="memo-empty-msg">Marque "Usar memoização" para visualizar o preenchimento da tabela.</span>

@@ -57,7 +57,7 @@
     "category": "eficiencia",
     "title": "E1: Fibonacci — Contagem de Chamadas e Subproblemas",
     "subtitle": "Métrica de operações elementares e recursões",
-    "comparison": "Chamadas recursivas Força Bruta (~2^n) vs Memoização (2n-1) vs Bottom-Up (1)",
+    "comparison": "Chamadas recursivas Força Bruta (2F(n+1)-1, Theta(phi^n)) vs Memoização (2n-1) vs Bottom-Up (1)",
     "x_axis": "Índice do Termo (n)",
     "y_axis": "Número de Invocações (escala logarítmica)",
     "is_available": true,
@@ -167,7 +167,7 @@
       "Implementações resolvendo o mesmo problema exato com validação de saída idêntica.",
       "O código em C++ nativo é entre 20x e 40x mais veloz que CPython devido a vetores contíguos e ausência de overhead dinâmico."
     ],
-    "limitations": "Compilador utilizado: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0. Flags: -O3 -std=c++14."
+    "limitations": "Compilador utilizado: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0. Flags: -O3 -std=c++17."
   },
   {
     "id": "e4_lcs_speedup",

@@ -8,7 +8,7 @@ Tabela de Experimentos:
 +----+-------------------------------------------------------------------------+-------------------------------------------------------+
 | ID | Experimento                                                             | Perguntas Científicas e Foco Empírico                 |
 +----+-------------------------------------------------------------------------+-------------------------------------------------------+
-| E1 | Fibonacci: tempo, chamadas, speedup e DP em escala linear               | Quebra da barreira exponencial Theta(2^n) -> Theta(n) |
+| E1 | Fibonacci: tempo, chamadas, speedup e DP em escala linear               | Quebra da barreira exponencial Theta(phi^n) -> Theta(n) |
 | E2 | Corte de hastes: tempo exato e qualidade/erro do algoritmo guloso       | Theta(2^n) -> Theta(n^2) e subotimalidade da razão    |
 | E3 | LCS: memória e tempo (tabela completa Theta(mn) x 2 linhas Theta(min))   | Trade-off de armazenamento e escalabilidade           |
 | E4 | LCS: Python contra C++ compilado (-O3) e speedup relativo               | Overhead de interpretador vs compilação nativa        |
@@ -340,7 +340,7 @@ def detect_and_compile_cpp() -> tuple[bool, str | None, dict[str, Any]]:
     binary_path = os.path.join(CPP_DIR, f"lcs{ext}")
 
     # Flags estritas de compilação
-    flags = ["-O3", "-std=c++14"]
+    flags = ["-O3", "-std=c++17"]
     compile_cmd = [detected_compiler] + flags + [cpp_src, "-o", binary_path]
 
     try:
@@ -594,7 +594,7 @@ def generate_manifest_json(cpp_metadata: dict[str, Any] | None = None) -> None:
             "category": "eficiencia",
             "title": "E1: Fibonacci — Contagem de Chamadas e Subproblemas",
             "subtitle": "Métrica de operações elementares e recursões",
-            "comparison": "Chamadas recursivas Força Bruta (~2^n) vs Memoização (2n-1) vs Bottom-Up (1)",
+            "comparison": "Chamadas recursivas Força Bruta (2F(n+1)-1, Theta(phi^n)) vs Memoização (2n-1) vs Bottom-Up (1)",
             "x_axis": "Índice do Termo (n)",
             "y_axis": "Número de Invocações (escala logarítmica)",
             "is_available": True,
@@ -882,12 +882,23 @@ def save_machine_metadata(cpp_info: dict[str, Any] | None = None) -> None:
     os.makedirs(RESULTS_DIR, exist_ok=True)
     dest = os.path.join(RESULTS_DIR, "machine.json")
 
+    cpu_model = platform.processor() or platform.machine()
+    if platform.system() == "Linux" and os.path.exists("/proc/cpuinfo"):
+        try:
+            with open("/proc/cpuinfo", "r", encoding="utf-8") as f:
+                for line in f:
+                    if "model name" in line:
+                        cpu_model = line.split(":", 1)[1].strip()
+                        break
+        except Exception:
+            pass
+
     meta: dict[str, Any] = {
         "system": platform.system(),
         "release": platform.release(),
         "version": platform.version(),
         "machine": platform.machine(),
-        "processor": platform.processor(),
+        "processor": cpu_model,
         "python_version": sys.version,
         "python_implementation": platform.python_implementation(),
         "recursion_limit": sys.getrecursionlimit(),
@@ -958,7 +969,7 @@ def exp_e1_fibonacci(quick: bool = False) -> None:
             "memory_bytes": 0,
             "calls": avg_calls,
             "status": status,
-            "notes": "Theta(2^n) Recursivo Puro",
+            "notes": "Theta(phi^n) Recursivo Puro",
         })
         if status == "timeout":
             break
@@ -1260,7 +1271,7 @@ def exp_e4_lcs_cpp_vs_python(quick: bool = False) -> None:
 
     Metodologia:
     1. Verifica disponibilidade de compilador C++ (g++ ou clang++).
-    2. Compila cpp/lcs.cpp com -O3 -std=c++14 e verifica código de saída.
+    2. Compila cpp/lcs.cpp com -O3 -std=c++17 e verifica código de saída.
     3. Executa ambas as linguagens resolvendo o mesmo problema exato nas mesmas instâncias.
     4. Valida a igualdade estrita dos resultados antes de registrar as medições.
     5. Se compilador não estiver disponível, documenta explicitamente a ausência sem dados fictícios.

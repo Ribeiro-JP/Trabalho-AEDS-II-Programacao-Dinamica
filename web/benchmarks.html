@@ -382,8 +382,8 @@
   <header class="site-header">
     <div class="header-inner">
       <a href="index.html" class="logo-area" aria-label="PD LAB - Início">
-        <span class="logo-mark">PD</span>
-        <span class="logo-title">PD LAB</span>
+        <span class="logo-mark" aria-hidden="true">PD</span>
+        <span class="logo-title">LAB</span>
         <span class="logo-subtitle">Laboratório de Algoritmos</span>
       </a>
 
@@ -608,7 +608,7 @@
             </p>
           </div>
           <div class="bench-fig-badges">
-            <span class="badge badge-accent">Theta(2^n) -> Theta(n)</span>
+            <span class="badge badge-accent">Theta(phi^n) -> Theta(n)</span>
             <span class="badge badge-secondary">Tempo de CPU (s)</span>
           </div>
         </div>
@@ -742,7 +742,7 @@
         </div>
 
         <div class="bench-fig-actions">
-          <div class="bench-fig-meta"><span>Domínio: n <= 32 (sem timeout)</span> • <span>Eixo Y: Fator de Speedup (log)</span></div>
+          <div class="bench-fig-meta"><span>Domínio: n <= 30 (sem timeout)</span> • <span>Eixo Y: Fator de Speedup (log)</span></div>
           <div class="bench-fig-btns">
             <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e1_fibonacci_speedup.png', 'E1: Fibonacci — Speedup')">🔍 Ampliar Gráfico</button>
             <a href="figures/e1_fibonacci_speedup.png" download="e1_fibonacci_speedup.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
@@ -959,7 +959,7 @@
           <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
             <li>Ambas as linguagens confirmam a inclinação assintótica Theta(m * n).</li>
-            <li>O código em C++ nativo opera ordens de magnitude mais rápido por dispensar o overhead de bytecode, checagem dinâmica de tipos e boxing do CPython.</li>
+            <li>O código em C++ nativo opera entre 1,5 e 2 ordens de magnitude mais rápido (35x–70x) por dispensar o overhead de bytecode, checagem dinâmica de tipos e boxing do CPython.</li>
           </ul>
         </div>
       </article>
@@ -1205,7 +1205,7 @@
           <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
             <li>A parentização ótima economiza ordens de magnitude em operações de ponto flutuante em matrizes heterogêneas.</li>
-            <li>O número de parentizações possíveis ultrapassa 10^10 para n = 20, justificando a busca polinomial de PD.</li>
+            <li>O número de parentizações possíveis cresce como Catalan ($C_{n-1}$), atingindo $C_{19} \approx 1{,}77 \times 10^9$ para $n = 20$, justificando a busca polinomial $\Theta(n^3)$ de PD.</li>
           </ul>
         </div>
       </article>
@@ -1369,7 +1369,7 @@
         <div>
           <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">4. Timeout Real com Subprocessos</h4>
           <p style="margin: 0; font-size: 0.875rem; color: var(--text-secondary); line-height: 1.55;">
-            Algoritmos com complexidade exponencial Theta(2^n) são isolados em subprocessos <code>multiprocessing.Process</code> com encerramento forçado via SIGTERM/SIGKILL, impedindo processos órfãos ou travamentos do sistema.
+            Algoritmos com complexidade exponencial (como Fibonacci e Corte de Hastes ingênuos) são isolados em subprocessos <code>multiprocessing.Process</code> com encerramento forçado (via SIGTERM/SIGKILL em Linux ou TerminateProcess em Windows), impedindo processos órfãos ou travamentos do sistema.
           </p>
         </div>
       </div>
@@ -1385,7 +1385,7 @@
         <button type="button" class="bench-modal-close-btn" onclick="closeModal()" aria-label="Fechar visualização">✕</button>
       </div>
       <div class="bench-modal-body">
-        <img src="" alt="Gráfico em alta resolução" class="bench-modal-img" id="modal-graph-img">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'/%3E" alt="Gráfico em alta resolução" class="bench-modal-img" id="modal-graph-img">
       </div>
       <div class="bench-modal-footer">
         <span style="font-family: var(--font-mono); font-size: 0.8rem;">Gráfico Científico Gerado a 200 DPI</span>

@@ -186,12 +186,12 @@ $$V[i, w] = \begin{cases} V[i-1, w] & \text{se } w_i > w \\ \max(V[i-1, w], V[i-
 | **Corte de Hastes** | Top-Down Memoização | $\Theta(n^2)$ | $\Theta(n)$ | Não | Instâncias esparsas |
 | **Corte de Hastes** | Extended Bottom-Up | $\Theta(n^2)$ | $\Theta(n)$ | **Sim** (tabela $s$) | **Produção:** receita ótima e lista exata de pedaços |
 | **Corte de Hastes** | Heurística Gulosa | $O(n \log n)$ | $O(n)$ | Sim | Falha em até 34% dos casos; inadequado sem prova |
-| **Cadeia de Matrizes** | Recursivo Ingênuo | $\Omega(4^n/n^{3/2})$ | $O(n)$ pilha | Não | Inviável para $n > 12$ devido à explosão de Catalan |
+| **Cadeia de Matrizes** | Recursivo Ingênuo | $3^{n-1}$ chamadas recursivas (espaço de Catalan $\Omega(4^n/n^{3/2})$) | $O(n)$ pilha | Não | Inviável para $n > 12$ devido às $3^{n-1}$ chamadas recursivas |
 | **Cadeia de Matrizes** | Bottom-Up Diagonais | $\Theta(n^3)$ | $\Theta(n^2)$ | **Sim** (tabela $s$) | **Padrão ouro:** ordem ótima de parentização |
 | **LCS** | Recursivo Ingênuo | $O(2^{m+n})$ | $O(m+n)$ pilha | Não | Apenas entradas minúsculas ($< 15$ caracteres) |
 | **LCS** | Tabela Completa (Cormen) | $\Theta(m \cdot n)$ | $\Theta(m \cdot n)$ | **Sim** (matriz $b$) | Quando a subsequência de texto ou alinhamento é necessária |
 | **LCS** | Duas Linhas (Otimizado) | $\Theta(m \cdot n)$ | $\Theta(\min(m, n))$ | Apenas comprimento | Economia de até 99,8% de RAM em strings biológicas |
-| **LCS (C++17)** | Nativo compilado `-O3` | $\Theta(m \cdot n)$ | $\Theta(m \cdot n)$ | Sim | **Alto desempenho:** $52\times$ mais veloz que CPython |
+| **LCS (C++17)** | Nativo compilado `-O3` | $\Theta(m \cdot n)$ | $\Theta(m \cdot n)$ | Sim | **Alto desempenho:** $161\times$ mais veloz que CPython |
 | **Mochila 0/1** | Bottom-Up 2D | $O(n \cdot W)$ | $O(n \cdot W)$ | **Sim** | Quando a lista de itens escolhidos é requerida |
 | **Mochila 0/1** | Vetor 1D Reverso | $O(n \cdot W)$ | $O(W)$ | Apenas valor máximo | Grande escala de $W$; economia massiva de memória |
 
@@ -337,7 +337,7 @@ O projeto conta com automação completa via `Makefile` para instalação, compi
 
 ## 🔧 Ambiente Experimental e Metodologia
 
-* **Ambiente de Teste:** Linux x86-64, Python 3.12, GCC 13 com `-O3 -std=c++17`.
+* **Ambiente de Teste:** Linux x86_64 (WSL2, kernel 6.18.54), Processador AMD Ryzen 5 4600G with Radeon Graphics, CPython 3.12.3, GCC 13.3.0 com `-O3 -std=c++17`.
 * **Medição de Tempo:** `time.perf_counter()` de alta precisão, sem concorrência com rastreamento de memória.
 * **Média Aparada (*Trimmed Mean*):** 5 repetições por ponto amostral; descarte dos extremos (mínimo e máximo) e média aritmética sobre as 3 repetições centrais.
 * **Batching Adaptativo:** Para durações $< 200\,\mu s$, laço em lote de até 100 iterações com amostragem piloto para superar o ruído do timer do sistema operacional.
@@ -359,9 +359,9 @@ O projeto conta com automação completa via `Makefile` para instalação, compi
   <img src="docs/figures/e1_fibonacci_speedup.png" width="48%" alt="E1 Fator de Speedup"/>
 </p>
 
-* **Tempo de Execução:** Em $n=32$, a força bruta ingênua levou **1,25 segundo**, com crescimento duplicativo a cada incremento; para $n > 32$, foi interrompida por timeout. A abordagem Bottom-Up calculou $n=2000$ em **$180\,\mu s$** e com espaço $O(1)$ em **$128\,\mu s$**.
-* **Chamadas de Função:** A força bruta disparou de forma exponencial (**177 chamadas** para $n=10$ e **7.049.155 chamadas** para $n=32$). A memoização realizou estritamente $2n - 1$ chamadas ($19$ chamadas para $n=10$).
-* **Fator de Aceleração (Speedup):** A Programação Dinâmica atinge ganhos de desempenho superiores a **$600.000\times$** em $n=30$.
+* **Tempo de Execução:** Em $n=32$, a força bruta ingênua levou **1,14 segundo** ($7.049.155$ chamadas); para $n > 32$, foi interrompida pelo timeout de $3{,}0\,\text{s}$. A abordagem Bottom-Up calculou $n=2000$ em **$165\,\mu s$** e com espaço $O(1)$ em **$92\,\mu s$**.
+* **Chamadas de Função:** A força bruta disparou de forma exponencial (**177 chamadas** para $n=10$, **2.692.537 chamadas** para $n=30$ e **7.049.155 chamadas** para $n=32$). A memoização realizou estritamente $2n - 1$ chamadas ($19$ chamadas para $n=10$ e $59$ para $n=30$).
+* **Fator de Aceleração (Speedup):** Em $n=30$, a Programação Dinâmica atinge ganhos de desempenho de **$252.443\times$** para Bottom-Up ($1{,}70\,\mu s$), **$575.089\times$** para espaço $O(1)$ ($0{,}75\,\mu s$) e supera **$2{,}4 \times 10^6\times$** para consultas em cache já preenchido (*Warm Cache*, $0{,}18\,\mu s$).
 
 ---
 
@@ -372,7 +372,7 @@ O projeto conta com automação completa via `Makefile` para instalação, compi
   <img src="docs/figures/e2_rod_cutting_qualidade.png" width="48%" alt="E2 Qualidade e Erro"/>
 </p>
 
-* **Crescimento Temporal:** O algoritmo recursivo ingênuo atinge $31,9\,\text{ms}$ para $n=15$. O Extended Bottom-Up processa $n=100$ em apenas **$2,08\,\text{ms}$**, gerando a receita ótima e os pontos de corte exatos.
+* **Crescimento Temporal:** O algoritmo recursivo ingênuo atinge $12{,}1\,\text{ms}$ para $n=15$. O Extended Bottom-Up processa $n=100$ em apenas **$0{,}20\,\text{ms}$** ($202\,\mu s$), gerando a receita ótima e os pontos de corte exatos.
 * **Falha da Heurística Gulosa:** A escolha baseada em densidade ($p_i / i$) falha em instâncias com combinações modulares, enquanto a PD assegura sempre o ótimo global.
 
 ---
@@ -384,7 +384,7 @@ O projeto conta com automação completa via `Makefile` para instalação, compi
   <img src="docs/figures/e3_lcs_tempo.png" width="48%" alt="E3 Tempo de Execução"/>
 </p>
 
-* **Economia de Memória:** Para cadeias com $1000$ caracteres, a matriz bidimensional completa requer **19,6 MB** de memória heap para armazenar as referências e setas de traceback. A otimização com **duas linhas rotativas** consumiu apenas **42,9 KB** (**redução de 99,8%**).
+* **Economia de Memória:** Para cadeias com $1000$ caracteres, a matriz bidimensional completa requer **20,1 MB** (19,15 MiB, 20.085.696 bytes) de memória heap para armazenar as referências e setas de traceback. A otimização com **duas linhas rotativas** consumiu apenas **44,0 KB** (43.952 bytes, **redução de 99,8%**).
 
 ---
 
@@ -395,7 +395,7 @@ O projeto conta com automação completa via `Makefile` para instalação, compi
   <img src="docs/figures/e4_lcs_speedup.png" width="48%" alt="E4 Speedup C++"/>
 </p>
 
-* **Impacto do Runtime:** Ambos executam o mesmo algoritmo exato $\Theta(m \cdot n)$. Para sequências de $1000$ caracteres, o C++17 executou em **8,5 ms**, enquanto o CPython 3.12 demandou **446 ms** (speedup empírico de **$52{,}2\times$** a favor do código nativo compilado sem boxing de objetos).
+* **Impacto do Runtime:** Ambos executam o mesmo algoritmo exato $\Theta(m \cdot n)$. Para sequências de $1000$ caracteres, o C++17 nativo compilado com `-O3` executou em **1,08 ms**, enquanto o CPython 3.12 demandou **173,3 ms** (speedup empírico de **$161{,}1\times$** a favor do código nativo compilado sem boxing de objetos e com vetores contíguos em memória).
 
 ---
 
@@ -416,7 +416,7 @@ O projeto conta com automação completa via `Makefile` para instalação, compi
   <img src="docs/figures/e6_guloso_erro.png" width="50%" alt="E6 Taxa de Falha do Guloso"/>
 </p>
 
-* **Taxa de Erro:** Em 200 instâncias aleatórias por tamanho de haste, a heurística gulosa falhou em até **34%** das vezes (para $n=25$), com perda média de receita de até **6,04%**, comprovando que heurísticas sem prova formal não substituem a Programação Dinâmica.
+* **Taxa de Erro:** Em 200 instâncias aleatórias por tamanho de haste (seed 42), a heurística gulosa falhou em até **24%** das vezes (para $n=18$ e $n=26$), com perda média de receita atingindo até **7,18%** (para $n=5$), comprovando que heurísticas sem prova formal não substituem a Programação Dinâmica.
 
 ---
 
@@ -427,7 +427,7 @@ O projeto conta com automação completa via `Makefile` para instalação, compi
   <img src="docs/figures/e7_matrix_chain_operacoes.png" width="48%" alt="E7 Catalan e Operações"/>
 </p>
 
-* **Explosão Combinatória:** Enquanto o espaço de busca de parentizações cresce segundo os números de Catalan $\Omega(4^n / n^{3/2})$, a Programação Dinâmica Bottom-Up resolve a instância de $n=50$ matrizes em **11,7 ms**, poupando bilhões de multiplicações escalares redundantes.
+* **Explosão Combinatória:** Enquanto o espaço de busca de todas as parentizações possíveis cresce segundo os números de Catalan $C_{n-1} = \Omega(4^n / n^{3/2})$ e a recursão ingênua efetua $3^{n-1}$ chamadas recursivas redundantes, a Programação Dinâmica Bottom-Up resolve a instância de $n=50$ matrizes em **3,13 ms** (e Memoização em **11,5 ms**), poupando bilhões de multiplicações escalares redundantes.
 
 ---
 
@@ -439,7 +439,7 @@ O projeto conta com automação completa via `Makefile` para instalação, compi
 </p>
 
 * **Pseudo-Polinomial:** O tempo cresce em função direta da magnitude numérica da capacidade $W$.
-* **Compactação 1D:** A otimização em vetor unidimensional com iteração reversa reduziu o pico de memória de **1,6 MB** para **39,2 KB** em $W=1000$ (**97,5% de economia**).
+* **Compactação 1D:** A otimização em vetor unidimensional com iteração reversa reduziu o pico de memória de **1,63 MB** (1.633.600 bytes) para **39,2 KB** (40.192 bytes) em $W=1000$ (**97,5% de economia**).
 
 ---
 
@@ -447,7 +447,7 @@ O projeto conta com automação completa via `Makefile` para instalação, compi
 
 1. **Indispensabilidade da PD:** Problemas com subestrutura ótima e subproblemas superpostos exigem PD; decisões gulosas míopes causam perdas financeiras concretas em até um terço dos casos (E6).
 2. **Top-Down vs. Bottom-Up:** Ambas compartilham a mesma complexidade assintótica $\Theta(n)$, mas a tabulação dispensa overhead de pilha de chamadas e elimina riscos de interrupção por limite de recursão (E5).
-3. **Constantes Ocultas:** Mesma complexidade teórica não implica mesmo tempo prático: C++ superou CPython por $52\times$ devido à ausência de boxing e alocação contígua em heap (E4).
+3. **Constantes Ocultas:** Mesma complexidade teórica não implica mesmo tempo prático: C++ superou CPython por até $161\times$ devido à ausência de boxing e alocação contígua em heap (E4).
 4. **Espaço vs. Traceback:** Vetores de linha única poupam mais de 97% de RAM quando apenas o valor ótimo é necessário (E3, E8); a matriz completa só se justifica quando se exige reconstruir a solução passo a passo.
 
 ---
@@ -455,7 +455,7 @@ O projeto conta com automação completa via `Makefile` para instalação, compi
 ## ⚠️ Limitações do Projeto
 
 1. **Complexidade Pseudo-polinomial:** Na Mochila 0/1, capacidades $W$ muito elevadas ($W \ge 10^9$) tornam a PD lenta mesmo para poucos itens.
-2. **Ausência de Subestrutura Ótima:** Problemas como o *Caminho Simples Mais Longo* em grafos gerais não podem ser resolvidos por PD por violarem a independência de subproblemas.
+2. **Dependência de Subproblemas:** Problemas como o *Caminho Simples Mais Longo* em grafos gerais não podem ser resolvidos por Programação Dinâmica porque violam a independência dos subproblemas (Cormen §15.3): a escolha de um subcaminho consome vértices que não podem ser reutilizados no restante do caminho, impedindo a subestrutura ótima.
 3. **Restrições de Memória em Grandes Strings:** No LCS, sequências biológicas com milhões de bases esgotam a memória RAM na matriz 2D completa, exigindo algoritmos híbridos com divisão e conquista (como Hirschberg).
 
 ---

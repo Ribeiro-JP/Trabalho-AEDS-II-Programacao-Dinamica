@@ -21,7 +21,8 @@ def fib_naive(n: int, counter: CallCounter | None = None) -> int:
     """Calcula o n-ésimo termo de Fibonacci recursivamente sem memoização.
 
     Complexidade:
-        Tempo: Theta(2^n) devido à árvore de recursão com repetições redundantes.
+        Tempo: Theta(phi^n) (onde phi = (1 + sqrt(5))/2 approx 1.618; cota superior O(2^n)),
+               com exatamente 2*F(n+1) - 1 chamadas recursivas.
         Espaço: O(n) na pilha de chamadas.
 
     Args:

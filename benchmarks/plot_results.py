@@ -134,7 +134,7 @@ def plot_e1_fibonacci_tempo() -> None:
     fig, ax = plt.subplots(figsize=(8.5, 5.0))
 
     series = [
-        ("naive", "Força Bruta (Naive, Θ(2ⁿ))", PALETTE["naive"]),
+        ("naive", "Força Bruta (Naive, Θ(φⁿ))", PALETTE["naive"]),
         ("memo", "Memoização (Top-Down, Θ(n))", PALETTE["memo"]),
         ("bottom_up", "Tabulação (Bottom-Up, Θ(n))", PALETTE["bottom_up"]),
         ("o1_space", "Espaço O(1) (Iterativo, Θ(n))", PALETTE["o1_space"]),
@@ -222,7 +222,7 @@ def plot_e1_fibonacci_chamadas() -> None:
     fig, ax = plt.subplots(figsize=(8.5, 5.0))
 
     series = [
-        ("naive", "Força Bruta (~2ⁿ invocações)", PALETTE["naive"]),
+        ("naive", "Força Bruta (2F(n+1)−1 chamadas, Θ(φⁿ))", PALETTE["naive"]),
         ("memo", "Memoização (2n - 1 chamadas)", PALETTE["memo"]),
         ("bottom_up", "Tabulação (1 chamada / loop iterativo)", PALETTE["bottom_up"]),
     ]
@@ -904,7 +904,7 @@ def plot_dashboard_summary() -> None:
     fig, ax = plt.subplots(figsize=(10.5, 6.0))
 
     comparisons = [
-        ("E1", "naive", "Fibonacci Força Bruta — Θ(2ⁿ)", PALETTE["naive"], "o"),
+        ("E1", "naive", "Fibonacci Força Bruta — Θ(φⁿ)", PALETTE["naive"], "o"),
         ("E7", "bottom_up", "Cadeia de Matrizes — Θ(n³)", PALETTE["memo"], "s"),
         ("E2", "bottom_up", "Corte de Hastes — Θ(n²)", PALETTE["bottom_up"], "^"),
         ("E1", "bottom_up", "Fibonacci Bottom-Up — Θ(n)", PALETTE["two_rows"], "D"),

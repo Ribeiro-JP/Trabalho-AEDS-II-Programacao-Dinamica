@@ -3,7 +3,7 @@
   "release": "6.18.54.1-microsoft-standard-WSL2",
   "version": "#1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026",
   "machine": "x86_64",
-  "processor": "x86_64",
+  "processor": "AMD Ryzen 5 4600G with Radeon Graphics",
   "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
   "python_implementation": "CPython",
   "recursion_limit": 1000,
@@ -11,7 +11,7 @@
     "status": "ready",
     "compiler": "/usr/bin/g++",
     "version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
-    "flags": "-O3 -std=c++14",
+    "flags": "-O3 -std=c++17",
     "binary_path": "/home/pichau/Programacao Dinamica/Trabalho-AEDS-II-Programaco-Dinamica/cpp/lcs"
   },
   "measurement_protocol": {
@@ -23,5 +23,5 @@
     "memory_measurement": "tracemalloc isolado em execução independente",
     "random_seed": 42
   },
-  "timestamp": "2026-10-14 15:50:53"
+  "timestamp": "2026-10-14 18:01:29"
 }
