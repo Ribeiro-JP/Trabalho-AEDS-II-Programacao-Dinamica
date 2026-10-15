@@ -525,8 +525,10 @@ O núcleo algorítmico, os testes unitários, os estudos de caso, os experimento
       <img src="https://img.shields.io/github/followers/Ribeiro-JP?label=Seguidores&style=social"/>
     </td>
     <td align="center" width="20%">
-      <img src="https://ui-avatars.com/api/?name=Paulo&background=6366f1&color=fff&size=100" width="100px" style="border-radius:50%;" alt="Paulo"/><br>
-      <b>Paulo</b><br>
+      <a href="https://github.com/Paulohenrish">
+        <img src="https://github.com/Paulohenrish.png" width="100px" style="border-radius:50%;" alt="João Pedro Ribeiro"/><br>
+        <b>Paulo Henrique</b>
+      </a><br>
       <img src="https://img.shields.io/badge/AEDS--II-CEFET--MG-blue"/>
     </td>
   </tr>
