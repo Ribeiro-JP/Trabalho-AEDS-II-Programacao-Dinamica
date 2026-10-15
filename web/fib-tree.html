@@ -24,6 +24,12 @@
   </script>
 
   <link rel="stylesheet" href="css/style.css">
+  
+  <!-- KaTeX com auto-render para tipografia matemática formal -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}, {left: '\\(', right: '\\)', display: false}, {left: '\\[', right: '\\]', display: true}], ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'], throwOnError: false});"></script>
 </head>
 <body>
 
@@ -281,6 +287,9 @@
           <div class="comparison-savings">
             <span>Economia computacional:</span>
             <strong id="stat-savings-pct">40.0% de chamadas evitadas</strong>
+          </div>
+          <div style="font-size: 0.775rem; color: var(--text-secondary); background: var(--bg-surface-alt); border: 1px solid var(--border-color); border-radius: var(--radius-xs); padding: 0.5rem 0.65rem; margin-top: 0.5rem; line-height: 1.45;">
+            <strong>Por que 9 chamadas e 2 podas?</strong> O algoritmo executa <strong>9 chamadas</strong> no total: 7 para calcular os estados inéditos e casos-base, mais <strong>2 consultas ao cache</strong> (<em>memo hits</em> em \(O(1)\)). Cada poda intercepta a recursão e evita a expansão de subárvores que gerariam <strong>6 chamadas redundantes adicionais</strong> (15 − 6 = 9).
           </div>
         </div>
 

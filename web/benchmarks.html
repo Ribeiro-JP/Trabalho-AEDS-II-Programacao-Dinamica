@@ -21,6 +21,12 @@
     })();
   </script>
   <link rel="stylesheet" href="css/style.css">
+  
+  <!-- KaTeX com auto-render para tipografia matemática formal -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}, {left: '\\(', right: '\\)', display: false}, {left: '\\[', right: '\\]', display: true}], ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'], throwOnError: false});"></script>
   <style>
     /* Estilos específicos da galeria científica e visualização editorial */
     .bench-gallery-grid {
@@ -587,8 +593,8 @@
           <div class="bench-takeaway-title">💡 Conclusões Empíricas Fundamentais:</div>
           <ul class="bench-takeaway-list">
             <li>A força bruta exponencial dispara verticalmente e atinge timeout por volta de n = 32.</li>
-            <li>Cadeia de Matrizes Theta(n^3) e Corte de Hastes Theta(n^2) mantêm crescimento suave e previsível.</li>
-            <li>Fibonacci linear Theta(n) executa em frações insignificantes de milissegundo.</li>
+            <li>Cadeia de Matrizes Θ(n³) e Corte de Hastes Θ(n²) mantêm crescimento suave e previsível.</li>
+            <li>Fibonacci linear Θ(n) executa em frações insignificantes de milissegundo.</li>
           </ul>
           <div class="bench-limitations-note">Limitação: Compara problemas distintos normalizados pelo parâmetro de entrada n.</div>
         </div>
@@ -604,11 +610,11 @@
             <h3 class="bench-fig-title">Fibonacci: Explosão Exponencial vs. Programação Dinâmica</h3>
             <div class="bench-fig-subtitle">Comparativo geral de tempo em escala semi-logarítmica</div>
             <p class="bench-fig-desc">
-              Compara o tempo de computação do n-ésimo número de Fibonacci. A recursão ingênua cresce segundo Theta(phi^n) (~1.618^n), enquanto as variantes com Programação Dinâmica operam em tempo estritamente linear Theta(n).
+              Compara o tempo de computação do n-ésimo número de Fibonacci. A recursão ingênua cresce segundo Θ(φⁿ) (~1.618ⁿ), enquanto as variantes com Programação Dinâmica operam em tempo estritamente linear Θ(n).
             </p>
           </div>
           <div class="bench-fig-badges">
-            <span class="badge badge-accent">Theta(phi^n) -> Theta(n)</span>
+            <span class="badge badge-accent">Θ(φⁿ) → Θ(n)</span>
             <span class="badge badge-secondary">Tempo de CPU (s)</span>
           </div>
         </div>
@@ -629,7 +635,7 @@
         <div class="bench-takeaway-box">
           <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
-            <li>A força bruta sofre timeout aos 3 segundos para n >= 32, demonstrando inviabilidade prática.</li>
+            <li>A força bruta sofre timeout aos 3 segundos para n ≥ 33, demonstrando inviabilidade prática (sucesso registrado até n = 32).</li>
             <li>Memoização, Tabulação e Espaço O(1) permanecem abaixo de 0.001s mesmo para n = 2000.</li>
           </ul>
         </div>
@@ -742,7 +748,7 @@
         </div>
 
         <div class="bench-fig-actions">
-          <div class="bench-fig-meta"><span>Domínio: n <= 30 (sem timeout)</span> • <span>Eixo Y: Fator de Speedup (log)</span></div>
+          <div class="bench-fig-meta"><span>Domínio: n ≤ 32 (sem timeout)</span> • <span>Eixo Y: Fator de Speedup (log)</span></div>
           <div class="bench-fig-btns">
             <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e1_fibonacci_speedup.png', 'E1: Fibonacci — Speedup')">🔍 Ampliar Gráfico</button>
             <a href="figures/e1_fibonacci_speedup.png" download="e1_fibonacci_speedup.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
@@ -766,13 +772,13 @@
           <div class="bench-fig-title-area">
             <div class="bench-fig-num"><span>Experimento 02</span> • <span>Cormen Cap. 15.1</span></div>
             <h3 class="bench-fig-title">Corte de Hastes: Desempenho dos Algoritmos Exatos</h3>
-            <div class="bench-fig-subtitle">Tempo de execução: Força Bruta Theta(2^n) vs PD Quadrática Theta(n^2)</div>
+            <div class="bench-fig-subtitle">Tempo de execução: Força Bruta Θ(2ⁿ) vs PD Quadrática Θ(n²)</div>
             <p class="bench-fig-desc">
-              Compara a decomposição recursiva que explora todas as 2^(n-1) maneiras de cortar uma haste de comprimento n com as versões de Programação Dinâmica (Memoização e Bottom-Up).
+              Compara a decomposição recursiva que explora todas as 2ⁿ⁻¹ maneiras de cortar uma haste de comprimento n com as versões de Programação Dinâmica (Memoização e Bottom-Up).
             </p>
           </div>
           <div class="bench-fig-badges">
-            <span class="badge badge-accent">Theta(2^n) -> Theta(n^2)</span>
+            <span class="badge badge-accent">Θ(2ⁿ) → Θ(n²)</span>
             <span class="badge badge-secondary">Tempo de CPU (s)</span>
           </div>
         </div>
@@ -793,7 +799,7 @@
         <div class="bench-takeaway-box">
           <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
-            <li>A força bruta ingênua atinge o limite de timeout (3s) em n = 20.</li>
+            <li>A força bruta ingênua atinge o limite de timeout (3s) para n > 20 (sucesso medido até n = 20).</li>
             <li>Memoização e Bottom-Up resolvem hastes de tamanho n = 200 em menos de 0.01 segundo.</li>
           </ul>
         </div>
@@ -850,11 +856,11 @@
             <h3 class="bench-fig-title">LCS: Consumo de Memória (Tabela Completa vs. Duas Linhas)</h3>
             <div class="bench-fig-subtitle">Pico de memória em KB medido via tracemalloc em execução isolada</div>
             <p class="bench-fig-desc">
-              Demonstra o ganho de espaço em memória ao calcular o comprimento da LCS. A matriz completa requer Theta(m*n), enquanto a versão com duas linhas descarta estados anteriores e consome apenas Theta(min(m, n)).
+              Demonstra o ganho de espaço em memória ao calcular o comprimento da LCS. A matriz completa requer Θ(m · n), enquanto a versão com duas linhas descarta estados anteriores e consome apenas Θ(min(m, n)).
             </p>
           </div>
           <div class="bench-fig-badges">
-            <span class="badge badge-accent">Theta(mn) -> Theta(min(m,n))</span>
+            <span class="badge badge-accent">Θ(m · n) → Θ(min(m, n))</span>
             <span class="badge badge-success">Economia > 95%</span>
           </div>
         </div>
@@ -896,7 +902,7 @@
             </p>
           </div>
           <div class="bench-fig-badges">
-            <span class="badge badge-accent">Theta(m * n)</span>
+            <span class="badge badge-accent">Θ(m · n)</span>
             <span class="badge">Tempo de CPU (s)</span>
           </div>
         </div>
@@ -917,7 +923,7 @@
         <div class="bench-takeaway-box">
           <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
-            <li>Ambas as implementações exibem o formato quadrático característico da recorrência Theta(m * n).</li>
+            <li>Ambas as implementações exibem o formato quadrático característico da recorrência Θ(m · n).</li>
             <li>A otimização de 2 linhas apresenta tempo ligeiramente inferior por reduzir a pressão sobre o cache de CPU.</li>
           </ul>
         </div>
@@ -930,7 +936,7 @@
         <div class="bench-fig-header">
           <div class="bench-fig-title-area">
             <div class="bench-fig-num"><span>Experimento 04</span> • <span>Linguagem & Compilação</span></div>
-            <h3 class="bench-fig-title">LCS: Desempenho CPython 3.11 vs. C++17 Nativo (-O3)</h3>
+            <h3 class="bench-fig-title">LCS: Desempenho CPython 3.12 vs. C++17 Nativo (-O3)</h3>
             <div class="bench-fig-subtitle">Medição empírica comparando código compilado de alta performance com interpretador</div>
             <p class="bench-fig-desc">
               Executa o mesmo algoritmo exato (Bottom-Up com traceback) nas mesmas instâncias de entrada em Python e C++. Ambas as saídas são estritamente validadas para garantir equivalência antes do registro temporal.
@@ -948,7 +954,7 @@
         </div>
 
         <div class="bench-fig-actions">
-          <div class="bench-fig-meta"><span>Compilador: MinGW GCC 6.3 (-O3)</span> • <span>Eixo Y: Tempo (s, log)</span></div>
+          <div class="bench-fig-meta"><span>Compilador: g++ 13.3 (-O3), WSL2</span> • <span>Eixo Y: Tempo (s, log)</span></div>
           <div class="bench-fig-btns">
             <button type="button" class="btn btn-outline btn-sm" onclick="openModal('e4_lcs_python_cpp.png', 'E4: LCS — Python vs C++')">🔍 Ampliar Gráfico</button>
             <a href="figures/e4_lcs_python_cpp.png" download="e4_lcs_python_cpp.png" class="btn btn-primary btn-sm">⬇ Baixar PNG</a>
@@ -958,8 +964,8 @@
         <div class="bench-takeaway-box">
           <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
-            <li>Ambas as linguagens confirmam a inclinação assintótica Theta(m * n).</li>
-            <li>O código em C++ nativo opera entre 1,5 e 2 ordens de magnitude mais rápido (35x–70x) por dispensar o overhead de bytecode, checagem dinâmica de tipos e boxing do CPython.</li>
+            <li>O comportamento de ambas as linguagens é consistente com a inclinação assintótica Θ(m · n).</li>
+            <li>O código em C++ nativo opera entre 2 e 2,2 ordens de magnitude mais rápido (cerca de 109x–163x) por dispensar o overhead de bytecode, checagem dinâmica de tipos e boxing do CPython.</li>
           </ul>
         </div>
       </article>
@@ -978,7 +984,7 @@
             </p>
           </div>
           <div class="bench-fig-badges">
-            <span class="badge badge-accent">Speedup ~ 35x a 70x</span>
+            <span class="badge badge-accent">Speedup ~ 109x a 163x</span>
             <span class="badge badge-secondary">T_python / T_cpp</span>
           </div>
         </div>
@@ -999,7 +1005,7 @@
         <div class="bench-takeaway-box">
           <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
-            <li>O C++ nativo apresenta aceleração consistente entre 35x e 70x em relação ao interpretador CPython.</li>
+            <li>O C++ nativo apresenta aceleração consistente entre 109x e 163x (entre 2 e 2,2 ordens de magnitude) em relação ao interpretador CPython.</li>
             <li>A diferença reflete o custo do runtime dinâmico em laços aninhados intensivos de CPU.</li>
           </ul>
         </div>
@@ -1123,7 +1129,7 @@
           <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
             <li>Em instâncias com variações de preço, a heurística gulosa falha em mais de 60% das vezes.</li>
-            <li>A perda média observada situa-se em torno de 5% a 15%, comprovando que escolhas locais míopes não garantem o ótimo global.</li>
+            <li>A perda média observada situa-se em torno de 5% a 15%, o que é consistente com a premissa de que escolhas locais míopes não garantem o ótimo global.</li>
           </ul>
         </div>
       </article>
@@ -1135,14 +1141,14 @@
         <div class="bench-fig-header">
           <div class="bench-fig-title-area">
             <div class="bench-fig-num"><span>Experimento 07</span> • <span>Cormen Cap. 15.2</span></div>
-            <h3 class="bench-fig-title">Cadeia de Matrizes: Tempo de Execução Cúbico Theta(n^3)</h3>
+            <h3 class="bench-fig-title">Cadeia de Matrizes: Tempo de Execução Cúbico Θ(n³)</h3>
             <div class="bench-fig-subtitle">Comportamento empírico do algoritmo Bottom-Up por diagonais</div>
             <p class="bench-fig-desc">
-              Avalia o crescimento do tempo de execução para determinar a ordem ótima de parentização do produto encadeado de n matrizes, confirmando o laço triplo de complexidade Theta(n^3).
+              Avalia o crescimento do tempo de execução para determinar a ordem ótima de parentização do produto encadeado de n matrizes, sendo consistente com o laço triplo de complexidade Θ(n³).
             </p>
           </div>
           <div class="bench-fig-badges">
-            <span class="badge badge-accent">Theta(n^3) Cúbico</span>
+            <span class="badge badge-accent">Θ(n³) Cúbico</span>
             <span class="badge">Tempo de CPU (s)</span>
           </div>
         </div>
@@ -1287,7 +1293,7 @@
           <div class="bench-takeaway-title">💡 Conclusões Empíricas:</div>
           <ul class="bench-takeaway-list">
             <li>Para capacidade constante, o tempo cresce linearmente com a inclusão de novos itens na mochila.</li>
-            <li>Confirma que cada item adiciona uma nova linha no preenchimento da matriz.</li>
+            <li>O resultado é consistente com o fato de que cada item adiciona uma nova linha no preenchimento da matriz.</li>
           </ul>
         </div>
       </article>
@@ -1369,7 +1375,7 @@
         <div>
           <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">4. Timeout Real com Subprocessos</h4>
           <p style="margin: 0; font-size: 0.875rem; color: var(--text-secondary); line-height: 1.55;">
-            Algoritmos com complexidade exponencial (como Fibonacci e Corte de Hastes ingênuos) são isolados em subprocessos <code>multiprocessing.Process</code> com encerramento forçado (via SIGTERM/SIGKILL em Linux ou TerminateProcess em Windows), impedindo processos órfãos ou travamentos do sistema.
+            Algoritmos com complexidade exponencial (como Fibonacci e Corte de Hastes ingênuos) são isolados em subprocessos <code>multiprocessing.Process</code> com encerramento forçado (no experimento final utilizou-se o de Linux com sinais POSIX SIGTERM/SIGKILL sob WSL2, com suporte alternativo a TerminateProcess no Windows), impedindo processos órfãos ou travamentos do sistema.
           </p>
         </div>
       </div>
@@ -1417,10 +1423,14 @@
       var modalTitle = document.getElementById('modal-graph-title');
       var modalDownloadLink = document.getElementById('modal-download-link');
 
-      window.openModal = function(imageFilename, title) {
+      var lastActiveTrigger = null;
+
+      window.openModal = function(imageFilename, title, triggerEl) {
         if (!modalBackdrop || !modalImg) return;
+        lastActiveTrigger = triggerEl || document.activeElement;
         var srcPath = 'figures/' + imageFilename;
         modalImg.src = srcPath;
+        modalImg.alt = title ? ('Gráfico ampliado: ' + title) : 'Gráfico científico de benchmark em alta resolução (200 DPI)';
         modalImg.onerror = function() {
           if (!this.dataset.triedDocs) {
             this.dataset.triedDocs = '1';
@@ -1434,12 +1444,17 @@
         }
         modalBackdrop.classList.add('is-open');
         document.body.style.overflow = 'hidden';
+        var closeBtn = modalBackdrop.querySelector('.bench-modal-close-btn');
+        if (closeBtn) closeBtn.focus();
       };
 
       window.closeModal = function() {
         if (!modalBackdrop) return;
         modalBackdrop.classList.remove('is-open');
         document.body.style.overflow = '';
+        if (lastActiveTrigger && typeof lastActiveTrigger.focus === 'function') {
+          lastActiveTrigger.focus();
+        }
       };
 
       window.handleBackdropClick = function(event) {

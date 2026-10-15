@@ -21,6 +21,12 @@
     })();
   </script>
   <link rel="stylesheet" href="css/style.css">
+  
+  <!-- KaTeX com auto-render para tipografia matemática formal -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}, {left: '\\(', right: '\\)', display: false}, {left: '\\[', right: '\\]', display: true}], ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'], throwOnError: false});"></script>
 </head>
 <body>
 
@@ -265,8 +271,8 @@
           </div>
           <div style="margin-bottom: 0.5rem;">
             <strong>Recorrência de Bellman:</strong>
-            <div style="font-family: var(--font-mono); background-color: var(--bg-surface-alt); padding: 0.5rem 0.75rem; border-radius: var(--radius-xs); border: 1px solid var(--border-color); margin-top: 0.35rem; font-size: 0.825rem; overflow-x: auto;">
-              m[i, j] = min { m[i, k] + m[k+1, j] + p_{i-1} · p_k · p_j }
+            <div style="font-family: var(--font-mono); background-color: var(--bg-surface-alt); padding: 0.5rem 0.75rem; border-radius: var(--radius-xs); border: 1px solid var(--border-color); margin-top: 0.35rem; font-size: 0.85rem; overflow-x: auto;">
+              \(m[i, j] = \min_{i \le k < j} \{ m[i, k] + m[k+1, j] + p_{i-1} \cdot p_k \cdot p_j \}\)
             </div>
           </div>
           <p id="label-subchain-desc" style="margin: 0; font-size: 0.825rem;">
@@ -405,7 +411,7 @@
         <div>
           <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-primary);">4. Força Bruta vs Programação Dinâmica</h4>
           <p style="margin: 0; font-size: 0.875rem; color: var(--text-secondary); line-height: 1.55;">
-            O número de parentizações possíveis para \(n\) matrizes é o \((n-1)\)-ésimo Número de Catalan \(P(n) = C(n-1) = \Omega(4^n / n^{3/2})\), tornando a busca exaustiva impossível para \(n \ge 15\).
+            O número de parentizações possíveis para \(n\) matrizes é o \((n-1)\)-ésimo Número de Catalan \(P(n) = C(n-1) = \Theta(4^n / n^{3/2})\), tornando a busca exaustiva impossível para \(n \ge 15\).
             A Programação Dinâmica avalia apenas \(\frac{n(n-1)}{2}\) subproblemas, reduzindo o tempo para \(O(n^3)\) e espaço para \(O(n^2)\).
           </p>
         </div>

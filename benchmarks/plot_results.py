@@ -471,7 +471,7 @@ def plot_e3_lcs_tempo() -> None:
 # 4. Experimento E4: Python vs C++
 # -----------------------------------------------------------------------------
 def plot_e4_lcs_python_cpp() -> None:
-    """E4: LCS - Comparativo de tempo Python (CPython 3.11) vs C++17 (-O3)."""
+    """E4: LCS - Comparativo de tempo Python (CPython 3.12) vs C++17 (-O3)."""
     df = load_dataset("e4_lcs_cpp.csv", ["approach", "n", "time_seconds", "status"])
     if df is None:
         raise FileNotFoundError("e4_lcs_cpp.csv não encontrado.")
@@ -489,7 +489,7 @@ def plot_e4_lcs_python_cpp() -> None:
 
     ax.plot(
         sub_py["n"], sub_py["time_seconds"],
-        label="Python 3.11 (CPython Bottom-Up)", color=PALETTE["bottom_up"],
+        label="Python 3.12 (CPython Bottom-Up)", color=PALETTE["bottom_up"],
         linestyle="-", marker="o", markersize=4.0, linewidth=2.0
     )
 
@@ -500,7 +500,7 @@ def plot_e4_lcs_python_cpp() -> None:
     )
 
     ax.set_yscale("log")
-    ax.set_title("E4: LCS — Desempenho CPython 3.11 vs. C++17 Nativo (-O3)")
+    ax.set_title("E4: LCS — Desempenho CPython 3.12 vs. C++17 Nativo (-O3)")
     ax.set_xlabel("Comprimento das Cadeias (n = m)")
     ax.set_ylabel("Tempo de Execução (s, escala log)")
     ax.grid(True)

@@ -694,7 +694,7 @@ def generate_manifest_json(cpp_metadata: dict[str, Any] | None = None) -> None:
             "filename": "e4_lcs_python_cpp.png",
             "experiment": "E4",
             "category": "linguagem",
-            "title": "E4: LCS — Desempenho CPython 3.11 vs C++17 Nativo (-O3)",
+            "title": "E4: LCS — Desempenho CPython 3.12 vs C++17 Nativo (-O3)",
             "subtitle": "Medição empírica comparando código compilado de alta performance com interpretador",
             "comparison": "CPython Bottom-Up vs C++ g++ -O3 Bottom-Up",
             "x_axis": "Comprimento das Cadeias (n = m)",
@@ -1293,7 +1293,7 @@ def exp_e4_lcs_cpp_vs_python(quick: bool = False) -> None:
         s1 = "".join(rng.choices(alphabet, k=n))
         s2 = "".join(rng.choices(alphabet, k=n))
 
-        # 1. Medição Python (CPython 3.11 Bottom-Up completo com traceback)
+        # 1. Medição Python (CPython 3.12 Bottom-Up completo com traceback)
         t_py, std_py, min_py, max_py, _, st_py = measure_execution_with_stats(
             lcs_mod.lcs_string, s1, s2, repeats=repeats
         )
@@ -1313,7 +1313,7 @@ def exp_e4_lcs_cpp_vs_python(quick: bool = False) -> None:
             "memory_bytes": 0,
             "calls": 1,
             "status": st_py,
-            "notes": "Python 3.11 (CPython Bottom-Up)",
+            "notes": "Python 3.12 (CPython Bottom-Up)",
         })
 
         # 2. Medição C++ (se disponível)

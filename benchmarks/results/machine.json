@@ -4,7 +4,7 @@
   "version": "#1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026",
   "machine": "x86_64",
   "processor": "AMD Ryzen 5 4600G with Radeon Graphics",
-  "gpu": "NVIDIA GeForce RTX 3060",
+  "gpu": "NVIDIA GeForce RTX 3060 (não utilizada nos experimentos — execução 100% CPU)",
   "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
   "python_implementation": "CPython",
   "recursion_limit": 1000,

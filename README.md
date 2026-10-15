@@ -54,7 +54,7 @@ O trabalho contempla:
 * **Disciplina:** Algoritmos e Estruturas de Dados II (AEDS-II)
 * **Professor Orientador:** Prof. Michel Pires da Silva
 * **Tema Central:** Programação Dinâmica (Capítulo 15 do livro *Introduction to Algorithms*, Cormen et al.)
-* **Participantes:** Alisson Henrique, Carlos Henrique, João Gabriel Santos, João Pedro Ribeiro e Paulo.
+* **Participantes:** Alisson Henrique, Carlos Daniel, João Gabriel Santos, João Pedro Ribeiro e Paulo.
 
 ---
 

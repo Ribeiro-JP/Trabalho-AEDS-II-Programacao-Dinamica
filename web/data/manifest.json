@@ -157,7 +157,7 @@
     "filename": "e4_lcs_python_cpp.png",
     "experiment": "E4",
     "category": "linguagem",
-    "title": "E4: LCS — Desempenho CPython 3.11 vs C++17 Nativo (-O3)",
+    "title": "E4: LCS — Desempenho CPython 3.12 vs C++17 Nativo (-O3)",
     "subtitle": "Medição empírica comparando código compilado de alta performance com interpretador",
     "comparison": "CPython Bottom-Up vs C++ g++ -O3 Bottom-Up",
     "x_axis": "Comprimento das Cadeias (n = m)",

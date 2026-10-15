@@ -24,6 +24,12 @@
   </script>
 
   <link rel="stylesheet" href="css/style.css">
+  
+  <!-- KaTeX com auto-render para tipografia matemática formal -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}, {left: '\\(', right: '\\)', display: false}, {left: '\\[', right: '\\]', display: true}], ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'], throwOnError: false});"></script>
 </head>
 <body>
 
@@ -197,7 +203,7 @@
         <div>
           <div class="editorial-card-top">
             <span class="editorial-card-num">MÓDULO 01</span>
-            <span class="badge badge-accent">O(2ⁿ) → O(n)</span>
+            <span class="badge badge-accent">Θ(φⁿ) → Θ(n)</span>
           </div>
           <h3 class="editorial-card-title">FIBONACCI</h3>
           <p class="editorial-card-desc">
@@ -436,7 +442,7 @@
         <div class="concept-pillar-card pillar-primary">
           <span class="concept-title">SUBESTRUTURA ÓTIMA</span>
           <p class="concept-desc">
-            Uma solução ótima para o problema global é construída a partir das soluções ótimas de seus subproblemas componentes. Sem subestrutura ótima, a PD não se aplica.
+            Uma solução ótima para o problema global é construída a partir das soluções ótimas de seus subproblemas componentes. Sem subestrutura ótima (ou sem independência dos subproblemas, como no caso clássico do caminho simples mais longo), a Programação Dinâmica não se aplica.
           </p>
         </div>
 
