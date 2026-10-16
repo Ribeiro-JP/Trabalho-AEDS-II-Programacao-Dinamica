@@ -254,43 +254,16 @@ Trabalho-AEDS-II-Programaco-Dinamica/
 │       ├── e8_knapsack.csv             # Dados da Mochila 0/1
 │       └── machine.json                # Metadados de CPU, memória, SO e compiladores
 │
-├── docs/                               # Documentação e figuras para documentação técnica
-│   ├── figures/                        # 19 gráficos científicos sincronizados a 200 DPI
-│   ├── TAREFAS.md                      # Checklist de tarefas do projeto
-│   ├── COMO_TRABALHAR_EM_GRUPO.md      # Normas de Git Flow, branches e revisões de código
-│   ├── RESUMO_TRABALHO.md              # Síntese das complexidades e deduções assintóticas
-│   ├── ROTEIRO_SLIDES.md               # Roteiro minuto a minuto da apresentação oral
-│   └── DECISOES.md                     # Architecture Decision Records (ADRs)
-│
-├── relatorio/                          # Relatório acadêmico completo em LaTeX (estilo CEFET)
-│   ├── main.tex                        # Arquivo mestre com pré-ambulo, capa e estrutura
-│   ├── referencias.bib                 # Bibliografia em BibTeX (Cormen, Bellman, etc.)
-│   ├── figuras/                        # Cópia sincronizada dos gráficos a 200 DPI
-│   ├── tikz/                           # Diagramas vetoriais em TikZ
-│   └── secoes/                         # Capítulos 1 a 6 e apêndice
-│       ├── 01_introducao.tex
-│       ├── 02_fundamentacao.tex
-│       ├── 03_paradigma.tex
-│       ├── 04_analise.tex
-│       ├── 05_estudo_de_caso.tex
-│       ├── 06_conclusoes.tex
-│       └── apendice_cheatsheet.tex
-│
-├── cheatsheet/                         # Resumo acadêmico condensado de 1 a 2 páginas
-│   ├── cheatsheet.tex                  # Documento independente em LaTeX
-│   └── cheatsheet_body.tex             # Corpo compartilhado entre apêndice e cheat sheet
-│
-├── slides/                             # Material para a apresentação oral de 40 minutos
-│   ├── README.md                       # Diretrizes de organização e estrutura dos 5 blocos
-│   └── assets/                         # Imagens e diagramas de apoio
+├── docs/                               # Documentação e figuras científicas
+│   └── figures/                        # 19 gráficos científicos sincronizados a 200 DPI
 │
 └── web/                                # Portal web com simuladores e visualizações interativas
     ├── index.html                      # Painel central de navegação com alternância de tema
     ├── benchmarks.html                 # Visualizador dinâmico de gráficos científicos
     ├── fib-tree.html                   # Árvore de recursão animada com destaque a nós do cache
-    ├── rod-cutting-duel.html           # Duelo interativo: Solução Ótima (PD) vs Heurística Gulosa
-    ├── matrix-chain.html               # Simulador de preenchimento por diagonais (tabelas m e s)
-    ├── lcs-table.html                  # Animação passo a passo da grade de LCS e setas de traceback
+    ├── lcs-table.html                  # Matriz interativa de LCS com traceback animado
+    ├── matrix-chain.html               # Simulador de multiplicação em cadeia e parentização
+    ├── rod-cutting-duel.html           # Duelo interativo Guloso vs. Programação Dinâmica
     ├── quiz.html                       # Questionário avaliativo com 8 questões conceituais
     ├── css/style.css                   # Folha de estilos responsiva com suporte a Dark Mode
     ├── js/shared.js                    # Utilitários JavaScript, controle de tema e modais
@@ -330,8 +303,7 @@ O projeto conta com automação completa via `Makefile` para instalação, compi
 | `make bench-quick` | `$(PYTHON) benchmarks/run_benchmarks.py --quick` | Executa os benchmarks em modo rápido (menos repetições e instâncias menores). |
 | `make cpp` | `g++ -O3 -std=c++17 cpp/lcs.cpp -o cpp/lcs` | Compila o algoritmo LCS em C++17 com otimização máxima (`-O3`), gerando `cpp/lcs`. |
 | `make web` | `python3 -m http.server 8000` | Inicia o servidor HTTP local para servir o portal interativo em `http://localhost:8000/web/`. |
-| `make report` | `cd relatorio && latexmk -pdf main.tex` | Compila o relatório acadêmico em PDF utilizando `latexmk` (se instalado localmente). |
-| `make clean` | `rm -rf __pycache__ ... cpp/lcs relatorio/*.aux ...` | Remove caches Python (`__pycache__`, `.pytest_cache`), binários nativos e artefatos LaTeX. |
+| `make clean` | `rm -rf __pycache__ ... cpp/lcs .pytest_cache` | Remove caches Python (`__pycache__`, `.pytest_cache`) e binário nativo compilado. |
 
 ---
 
@@ -460,23 +432,6 @@ O projeto conta com automação completa via `Makefile` para instalação, compi
 
 ---
 
-## 📌 O que Falta Ser Implementado
-
-O núcleo algorítmico, os testes unitários, os estudos de caso, os experimentos científicos e os simuladores web estão **100% implementados, testados e validados**. As atividades pendentes concentram-se na documentação final e materiais de apresentação:
-
-- [ ] **Relatório Técnico Acadêmico em LaTeX (`relatorio/`):**
-  - [ ] Redigir a versão definitiva dos Capítulos 1 a 6 a partir dos esqueletos existentes em `relatorio/secoes/`.
-  - [ ] Compilar a versão final do relatório PDF no Overleaf integrando os diagramas em TikZ e os 19 gráficos em alta resolução.
-- [ ] **Apresentação e Slides do Seminário (`slides/`):**
-  - [ ] Montar a sequência final de slides para a apresentação oral de 40 minutos conforme roteiro em `docs/ROTEIRO_SLIDES.md`.
-  - [ ] Preparar os roteiros das dinâmicas interativas da aula (aposta do Fibonacci, corte de haste e cadeia de matrizes).
-- [ ] **Finalização do Cheat Sheet Acadêmico (`cheatsheet/`):**
-  - [ ] Preencher o resumo condensado em LaTeX de 1 a 2 páginas em `cheatsheet/cheatsheet_body.tex`.
-- [ ] **Ensaio Geral da Apresentação:**
-  - [ ] Realizar ensaio cronometrado da apresentação oral com simulação de perguntas da banca/professor.
-
----
-
 ## 📚 Referências Acadêmicas
 
 1. **CORMEN, Thomas H.; LEISERSON, Charles E.; RIVEST, Ronald L.; STEIN, Clifford.** *Algoritmos: Teoria e Prática*. 3. ed. Rio de Janeiro: Elsevier, 2012. Capítulo 15: Programação Dinâmica, p. 263-305.
@@ -505,8 +460,8 @@ O núcleo algorítmico, os testes unitários, os estudos de caso, os experimento
     </td>
     <td align="center" width="20%">
       <a href="https://github.com/zCarlos17">
-        <img src="https://github.com/zCarlos17.png" width="100px" style="border-radius:50%;" alt="Carlos Henrique"/><br>
-        <b>Carlos Henrique</b>
+        <img src="https://github.com/zCarlos17.png" width="100px" style="border-radius:50%;" alt="Carlos Daniel"/><br>
+        <b>Carlos Daniel</b>
       </a><br>
       <img src="https://img.shields.io/github/followers/zCarlos17?label=Seguidores&style=social"/>
     </td>

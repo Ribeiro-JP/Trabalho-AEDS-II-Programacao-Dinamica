@@ -428,11 +428,10 @@ class TestBenchmarkInfrastructure:
             assert expected_exp in exp_ids
 
     def test_19_all_figures_generated_and_synchronized(self) -> None:
-        """19. Valida que os 19 gráficos científicos foram sincronizados nas 3 pastas."""
+        """19. Valida que os 19 gráficos científicos foram sincronizados nas pastas docs e web."""
         root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
         dirs = [
             os.path.join(root, "docs", "figures"),
-            os.path.join(root, "relatorio", "figuras"),
             os.path.join(root, "web", "figures"),
         ]
         key_figures = [

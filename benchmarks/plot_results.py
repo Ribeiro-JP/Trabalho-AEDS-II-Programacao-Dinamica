@@ -76,24 +76,26 @@ def setup_theme() -> None:
 
 
 def save_figure(fig: plt.Figure, canonical_filename: str, aliases: list[str] | None = None) -> None:
-    """Salva a figura a 200 DPI em docs/figures/, relatorio/figuras/ e web/figures/."""
+    """Salva a figura a 200 DPI em docs/figures/ e web/figures/."""
     os.makedirs(DOCS_FIGURES_DIR, exist_ok=True)
-    os.makedirs(RELATORIO_FIGURES_DIR, exist_ok=True)
     os.makedirs(WEB_FIGURES_DIR, exist_ok=True)
 
     filenames = [canonical_filename] + (aliases or [])
 
     for fname in filenames:
         dest_docs = os.path.join(DOCS_FIGURES_DIR, fname)
-        dest_relatorio = os.path.join(RELATORIO_FIGURES_DIR, fname)
         dest_web = os.path.join(WEB_FIGURES_DIR, fname)
 
         fig.savefig(dest_docs, dpi=200, bbox_inches="tight")
-        fig.savefig(dest_relatorio, dpi=200, bbox_inches="tight")
         fig.savefig(dest_web, dpi=200, bbox_inches="tight")
 
+        if os.path.isdir(os.path.join(ROOT_DIR, "relatorio")):
+            os.makedirs(RELATORIO_FIGURES_DIR, exist_ok=True)
+            dest_relatorio = os.path.join(RELATORIO_FIGURES_DIR, fname)
+            fig.savefig(dest_relatorio, dpi=200, bbox_inches="tight")
+
     plt.close(fig)
-    print(f"      [FIG] Salvo: {canonical_filename} (e {len(aliases or [])} aliases) em docs, relatorio e web.")
+    print(f"      [FIG] Salvo: {canonical_filename} (e {len(aliases or [])} aliases) em docs e web.")
 
 
 def load_dataset(filename: str, required_cols: list[str] | None = None) -> pd.DataFrame | None:
