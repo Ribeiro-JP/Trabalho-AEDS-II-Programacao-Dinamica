@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/figures/summary_complexity_dashboard.png" alt="Dashboard Síntese de Complexidade e Benchmarks" style="width:100%; max-height:480px; object-fit:cover; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.4);"/>
+  <img src="docs/figures/summary_complexity_dashboard.png" alt="Dashboard de síntese de complexidade e benchmarks" style="width:100%; max-height:480px; object-fit:cover; border-radius:10px;" />
 </p>
 
 # Análise Teórica e Empírica de Algoritmos em Programação Dinâmica: Complexidade, Otimizações e Estudos de Caso
@@ -7,24 +7,33 @@
 [![Linux](https://img.shields.io/badge/Platform-Linux-FCC624?logo=linux&logoColor=black)](https://www.linux.org/)
 [![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![C++](https://img.shields.io/badge/C%2B%2B-17%20(-O3)-00599C?logo=cplusplus&logoColor=white)](https://isocpp.org/)
-[![Pytest](https://img.shields.io/badge/Tests-48%2F48%20Passed-brightgreen?logo=pytest&logoColor=white)](https://pytest.org/)
+[![Pytest](https://img.shields.io/badge/Tests-48%20casos%20documentados-blue?logo=pytest&logoColor=white)](https://pytest.org/)
 [![LaTeX](https://img.shields.io/badge/Report-LaTeX%20%2F%20Overleaf-47A141?logo=latex&logoColor=white)](https://www.overleaf.com/)
-[![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/Ribeiro-JP/Trabalho-AEDS-II-Programaco-Dinamica)
+[![Status](https://img.shields.io/badge/Status-Academic%20Project-0D9488)](https://github.com/Ribeiro-JP/Trabalho-AEDS-II-Programaco-Dinamica)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+<p align="center">
+  <a href="https://ribeiro-jp.github.io/Trabalho-AEDS-II-Programaco-Dinamica/index.html"><b>🌐 Acessar o PD LAB — Portal Interativo</b></a>
+  &nbsp;|&nbsp;
+  <a href="https://ribeiro-jp.github.io/Trabalho-AEDS-II-Programaco-Dinamica/benchmarks.html"><b>📊 Painel de Benchmarks</b></a>
+  &nbsp;|&nbsp;
+  <a href="https://ribeiro-jp.github.io/Trabalho-AEDS-II-Programaco-Dinamica/quiz.html"><b>🧠 Quiz</b></a>
+</p>
 
 ---
 
 ## 📋 Sumário Executivo
 
-Este repositório contém uma investigação teórico-empírica rigorosa sobre o paradigma de **Programação Dinâmica (PD)**, desenvolvida no âmbito da disciplina de **Algoritmos e Estruturas de Dados II (AEDS-II)** do **CEFET-MG (Campus Divinópolis)** sob orientação do Prof. Michel Pires da Silva.
+Este repositório documenta uma investigação teórica e experimental sobre **Programação Dinâmica (PD)**, realizada na disciplina **Algoritmos e Estruturas de Dados II (AEDS II)** do **CEFET-MG — Campus Divinópolis**, sob orientação do Prof. Michel Pires da Silva. O projeto toma como referência o capítulo de Programação Dinâmica de Cormen et al. e compara **recursão ingênua**, **top-down com memoização**, **bottom-up com tabulação** e **otimizações espaciais**.
 
-O projeto fundamenta-se nas formulações clássicas do livro *Algoritmos: Teoria e Prática* (Cormen et al., Capítulo 15), confrontando implementações de referência nas abordagens **recursiva ingênua (Força Bruta)**, **Top-Down com Memoização** e **Bottom-Up com Tabulação**, além de **otimizações avançadas de espaço de memória** ($O(1)$ variáveis rotativas, vetor unidimensional e matriz de duas linhas).
+O trabalho compreende:
 
-O trabalho contempla:
-1. **Modelagem Matemática e Corretude:** Formulação exata das recorrências, casos-base, subestrutura ótima e prova de superposição de subproblemas para Fibonacci, Corte de Hastes (*Rod Cutting*), Multiplicação em Cadeia de Matrizes (*Matrix-Chain Multiplication*), Maior Subsequência Comum (*Longest Common Subsequence - LCS*) e Mochila 0/1 (*0/1 Knapsack*).
-2. **Estudos de Caso Reais:** Aplicação prática de PD na ferramenta de comparação textual unificada (**Mini Diff** linha a linha via LCS) e na bioinformática computacional (**Alinhamento Global de Sequências de DNA** via Needleman-Wunsch / Levenshtein).
-3. **Engenharia Experimental Científica:** Suíte automatizada de benchmarks (**Experimentos E1 a E8**) com isolamento de processos, tratamento de *timeouts* em funções exponenciais, medição de pico de memória via `tracemalloc`, média aparada (*trimmed mean*) de repetições, *batching* adaptativo para resolução sub-microssegundo e comparação de desempenho entre **CPython 3.11/3.12** e **C++17 compilado com `-O3`**.
-4. **Portal Web Interativo e Didático:** Simuladores visuais interativos em JavaScript/CSS modernos com animação passo a passo de matrizes, reconstrução de caminhos (*traceback*), duelo contra heurística gulosa e catálogo dos 19 gráficos gerados a 200 DPI.
+1. **Fundamentação matemática e corretude:** recorrências, casos-base, subestrutura ótima, subproblemas sobrepostos e análises assintóticas para Fibonacci, corte de hastes, cadeia de matrizes, LCS e mochila 0/1.
+2. **Aplicações didáticas:** Mini Diff baseado em LCS de linhas e estudo de alinhamento global/distância de edição em sequências de DNA.
+3. **Experimentação reproduzível:** experimentos **E1–E8**, cinco repetições por ponto na rodada completa, medições de tempo separadas das medições de memória, CSVs e metadados de ambiente.
+4. **Portal interativo PD LAB:** simuladores de algoritmos passo a passo, painel de gráficos e quiz conceitual de oito questões.
+
+Os tempos relatados são **observações em um ambiente experimental específico**. Complexidade teórica, contagem de chamadas, tempo medido e alocações rastreadas são grandezas diferentes e são tratadas separadamente.
 
 ---
 
@@ -41,7 +50,7 @@ O trabalho contempla:
 - [Resultados Experimentais](#-resultados-experimentais)
 - [Discussão dos Resultados](#-discussão-dos-resultados)
 - [Limitações do Projeto](#-limitações-do-projeto)
-- [O que Falta Ser Implementado](#-o-que-falta-ser-implementado)
+- [Situação dos Entregáveis](#-situação-dos-entregáveis)
 - [Referências Acadêmicas](#-referências-acadêmicas)
 - [Autores](#autores)
 
@@ -49,33 +58,41 @@ O trabalho contempla:
 
 ## 🎓 Contexto Acadêmico
 
-* **Instituição:** Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG) -- Campus Divinópolis
-* **Departamento:** Departamento de Computação
-* **Disciplina:** Algoritmos e Estruturas de Dados II (AEDS-II)
-* **Professor Orientador:** Prof. Michel Pires da Silva
-* **Tema Central:** Programação Dinâmica (Capítulo 15 do livro *Introduction to Algorithms*, Cormen et al.)
-* **Participantes:** Alisson Henrique, Carlos Daniel, João Gabriel Santos, João Pedro Ribeiro e Paulo.
+- **Instituição:** Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG) — Campus Divinópolis.
+- **Curso:** Engenharia da Computação.
+- **Departamento:** Departamento de Computação.
+- **Disciplina:** Algoritmos e Estruturas de Dados II (AEDS II).
+- **Professor:** Michel Pires da Silva.
+- **Tema:** Programação Dinâmica e suas aplicações (Cormen et al., Capítulo 15).
+- **Equipe:** Alisson Henrique, Carlos Daniel, João Gabriel Santos, João Pedro Ribeiro e Paulo Henrique.
 
 ---
 
 ## 🎯 Objetivos Acadêmicos
 
-### Análise Teórica vs. Prática
-- **Validação experimental** das ordens de complexidade assintótica assinaladas pelo Cormen: $\Theta(\phi^n)$ vs. $\Theta(n)$ em Fibonacci, $\Theta(2^n)$ vs. $\Theta(n^2)$ em Rod Cutting, $\Theta(4^n/n^{3/2})$ vs. $\Theta(n^3)$ em Matrix-Chain, $\Theta(m \cdot n)$ em LCS e $O(n \cdot W)$ pseudo-polinomial na Mochila 0/1.
-- **Quantificação de overhead de recursão**: impacto da pilha de chamadas (*call stack*), alocação de quadros de ativação e limites de sistema (`sys.getrecursionlimit()`).
-- **Análise fina de constantes ocultas**: investigação de por que algoritmos com a mesma classe assintótica $\Theta(m \cdot n)$ apresentam ordens de grandeza distintas entre linguagens interpretadas e nativas.
+### Análise Teórica versus Prática
 
-### Subestrutura Ótima e Superposição de Subproblemas
-- Prova de que problemas de otimização combinatória exibem subestrutura ótima formalizável por relações de recorrência.
-- Comprovação empírica do colapso de **heurísticas gulosas** quando a *propriedade da escolha gulosa* não se sustenta (demonstrada via simulações com Monte Carlo no corte de hastes).
+- Formular e justificar as recorrências e os estados dos algoritmos estudados.
+- Comparar quantitativamente custos como $\Theta(\varphi^n)$ versus $\Theta(n)$ em Fibonacci, $\Theta(2^n)$ versus $\Theta(n^2)$ no corte de hastes e $\Theta(3^n)$ versus $\Theta(n^3)$ na cadeia de matrizes.
+- Distinguir o crescimento do **número de parentizações de Catalan**, $\Theta(4^n/n^{3/2})$, do número de **chamadas** da recursão ingênua na cadeia de matrizes ($3^{n-1}$).
+- Avaliar limitações de pilha, custo de memória e diferenças empíricas de implementação entre Python e C++.
 
-### Otimização Espacial e Trade-offs de Engenharia
-- Isolamento e quantificação do custo de **recuperação de solução ótima (*traceback*)**:
-  - Matriz bidimensional completa $(m+1) \times (n+1)$ para reconstrução exata da solução.
-  - Redução drástica para **duas linhas rotativas** $\Theta(\min(m, n))$ ou **vetor unidimensional** $\Theta(W)$ quando apenas o valor escalar ótimo é requerido (redução de memória superior a $97\%$).
+### Subestrutura Ótima e Subproblemas Sobrepostos
 
-### Comparação Inter-linguagem (CPython vs. C++17)
-- Isolamento de fatores de arquitetura de software: alocação contígua em heap vs. ponteiros de objetos em Python (*PyObject boxing*), vetorização e otimização por compilador nativo (`g++ -O3 -std=c++17`).
+- Demonstrar subestrutura ótima **nas formulações adequadas** para os problemas selecionados, sem pressupor que toda formulação possua essa propriedade.
+- Mostrar por que o reaproveitamento de estados pode eliminar recomputações.
+- Investigar situações em que uma heurística gulosa não garante o valor ótimo.
+
+### Otimizações de Espaço e Reconstrução
+
+- Contrastar tabela completa, duas linhas e vetor unidimensional.
+- Diferenciar o cálculo do **valor ótimo** da recuperação das **escolhas** que o produzem (*traceback*).
+- Discutir os limites de interpretação das medições realizadas com `tracemalloc`.
+
+### Comparação entre Linguagens
+
+- Comparar as implementações de LCS em CPython e C++17 compilado com `-O3` nas mesmas entradas.
+- Separar a **aceleração medida** de hipóteses sobre suas causas: representação de objetos, compilação e organização dos dados não foram isoladas experimentalmente.
 
 ---
 
@@ -83,117 +100,98 @@ O trabalho contempla:
 
 ### 1. Sequência de Fibonacci (Problema de Aquecimento)
 
-#### Fundamentação Teórica
-A sequência de Fibonacci ilustra de forma canônica o fenômeno da **superposição massiva de subproblemas**, onde subárvores idênticas são recalculadas exponencialmente na abordagem recursiva ingênua.
+$$
+F_0=0,\quad F_1=1,\qquad F_n=F_{n-1}+F_{n-2}\quad(n\ge2).
+$$
 
-**Recorrência:**
-$$F(0) = 0, \quad F(1) = 1$$
-$$F(n) = F(n-1) + F(n-2), \quad \forall n \ge 2$$
+- **Recursão ingênua:** $2F_{n+1}-1=\Theta(\varphi^n)$ invocações; pilha $O(n)$.
+- **Memoização:** $\Theta(n)$ operações no modelo de custo unitário e $\Theta(n)$ posições de cache/pilha. Na implementação que armazena apenas $F_2,\ldots,F_n$, um cache inicialmente vazio gera exatamente **$2n-1$ invocações totais para $n\ge2$**, das quais $n-1$ calculam estados novos.
+- **Bottom-up:** $\Theta(n)$ tempo e $\Theta(n)$ espaço com tabela completa.
+- **Bottom-up otimizado:** $\Theta(n)$ tempo e $O(1)$ posições auxiliares no modelo de palavras.
 
-#### Abordagens Implementadas
-1. **Força Bruta (*Naive*):** Árvore recursiva pura com exatamente $F(n+1)$ folhas e $2F(n+1) - 1$ chamadas totais. Complexidade: $\Theta(\phi^n) \approx \Theta(1.618^n)$ tempo, $O(n)$ espaço na pilha.
-2. **Top-Down com Memoização:** Recursão guiada com tabela de dispersão (*cache*). Cada subproblema de $0$ a $n$ é computado uma única vez em $2n-1$ chamadas de função. Complexidade: $\Theta(n)$ tempo, $\Theta(n)$ espaço.
-3. **Bottom-Up (Tabulação Linear):** Preenchimento iterativo de vetor unidimensional a partir dos casos-base. Complexidade: $\Theta(n)$ tempo, $\Theta(n)$ espaço.
-4. **Espaço Otimizado $O(1)$:** Mantém apenas as duas variáveis anteriores $a = F(n-2)$ e $b = F(n-1)$. Complexidade: $\Theta(n)$ tempo, $\Theta(1)$ espaço.
+**Ressalva aritmética:** $F_n$ tem $\Theta(n)$ bits. Em aritmética de precisão arbitrária, o custo em bits das somas e do armazenamento de valores não é constante; a tabulação usual exige $\Theta(n^2)$ operações de bit por somas sucessivas.
 
----
+### 2. Corte de Hastes / *Rod Cutting* (Cormen 15.1)
 
-### 2. Corte de Hastes / Rod Cutting (Cormen Seção 15.1)
+Para preços $p_i$ e comprimento $n$:
 
-#### Fundamentação Teórica
-Dada uma haste de comprimento $n$ e uma tabela de preços $p[1..n]$, determinar a receita máxima $r_n$ obtida cortando a haste em pedaços inteiros e vendendo-os.
+$$
+r_0=0,\qquad r_n=\max_{1\le i\le n}(p_i+r_{n-i}).
+$$
 
-**Recorrência Fundamental:**
-$$r_0 = 0$$
-$$r_n = \max_{1 \le i \le n} \left( p[i] + r_{n-i} \right), \quad \forall n \ge 1$$
+A implementação contempla recursão ingênua, memoização, tabulação estendida e reconstrução dos cortes por uma tabela $s$. A recursão ingênua executa $2^n$ invocações; as abordagens clássicas de PD usam $\Theta(n^2)$ tempo e $\Theta(n)$ espaço. Há ainda uma heurística gulosa por densidade $p_i/i$, utilizada como contraste experimental — **não** como solução exata garantida.
 
-#### Algoritmo Estendido e Reconstrução
-- **Extended-Bottom-Up-Cut-Rod:** Constrói a tabela de receitas ótimas $r[0..n]$ e a tabela auxiliar de escolhas $s[0..n]$, onde $s[j]$ armazena o tamanho do primeiro pedaço cortado para a haste de comprimento $j$.
-- **Reconstruct-Cuts:** Algoritmo iterativo de *traceback* que recupera a partição exata dos pedaços em tempo $O(n)$.
-- **Duelo contra a Heurística Gulosa:** Implementação da estratégia gulosa por densidade de valor ($p[i] / i$). No contraexemplo canônico $p = [0, 1, 5, 8, 9]$ com $n = 4$:
-  - Guloso escolhe pedaço de tamanho 3 (razão $2.67$, sobra 1) $\to$ Receita $8 + 1 = 9$.
-  - Programação Dinâmica escolhe dois pedaços de tamanho 2 $\to$ Receita $5 + 5 = 10$ (**Ótimo global**).
+Contraexemplo: para $p=(1,5,8,9)$ e $n=4$, a escolha gulosa inicial do pedaço de comprimento 3 produz receita 9; a solução ótima são dois pedaços de comprimento 2, com receita 10.
 
-**Complexidade:** $\Theta(n^2)$ tempo, $\Theta(n)$ espaço para PD; $\Theta(2^n)$ para a recursão ingênua.
+### 3. Multiplicação em Cadeia de Matrizes (Cormen 15.2)
 
----
+Para $A_i$ de dimensões $p_{i-1}\times p_i$:
 
-### 3. Multiplicação em Cadeia de Matrizes (Cormen Seção 15.2)
+$$
+m[i,i]=0,\quad m[i,j]=\min_{i\le k<j}\{m[i,k]+m[k+1,j]+p_{i-1}p_kp_j\}.
+$$
 
-#### Fundamentação Teórica
-Dada uma cadeia de $n$ matrizes $\langle A_1, A_2, \dots, A_n \rangle$ onde $A_i$ possui dimensão $p_{i-1} \times p_i$, determinar a parentização completa que minimiza o número total de multiplicações escalares.
+A tabulação por diagonais usa $\Theta(n^3)$ tempo e $\Theta(n^2)$ espaço, com reconstrução pela tabela $s[i,j]$. A recursão ingênua dessa formulação realiza $3^{n-1}$ invocações; já o número de parentizações distintas é $C_{n-1}=\Theta(4^n/n^{3/2})$. Essas são duas grandezas diferentes.
 
-A busca exaustiva é inviável porque a quantidade de parentizações possíveis corresponde aos **Números de Catalan**:
-$$P(n) = C(n-1) = \frac{1}{n}\binom{2n-2}{n-1} \sim \Theta\left(\frac{4^n}{n^{3/2}}\right)$$
-Para $n=15$, existem mais de $2{,}6$ milhões de parentizações; para $n=50$, ultrapassa $5{,}1 \times 10^{26}$.
+Na memoização, o número de **estados distintos** é $n(n+1)/2$. Isso não deve ser confundido com o total de invocações da função recursiva; na formulação clássica, com chamada em cada divisão, esse total é $1+(n^3-n)/3$. Para as dimensões $[30,35,15,5,10,20,25]$, o custo ótimo é **15.125 multiplicações escalares**.
 
-**Recorrência Fundamental:**
-$$m[i, i] = 0, \quad \forall 1 \le i \le n$$
-$$m[i, j] = \min_{i \le k < j} \left\{ m[i, k] + m[k+1, j] + p_{i-1} \cdot p_k \cdot p_j \right\}, \quad 1 \le i < j \le n$$
+### 4. Maior Subsequência Comum / LCS (Cormen 15.4)
 
-#### Estratégia de Preenchimento
-O preenchimento da tabela $m[1..n, 1..n]$ ocorre **por diagonais crescentes** (comprimento de subcadeia $l = 2 \dots n$). A matriz auxiliar $s[i, j]$ registra o ponto de corte ótimo $k$.
+$$
+c[i,j]=\begin{cases}
+0,& i=0\text{ ou }j=0;\\
+c[i-1,j-1]+1,&x_i=y_j;\\
+\max(c[i-1,j],c[i,j-1]),&x_i\ne y_j.
+\end{cases}
+$$
 
-- **Print-Optimal-Parens:** Reconstrução recursiva da expressão parentizada (ex.: `((A1(A2A3))((A4A5)A6))`).
-- **Instância Canônica do Cormen:** `dims = [30, 35, 15, 5, 10, 20, 25]` $\to$ Custo ótimo: **15.125 multiplicações**.
+A tabela completa usa $\Theta(mn)$ tempo e espaço, permitindo reconstrução pela matriz de direções. Se apenas o comprimento for necessário, duas linhas são suficientes, com espaço $\Theta(\min(m,n))$. A reconstrução com espaço linear também pode ser obtida por técnicas como a de Hirschberg. Existe implementação em C++17 para comparação experimental.
 
-**Complexidade:** $\Theta(n^3)$ tempo (laço triplo $l, i, k$), $\Theta(n^2)$ espaço.
+**Estudos de caso:** `src/case_study/diff_tool.py` realiza comparação textual linha a linha via LCS; `src/case_study/dna_alignment.py` explora alinhamento global e distância de edição em sequências biológicas.
 
----
+### 5. Problema da Mochila 0/1 (*Knapsack*)
 
-### 4. Maior Subsequência Comum / LCS (Cormen Seção 15.4)
+$$
+V[i,w]=\begin{cases}
+V[i-1,w],&w_i>w;\\
+\max(V[i-1,w],V[i-1,w-w_i]+v_i),&w_i\le w.
+\end{cases}
+$$
 
-#### Fundamentação Teórica
-Dadas duas sequências $X = \langle x_1, \dots, x_m \rangle$ e $Y = \langle y_1, \dots, y_n \rangle$, encontrar o comprimento e os elementos de uma subsequência comum de comprimento máximo.
-
-**Recorrência Fundamental:**
-$$c[i, j] = \begin{cases} 0 & \text{se } i = 0 \text{ ou } j = 0 \\ c[i-1, j-1] + 1 & \text{se } i, j > 0 \text{ e } x_i = y_j \\ \max(c[i-1, j], c[i, j-1]) & \text{se } i, j > 0 \text{ e } x_i \ne y_j \end{cases}$$
-
-#### Variantes e Estudos de Caso
-- **Tabela Completa com Direções:** Matriz $(m+1) \times (n+1)$ com setas de *traceback* (`diag`, `up`, `left`). Permite reconstruir a string ótima em tempo $O(m + n)$.
-- **Otimização de Duas Linhas:** Como $c[i, j]$ depende unicamente das linhas $i$ e $i-1$, reduz o espaço para $\Theta(\min(m, n))$, mantendo a menor string como largura de linha.
-- **Implementação C++17:** Binário nativo compilado com `-O3` para o experimento E4.
-- **Mini Diff Textual (`diff_tool.py`):** Aplicação de LCS tratando linhas como tokens para gerar diffs unificados (`+`, `-`, ` `).
-- **Alinhamento Global de DNA (`dna_alignment.py`):** Algoritmo de Needleman-Wunsch / Levenshtein com penalidade de gap (`-`) e cálculo de distância de edição sobre arquivos FASTA.
-
-**Complexidade:** $\Theta(m \cdot n)$ tempo; Espaço $\Theta(m \cdot n)$ (tabela completa) ou $\Theta(\min(m, n))$ (duas linhas).
-
----
-
-### 5. Problema da Mochila 0/1 / Knapsack (Módulo Opcional)
-
-#### Fundamentação Teórica
-Dado um conjunto de $n$ itens com pesos $w_i$ e valores $v_i$, e uma mochila com capacidade máxima $W$, determinar o subconjunto que maximiza o valor total sem exceder $W$.
-
-**Recorrência Fundamental:**
-$$V[0, w] = 0, \quad \forall 0 \le w \le W$$
-$$V[i, w] = \begin{cases} V[i-1, w] & \text{se } w_i > w \\ \max(V[i-1, w], V[i-1, w - w_i] + v_i) & \text{se } w_i \le w \end{cases}$$
-
-- **Caráter Pseudo-polinomial:** Complexidade $O(n \cdot W)$, dependente do valor numérico de $W$ e não apenas do número de bits da entrada.
-- **Otimização 1D:** Itera capacidades de trás para frente ($W \dots w_i$), reduzindo o espaço de $O(n \cdot W)$ para $O(W)$.
+A tabulação completa usa $\Theta(nW)$ tempo e $\Theta(nW)$ espaço; a versão em vetor único, com capacidades percorridas em ordem decrescente, reduz o espaço para $\Theta(W)$. Como $W$ é codificado em $O(\log W)$ bits, a complexidade é **pseudopolinomial**, e não necessariamente polinomial no tamanho da entrada.
 
 ---
 
 ## 📊 Comparação Teórica e Assintótica
 
-| Problema | Abordagem | Complexidade de Tempo | Complexidade de Espaço | Traceback da Solução | Quando Utilizar |
-| :--- | :--- | :---: | :---: | :---: | :--- |
-| **Fibonacci** | Recursivo Ingênuo | $\Theta(\phi^n) \approx \Theta(1.618^n)$ | $O(n)$ pilha | N/A | Apenas didático para ilustrar redundância exponencial |
-| **Fibonacci** | Top-Down Memoização | $\Theta(n)$ | $\Theta(n)$ cache + pilha | N/A | Quando nem todos os subproblemas precisam ser explorados |
-| **Fibonacci** | Bottom-Up Tabulação | $\Theta(n)$ | $\Theta(n)$ tabela | N/A | Quando todos os subproblemas são necessários; evita pilha |
-| **Fibonacci** | Espaço $O(1)$ | $\Theta(n)$ | $\Theta(1)$ | N/A | **Produção:** menor pegada de memória e execução contínua |
-| **Corte de Hastes** | Recursivo Ingênuo | $\Theta(2^n)$ | $O(n)$ pilha | Não | Inviável para $n > 25$ |
-| **Corte de Hastes** | Top-Down Memoização | $\Theta(n^2)$ | $\Theta(n)$ | Não | Instâncias esparsas |
-| **Corte de Hastes** | Extended Bottom-Up | $\Theta(n^2)$ | $\Theta(n)$ | **Sim** (tabela $s$) | **Produção:** receita ótima e lista exata de pedaços |
-| **Corte de Hastes** | Heurística Gulosa | $O(n \log n)$ | $O(n)$ | Sim | Falha em até 34% dos casos; inadequado sem prova |
-| **Cadeia de Matrizes** | Recursivo Ingênuo | $3^{n-1}$ chamadas recursivas (espaço de Catalan $\Theta(4^n/n^{3/2})$) | $O(n)$ pilha | Não | Inviável para $n > 12$ devido às $3^{n-1}$ chamadas recursivas |
-| **Cadeia de Matrizes** | Bottom-Up Diagonais | $\Theta(n^3)$ | $\Theta(n^2)$ | **Sim** (tabela $s$) | **Padrão ouro:** ordem ótima de parentização |
-| **LCS** | Recursivo Ingênuo | $O(2^{m+n})$ | $O(m+n)$ pilha | Não | Apenas entradas minúsculas ($< 15$ caracteres) |
-| **LCS** | Tabela Completa (Cormen) | $\Theta(m \cdot n)$ | $\Theta(m \cdot n)$ | **Sim** (matriz $b$) | Quando a subsequência de texto ou alinhamento é necessária |
-| **LCS** | Duas Linhas (Otimizado) | $\Theta(m \cdot n)$ | $\Theta(\min(m, n))$ | Apenas comprimento | Economia de até 99,8% de RAM em strings biológicas |
-| **LCS (C++17)** | Nativo compilado `-O3` | $\Theta(m \cdot n)$ | $\Theta(m \cdot n)$ | Sim | **Alto desempenho:** $161\times$ mais veloz que CPython |
-| **Mochila 0/1** | Bottom-Up 2D | $O(n \cdot W)$ | $O(n \cdot W)$ | **Sim** | Quando a lista de itens escolhidos é requerida |
-| **Mochila 0/1** | Vetor 1D Reverso | $O(n \cdot W)$ | $O(W)$ | Apenas valor máximo | Grande escala de $W$; economia massiva de memória |
+A tabela resume os custos no **modelo unitário de operações elementares**. Para Fibonacci de precisão arbitrária, o armazenamento dos números e o custo das somas em bits não são constantes.
+
+| Problema | Abordagem | Tempo | Espaço auxiliar/tabelas | Reconstrução |
+| :--- | :--- | :---: | :---: | :--- |
+| **Fibonacci** | Recursão ingênua | $\Theta(\varphi^n)$ | $O(n)$ (pilha) | Não se aplica |
+| **Fibonacci** | Top-down memoização | $\Theta(n)$ | $\Theta(n)$ (cache + pilha) | Não se aplica |
+| **Fibonacci** | Bottom-up tabulação | $\Theta(n)$ | $\Theta(n)$ | Não se aplica |
+| **Fibonacci** | Bottom-up — duas variáveis | $\Theta(n)$ | $O(1)$ posições auxiliares | Não se aplica |
+| **Corte de hastes** | Recursão ingênua | $\Theta(2^n)$ | $O(n)$ (pilha) | Não diretamente |
+| **Corte de hastes** | Top-down memoização | $\Theta(n^2)$ | $\Theta(n)$ | Com tabela de escolhas |
+| **Corte de hastes** | Bottom-up estendido | $\Theta(n^2)$ | $\Theta(n)$ | Sim, via $s[j]$ |
+| **Cadeia de matrizes** | Recursão ingênua da recorrência clássica | $\Theta(3^n)$ | $O(n)$ (pilha) | Não diretamente |
+| **Cadeia de matrizes** | Top-down memoização | $\Theta(n^3)$ | $\Theta(n^2)$ | Com tabela de escolhas |
+| **Cadeia de matrizes** | Bottom-up diagonais | $\Theta(n^3)$ | $\Theta(n^2)$ | Sim, via $s[i,j]$ |
+| **LCS** | Recursão ingênua | $O(2^{m+n})$ | $O(m+n)$ (pilha) | Não diretamente |
+| **LCS** | Bottom-up, tabela completa | $\Theta(mn)$ | $\Theta(mn)$ | Sim |
+| **LCS** | Bottom-up, duas linhas | $\Theta(mn)$ | $\Theta(\min(m,n))$ | Apenas comprimento, diretamente |
+| **LCS em C++17** | Bottom-up com `-O3` | $\Theta(mn)$ | $\Theta(mn)$ | Sim |
+| **Mochila 0/1** | Bottom-up, tabela 2D | $\Theta(nW)$ | $\Theta(nW)$ | Sim, via tabela |
+| **Mochila 0/1** | Bottom-up, vetor 1D | $\Theta(nW)$ | $\Theta(W)$ | Apenas valor, diretamente |
+| **Caixeiro-viajante** | Held–Karp | $O(n^2 2^n)$ | $O(n2^n)$ | Com decisões armazenadas |
+
+**Observações:**
+
+- As cotas $O$ e $\Omega$ significam limites assintóticos superior e inferior, respectivamente; não representam automaticamente pior e melhor caso.
+- Para a cadeia de matrizes, $C_{n-1}=\Theta(4^n/n^{3/2})$ conta **parentizações**, não chamadas da implementação recursiva ingênua.
+- A mochila 0/1 é **pseudopolinomial** em $W$; Held–Karp é exponencial, apesar de usar Programação Dinâmica.
+- Algoritmos de espaço linear como Hirschberg também permitem reconstruir uma LCS, embora não sejam as implementações de duas linhas simples usadas no E3.
 
 ---
 
@@ -201,297 +199,309 @@ $$V[i, w] = \begin{cases} V[i-1, w] & \text{se } w_i > w \\ \max(V[i-1, w], V[i-
 
 ```text
 Trabalho-AEDS-II-Programaco-Dinamica/
-├── README.md                           # Documentação técnica integral e guia de execução
-├── LICENSE                             # Licença de código aberto MIT
-├── Makefile                            # Build system com automação de testes, benchmarks e web
-├── requirements.txt                    # Dependências Python (pytest, matplotlib, pandas, numpy)
-├── conftest.py                         # Configuração e fixtures da suíte pytest
-├── .editorconfig                       # Padrão consistente de tabulações e quebras de linha
-├── .gitignore                          # Exclusões de ambiente virtual, compilações e caches
-│
-├── src/                                # Implementações de referência em Python
-│   ├── __init__.py
-│   ├── common.py                       # CallCounter, instrumentação e medição de memória
-│   ├── fibonacci.py                    # Naive, Memo, Bottom-Up e O(1) Espaço
-│   ├── rod_cutting.py                  # Naive, Memo, Extended Bottom-Up e Heurística Gulosa
-│   ├── matrix_chain.py                 # Naive, Memo, Matrix-Chain-Order e Catalan
-│   ├── lcs.py                          # Naive, Memo, Tabela Completa e Duas Linhas
-│   ├── knapsack.py                     # Mochila 0/1 2D e Vetor 1D com iteração reversa
-│   └── case_study/                     # Estudos de caso de aplicação prática
-│       ├── __init__.py
-│       ├── diff_tool.py                # Comparador de arquivos linha a linha via LCS
-│       └── dna_alignment.py            # Alinhamento global e distância de Levenshtein
-│
-├── cpp/                                # Implementação de alto desempenho em linguagem nativa
-│   └── lcs.cpp                         # LCS Bottom-Up em C++17 com flags -O3 e saída JSON
-│
-├── data/                               # Arquivos de dados reais para os estudos de caso
-│   ├── texto_a.txt                     # Versão original de arquivo de código/texto
-│   ├── texto_b.txt                     # Versão modificada com adições e remoções
-│   ├── dna_a.fasta                     # Sequência biológica de nucleotídeos A
-│   └── dna_b.fasta                     # Sequência biológica de nucleotídeos B
-│
-├── tests/                              # Suíte completa de testes automatizados (48 testes)
-│   ├── test_fibonacci.py               # Casos Cormen, equivalências e limites de chamadas
-│   ├── test_rod_cutting.py             # Tabela Cormen 1..10, reconstrução e falha do guloso
-│   ├── test_matrix_chain.py            # Instância oficial de 6 matrizes, parentização e Catalan
-│   ├── test_lcs.py                     # Strings clássicas Cormen e equivalência entre 4 versões
-│   ├── test_case_study.py              # Testes unitários do Mini Diff e alinhamento FASTA
-│   └── test_benchmarks.py              # 20 testes de estresse da infraestrutura experimental
-│
-├── benchmarks/                         # Automação de experimentos científicos e plotagem
-│   ├── run_benchmarks.py               # Executor CLI com protocolos estatísticos rigorosos
-│   ├── plot_results.py                 # Gerador de gráficos científicos padronizados a 200 DPI
-│   └── results/                        # Dados brutos experimentais
-│       ├── all_benchmarks.csv          # Base consolidada de todos os experimentos E1 a E8
-│       ├── e1_fibonacci.csv            # Dados detalhados de Fibonacci
-│       ├── e2_rod_cutting.csv          # Dados detalhados de corte de hastes
-│       ├── e3_lcs_memory.csv           # Dados detalhados de memória do LCS
-│       ├── e4_lcs_cpp_vs_python.csv    # Comparativo C++ vs Python
-│       ├── e5_recursion_limit.csv      # Limite de profundidade de pilha em Python
-│       ├── e6_greedy_failure.csv       # Simulação Monte Carlo de erro do guloso
-│       ├── e7_matrix_chain.csv         # Dados da cadeia de matrizes e Catalan
-│       ├── e8_knapsack.csv             # Dados da Mochila 0/1
-│       └── machine.json                # Metadados de CPU, memória, SO e compiladores
-│
-├── docs/                               # Documentação e figuras científicas
-│   └── figures/                        # 19 gráficos científicos sincronizados a 200 DPI
-│
-└── web/                                # Portal web com simuladores e visualizações interativas
-    ├── index.html                      # Painel central de navegação com alternância de tema
-    ├── benchmarks.html                 # Visualizador dinâmico de gráficos científicos
-    ├── fib-tree.html                   # Árvore de recursão animada com destaque a nós do cache
-    ├── lcs-table.html                  # Matriz interativa de LCS com traceback animado
-    ├── matrix-chain.html               # Simulador de multiplicação em cadeia e parentização
-    ├── rod-cutting-duel.html           # Duelo interativo Guloso vs. Programação Dinâmica
-    ├── quiz.html                       # Questionário avaliativo com 8 questões conceituais
-    ├── css/style.css                   # Folha de estilos responsiva com suporte a Dark Mode
-    ├── js/shared.js                    # Utilitários JavaScript, controle de tema e modais
-    ├── figures/                        # Gráficos servidos estaticamente para o portal
-    └── data/                           # Bases de dados JSON consumidas pelo front-end
+├── README.md                           # Documentação, metodologia e resultados
+├── LICENSE                             # Licença MIT
+├── Makefile                            # Automação de instalação, testes, benchmarks e web
+├── requirements.txt                    # Dependências Python
+├── conftest.py                         # Configuração de testes
+├── .github/workflows/deploy-pages.yml # Publicação do PD LAB no GitHub Pages
+├── src/                                # Implementações algorítmicas em Python
+│   ├── fibonacci.py                    # Ingênuo, Memo, Bottom-Up e espaço otimizado
+│   ├── rod_cutting.py                  # Ingênuo, Memo, Bottom-Up, guloso e reconstrução
+│   ├── matrix_chain.py                 # Ingênuo, Memo, DP e Catalan
+│   ├── lcs.py                          # Ingênuo, Memo, tabelas e duas linhas
+│   ├── knapsack.py                     # Mochila 0/1 em 2D e 1D
+│   └── case_study/
+│       ├── diff_tool.py                # Mini Diff baseado em LCS
+│       └── dna_alignment.py            # Alinhamento e distância de edição
+├── cpp/
+│   └── lcs.cpp                         # LCS C++17, saída JSON para E4
+├── data/                               # Entradas de demonstração textual e FASTA
+├── tests/                              # Casos unitários e de infraestrutura (48 previstos)
+│   ├── test_fibonacci.py
+│   ├── test_rod_cutting.py
+│   ├── test_matrix_chain.py
+│   ├── test_lcs.py
+│   ├── test_case_study.py
+│   └── test_benchmarks.py
+├── benchmarks/
+│   ├── run_benchmarks.py               # Coleta experimental E1–E8
+│   ├── plot_results.py                 # Gráficos científicos
+│   └── results/
+│       ├── all_benchmarks.csv          # Base consolidada
+│       ├── e1_fibonacci.csv
+│       ├── e2_rod_cutting.csv
+│       ├── e3_lcs_memory.csv
+│       ├── e4_lcs_cpp.csv              # Nome efetivo do CSV de E4
+│       ├── e5_recursion_limit.csv
+│       ├── e6_greedy_failure.csv
+│       ├── e7_matrix_chain.csv
+│       ├── e8_knapsack.csv
+│       └── machine.json                # Ambiente experimental
+├── docs/figures/                       # Gráficos utilizados no README
+└── web/                                # Portal PD LAB (GitHub Pages)
+    ├── index.html
+    ├── benchmarks.html
+    ├── fib-tree.html
+    ├── lcs-table.html
+    ├── rod-cutting-duel.html
+    ├── matrix-chain.html
+    ├── quiz.html
+    ├── css/style.css
+    ├── js/shared.js
+    ├── figures/
+    └── data/
         ├── results.json
         └── manifest.json
 ```
+
+**Nota:** a árvore representa a estrutura publicada na branch `main`. O PDF acadêmico final e o *Cheat Sheet* podem ser distribuídos separadamente; não são listados como arquivos do repositório quando não estão presentes nele.
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-| Ferramenta / Tecnologia | Versão Mínima | Finalidade no Projeto |
-| :--- | :---: | :--- |
-| **Python** | 3.11+ / 3.12 | Implementações base de referência, estudos de caso e suíte de benchmarks |
-| **C++ (g++)** | C++17 (`-O3`) | Implementação nativa de alto desempenho do LCS para benchmark inter-linguagem |
-| **Pytest** | 8.x / 9.x | Framework de testes unitários automatizados com asserções estritas |
-| **Matplotlib & NumPy** | 3.8+ / 1.26+ | Plotagem dos gráficos científicos em padrão editorial Dark Slate |
-| **Pandas** | 2.1+ | Manipulação de datasets, parsing de CSVs e cálculo estatístico |
-| **Tracemalloc** | Standard Library | Rastreamento isolado de pico de memória física alocada em bytes |
-| **LaTeX (TeX Live / Overleaf)** | 2024 / 2025 | Diagramação profissional do relatório acadêmico CEFET-MG e Cheat Sheet |
-| **Vanilla HTML/CSS/JS** | ES6+ | Simuladores visuais interativos e portal web autônomo sem dependências externas |
+| Tecnologia | Utilização |
+| :--- | :--- |
+| **Python 3.12 / compatibilidade 3.11+** | Algoritmos, testes e medições |
+| **C++17 / g++ `-O3`** | Implementação nativa de LCS para E4 |
+| **pytest** | Testes unitários e de infraestrutura |
+| **Matplotlib e pandas** | Geração de gráficos e manipulação dos CSVs |
+| **HTML, CSS e JavaScript** | PD LAB, simuladores, gráficos e quiz |
+| **GitHub Pages / Actions** | Publicação automatizada do site |
+| **LaTeX (`algorithm2e`)** | Relatório acadêmico e pseudocódigos do documento entregue separadamente |
+| **Make** | Comandos reproduzíveis de instalação, compilação e benchmark |
 
 ---
 
 ## 🛠️ Comandos do Makefile
 
-O projeto conta com automação completa via `Makefile` para instalação, compilação, testes, benchmarks e servidor local:
+Recomenda-se Linux ou WSL2, com Python, `pip`, `make` e (para E4) `g++` disponíveis.
 
-| Alvo (`make`) | Comando Executado | Descrição e Finalidade |
+```bash
+git clone https://github.com/Ribeiro-JP/Trabalho-AEDS-II-Programaco-Dinamica.git
+cd Trabalho-AEDS-II-Programaco-Dinamica
+make setup
+make test
+```
+
+| Alvo (`make`) | Operação | Finalidade |
 | :--- | :--- | :--- |
-| `make help` | `@echo ...` | Exibe o menu com todos os alvos e comandos disponíveis no Makefile. |
-| `make setup` | `python3 -m venv $(VENV) && $(PIP) install -r requirements.txt` | Cria o ambiente virtual (`.venv`), atualiza o `pip` e instala todas as dependências. |
-| `make test` | `$(PYTEST) tests/ -v` | Executa a suíte de 48 testes unitários e de integração com saída verbosa. |
-| `make bench` | `$(PYTHON) benchmarks/run_benchmarks.py` | Executa toda a bateria de benchmarks (E1 a E8) em modo científico com amostragem densa. |
-| `make bench-quick` | `$(PYTHON) benchmarks/run_benchmarks.py --quick` | Executa os benchmarks em modo rápido (menos repetições e instâncias menores). |
-| `make cpp` | `g++ -O3 -std=c++17 cpp/lcs.cpp -o cpp/lcs` | Compila o algoritmo LCS em C++17 com otimização máxima (`-O3`), gerando `cpp/lcs`. |
-| `make web` | `python3 -m http.server 8000` | Inicia o servidor HTTP local para servir o portal interativo em `http://localhost:8000/web/`. |
-| `make clean` | `rm -rf __pycache__ ... cpp/lcs .pytest_cache` | Remove caches Python (`__pycache__`, `.pytest_cache`) e binário nativo compilado. |
+| `make help` | Lista os alvos | Consulta dos comandos |
+| `make setup` | Cria `.venv`, atualiza `pip` e instala dependências | Preparação do ambiente |
+| `make test` | Executa `pytest tests/ -v` (usando o ambiente disponível) | Validação das implementações |
+| `make cpp` | Compila `cpp/lcs.cpp` com `-O3 -std=c++17` | Preparação da versão C++ da LCS |
+| `make bench-quick` | Executa `run_benchmarks.py --quick` | Teste rápido da infraestrutura |
+| `make bench` | Executa `run_benchmarks.py` | Rodada completa E1–E8 |
+| `make web` | Inicia `python3 -m http.server 8000` | Abrir `http://localhost:8000/web/` |
+| `make clean` | Remove caches e binários gerados | Limpeza do ambiente |
+
+O comando `make test` pode ser executado sem compilar C++ manualmente. Para resultados comparáveis ao E4, é necessária a disponibilidade de compilador C++ no ambiente de benchmark. **Não existe alvo `make report` no Makefile atual.**
 
 ---
 
 ## 🔧 Ambiente Experimental e Metodologia
 
-* **Ambiente de Teste:** Linux x86_64 (WSL2, kernel 6.18.54), CPU AMD Ryzen 5 4600G (6C/12T), GPU dedicada NVIDIA GeForce RTX 3060, CPython 3.12.3, GCC 13.3.0 com `-O3 -std=c++17`.
-* **Medição de Tempo:** `time.perf_counter()` de alta precisão, sem concorrência com rastreamento de memória.
-* **Média Aparada (*Trimmed Mean*):** 5 repetições por ponto amostral; descarte dos extremos (mínimo e máximo) e média aritmética sobre as 3 repetições centrais.
-* **Batching Adaptativo:** Para durações $< 200\,\mu s$, laço em lote de até 100 iterações com amostragem piloto para superar o ruído do timer do sistema operacional.
-* **Isolamento e Timeout:** Subprocessos independentes com encerramento forçado em 3.0s para conter explosões exponenciais da força bruta.
-* **Isolamento de Cache:** No Top-Down de Fibonacci, medições completas utilizam cache limpo (*Cold Cache* $\Theta(n)$), medindo-se em separado a consulta constante (*Warm Cache* $O(1)$).
+A rodada documentada no relatório foi executada em **14/10/2026**, em Linux sob WSL2, com **AMD Ryzen 5 4600G**, **CPython 3.12.3** e **g++ 13.3** usando `-O3 -std=c++17`. A interpretação das medições deve levar em conta a máquina e os demais processos ativos.
+
+- **Tempo:** `time.perf_counter()`; aquecimento e cinco repetições por ponto, usando média aparada das três observações centrais.
+- **Medições muito curtas:** uso de medições em lote (*batching*) quando apropriado, reduzindo a influência da resolução do relógio.
+- **Exponenciais:** limites de tempo por execução e faixas menores de entrada para tornar a comparação viável.
+- **Memória:** `tracemalloc` em medições separadas. Ele registra **alocações rastreadas pelo Python**, não a memória física total, o RSS ou toda alocação nativa.
+- **Cache de Fibonacci:** E1 distingue **cache frio** (novo dicionário a cada execução completa) e **cache quente** (consulta a resultado já armazenado). A consulta quente, de custo $O(1)$ no modelo unitário, não representa o custo de resolver o problema.
+- **Limite de recursão:** E1 aumenta temporariamente `sys.setrecursionlimit()` quando necessário (limite ao menos `max(pd_ns) + 500`) e restaura o valor anterior ao final. E5 utiliza um limite controlado para investigar `RecursionError`. Assim, o sucesso da memoização em E1 para $n=2000$ não contradiz a falha perto de $n=1000$ em E5.
+- **Reprodutibilidade:** semente pseudoaleatória fixa nos experimentos aplicáveis. Repetir o código não garante reproduzir os mesmos tempos exatos, que dependem do ambiente de execução.
+
+**Artefatos para conferência:** [CSVs de E1–E8](benchmarks/results), [executor de benchmarks](benchmarks/run_benchmarks.py), [gerador dos gráficos](benchmarks/plot_results.py) e [metadados do ambiente](benchmarks/results/machine.json). Os resultados numéricos abaixo vêm da rodada documentada, e não de uma nova execução deste README.
 
 ---
 
 ## 📊 Resultados Experimentais
 
-### E1: Fibonacci (Recursão Exponencial vs. Programação Dinâmica)
+### E1: Fibonacci (Recursão Exponencial versus Programação Dinâmica)
 
 <p align="center">
-  <img src="docs/figures/e1_fibonacci_tempo.png" width="48%" alt="E1 Tempo Geral"/>
-  <img src="docs/figures/e1_fibonacci_dp.png" width="48%" alt="E1 Comparação Fina PD"/>
+  <img src="docs/figures/e1_fibonacci_tempo.png" width="48%" alt="E1 — tempo de execução de Fibonacci" />
+  <img src="docs/figures/e1_fibonacci_dp.png" width="48%" alt="E1 — comparação fina de tempo entre versões DP" />
 </p>
 <p align="center">
-  <img src="docs/figures/e1_fibonacci_chamadas.png" width="48%" alt="E1 Chamadas de Função"/>
-  <img src="docs/figures/e1_fibonacci_speedup.png" width="48%" alt="E1 Fator de Speedup"/>
+  <img src="docs/figures/e1_fibonacci_chamadas.png" width="48%" alt="E1 — número de chamadas da recursão" />
+  <img src="docs/figures/e1_fibonacci_speedup.png" width="48%" alt="E1 — fatores de aceleração medidos" />
 </p>
 
-* **Tempo de Execução:** Em $n=32$, a força bruta ingênua levou **1,14 segundo** ($7.049.155$ chamadas); para $n > 32$, foi interrompida pelo timeout de $3{,}0\,\text{s}$. A abordagem Bottom-Up calculou $n=2000$ em **$165\,\mu s$** e com espaço $O(1)$ em **$92\,\mu s$**.
-* **Chamadas de Função:** A força bruta disparou de forma exponencial (**177 chamadas** para $n=10$, **2.692.537 chamadas** para $n=30$ e **7.049.155 chamadas** para $n=32$). A memoização realizou estritamente $2n - 1$ chamadas ($19$ chamadas para $n=10$ e $59$ para $n=30$).
-* **Fator de Aceleração (Speedup):** Em $n=30$, a Programação Dinâmica atinge ganhos de desempenho de **$252.443\times$** para Bottom-Up ($1{,}70\,\mu s$), **$575.089\times$** para espaço $O(1)$ ($0{,}75\,\mu s$) e supera **$2{,}4 \times 10^6\times$** para consultas em cache já preenchido (*Warm Cache*, $0{,}18\,\mu s$).
+- **Crescimento ingênuo:** para $n=30$, **2.692.537 chamadas** e aproximadamente **0,4285 s**; para $n=32$, **7.049.155 chamadas** e **1,14 s**.
+- **Memoização com cache frio:** para $n=30$, **59 chamadas**, contra milhões na recursão ingênua. Para $n=2000$, o tempo medido foi aproximadamente **927 µs** (com limite de recursão temporariamente elevado).
+- **Bottom-up e duas variáveis:** para $n=2000$, aproximadamente **165 µs** e **92 µs**, respectivamente.
+- **Consulta com cache quente:** a curva mede **somente a recuperação de um resultado pré-calculado**, e não uma resolução completa do problema. A curva denominada espaço $O(1)$ representa **tempo da variante de duas variáveis**, não memória no eixo Y.
+- **Limite do experimento:** a versão ingênua foi **avaliada somente até $n=32$**; não há registro de execução interrompida para $n>32$ nessa rodada.
 
 ---
 
-### E2: Corte de Hastes (Cormen 15.1) e Duelo contra Algoritmo Guloso
+### E2: Corte de Hastes (Cormen 15.1) e Qualidade do Guloso
 
 <p align="center">
-  <img src="docs/figures/e2_rod_cutting_tempo.png" width="48%" alt="E2 Tempo Exato"/>
-  <img src="docs/figures/e2_rod_cutting_qualidade.png" width="48%" alt="E2 Qualidade e Erro"/>
+  <img src="docs/figures/e2_rod_cutting_tempo.png" width="48%" alt="E2 — comparação temporal do corte de hastes" />
+  <img src="docs/figures/e2_rod_cutting_qualidade.png" width="48%" alt="E2 — comparação do guloso e PD" />
 </p>
 
-* **Crescimento Temporal:** O algoritmo recursivo ingênuo atinge $12{,}1\,\text{ms}$ para $n=15$. O Extended Bottom-Up processa $n=100$ em apenas **$0{,}20\,\text{ms}$** ($202\,\mu s$), gerando a receita ótima e os pontos de corte exatos.
-* **Falha da Heurística Gulosa:** A escolha baseada em densidade ($p_i / i$) falha em instâncias com combinações modulares, enquanto a PD assegura sempre o ótimo global.
+- A recursão ingênua chega a **1.048.576 chamadas** e **0,399 s** em $n=20$, coerente com crescimento exponencial.
+- A tabulação completa processa $n=100$ em aproximadamente **0,202 ms** na rodada relatada.
+- A heurística de densidade pode falhar; ela não fornece certificado universal de otimalidade.
 
 ---
 
-### E3: Maior Subsequência Comum (LCS) — Análise de Memória
+### E3: LCS — Consumo de Memória e Tempo
 
 <p align="center">
-  <img src="docs/figures/e3_lcs_memoria.png" width="48%" alt="E3 Consumo de Memória"/>
-  <img src="docs/figures/e3_lcs_tempo.png" width="48%" alt="E3 Tempo de Execução"/>
+  <img src="docs/figures/e3_lcs_memoria.png" width="48%" alt="E3 — pico de alocações rastreadas pelo Python" />
+  <img src="docs/figures/e3_lcs_tempo.png" width="48%" alt="E3 — tempo de LCS tabela completa versus duas linhas" />
 </p>
 
-* **Economia de Memória:** Para cadeias com $1000$ caracteres, a matriz bidimensional completa requer **20,1 MB** (19,15 MiB, 20.085.696 bytes) de memória heap para armazenar as referências e setas de traceback. A otimização com **duas linhas rotativas** consumiu apenas **44,0 KB** (43.952 bytes, **redução de 99,8%**).
+- Em duas sequências de tamanho $1000$, a tabela completa registrou **20.085.696 B** e a versão de duas linhas **43.952 B** de pico rastreado por `tracemalloc`.
+- A relação é de aproximadamente **457 vezes** (economia perto de **99,8%**). Isso é **pico rastreado**, não medida direta de RSS nem de toda RAM física.
+- A versão de duas linhas determina o **comprimento** da LCS; reconstrução em espaço linear requer estratégia adicional, como Hirschberg.
 
 ---
 
-### E4: Gargalo de Linguagem — CPython 3.12 vs. C++17 Nativo (-O3)
+### E4: CPython versus C++17 (LCS, `-O3`)
 
 <p align="center">
-  <img src="docs/figures/e4_lcs_python_cpp.png" width="48%" alt="E4 C++ vs Python"/>
-  <img src="docs/figures/e4_lcs_speedup.png" width="48%" alt="E4 Speedup C++"/>
+  <img src="docs/figures/e4_lcs_python_cpp.png" width="48%" alt="E4 — tempo de execução de LCS em Python e C++" />
+  <img src="docs/figures/e4_lcs_speedup.png" width="48%" alt="E4 — aceleração observada do código C++" />
 </p>
 
-* **Impacto do Runtime:** Ambos executam o mesmo algoritmo exato $\Theta(m \cdot n)$. Para sequências de $1000$ caracteres, o C++17 nativo compilado com `-O3` executou em **1,08 ms**, enquanto o CPython 3.12 demandou **173,3 ms** (speedup empírico de **$161{,}1\times$** a favor do código nativo compilado sem boxing de objetos e com vetores contíguos em memória).
+- Para cadeias de comprimento $1000$, CPython: **173,3 ms**; C++17: **1,08 ms**, com aceleração de aproximadamente **161 vezes**.
+- Ambas as implementações pertencem à classe $\Theta(mn)$ e retornam LCS corretas nas instâncias verificadas.
+- **Limitação:** Python utiliza também uma tabela auxiliar de direções; C++ reconstrói a solução diretamente da tabela de comprimentos. Não se trata de uma comparação que isole exclusivamente a linguagem, nem de prova causal de efeitos de *boxing* ou de memória contígua.
 
 ---
 
-### E5: Limites de Profundidade da Pilha de Recursão
+### E5: Limites de Recursão em Python
 
 <p align="center">
-  <img src="docs/figures/e5_recursao_limites.png" width="48%" alt="E5 Limites de Recursão"/>
-  <img src="docs/figures/e5_recursao_tempo.png" width="48%" alt="E5 Tempo no Domínio Válido"/>
+  <img src="docs/figures/e5_recursao_limites.png" width="48%" alt="E5 — condição de sucesso e erro de profundidade recursiva" />
+  <img src="docs/figures/e5_recursao_tempo.png" width="48%" alt="E5 — tempos no domínio em que as versões executam" />
 </p>
 
-* **Robustez de Engenharia:** A memoização Top-Down falha com `RecursionError` no limite de profundidade da pilha do interpretador ($n = 1000$). A formulação Bottom-Up tabulada opera iterativamente na memória heap e permaneceu estável para qualquer tamanho de entrada.
+- Com limite controlado de recursão igual a **1000**, o top-down conclui a entrada $n=990$ e registra `RecursionError` em $n=1000$.
+- O bottom-up é iterativo e não depende da profundidade recursiva, mas continua limitado pelo tempo e pela memória disponíveis.
+- Em E1 o limite foi elevado temporariamente, razão pela qual os resultados para $n=2000$ não contradizem E5.
 
 ---
 
-### E6: Simulação de Monte Carlo da Falha Gulosa
+### E6: Simulação da Falha Gulosa no Corte de Hastes
 
 <p align="center">
-  <img src="docs/figures/e6_guloso_erro.png" width="50%" alt="E6 Taxa de Falha do Guloso"/>
+  <img src="docs/figures/e6_guloso_erro.png" width="56%" alt="E6 — taxa de falha e perda média da heurística gulosa" />
 </p>
 
-* **Taxa de Erro:** Em 200 instâncias aleatórias por tamanho de haste (seed 42), a heurística gulosa falhou em até **24%** das vezes (para $n=18$ e $n=26$), com perda média de receita atingindo até **7,18%** (para $n=5$), comprovando que heurísticas sem prova formal não substituem a Programação Dinâmica.
+- Foram avaliadas **200 instâncias por comprimento**, com semente pseudoaleatória **42**.
+- As taxas de falha variaram conforme as entradas; o máximo observado foi **24%** (por exemplo, $n=18$ e $n=26$), e a maior perda média registrada foi **7,18%** ($n=5$, entre as falhas).
+- Isso demonstra que a heurística testada **não garante** a solução ótima; não implica que sua taxa de falha seja sempre 24% em qualquer distribuição.
 
 ---
 
-### E7: Multiplicação em Cadeia de Matrizes e Números de Catalan
+### E7: Cadeia de Matrizes e Números de Catalan
 
 <p align="center">
-  <img src="docs/figures/e7_matrix_chain_tempo.png" width="48%" alt="E7 Tempo Cúbico"/>
-  <img src="docs/figures/e7_matrix_chain_operacoes.png" width="48%" alt="E7 Catalan e Operações"/>
+  <img src="docs/figures/e7_matrix_chain_tempo.png" width="48%" alt="E7 — comparação temporal da cadeia de matrizes" />
+  <img src="docs/figures/e7_matrix_chain_operacoes.png" width="48%" alt="E7 — contagens de parentizações e operações escalares" />
 </p>
 
-* **Explosão Combinatória:** Enquanto o espaço de busca de todas as parentizações possíveis cresce segundo os números de Catalan $C_{n-1} = \Theta(4^n / n^{3/2})$ e a recursão ingênua efetua $3^{n-1}$ chamadas recursivas redundantes, a Programação Dinâmica Bottom-Up resolve a instância de $n=50$ matrizes em **3,13 ms** (e Memoização em **11,5 ms**), poupando bilhões de multiplicações escalares redundantes.
+- Em $n=50$, a rodada registrou aproximadamente **3,13 ms** em bottom-up e **11,5 ms** em memoização. Em $n=75$, bottom-up registrou aproximadamente **9,44 ms**.
+- O número de parentizações é $C_{n-1}=\Theta(4^n/n^{3/2})$; o número de chamadas da recursão ingênua clássica é **$3^{n-1}$**, grandezas que não devem ser confundidas.
+- Em $n=75$, a versão memoizada possui **2.850 estados distintos**, porém **140.601 invocações totais** na implementação que chama recursivamente cada transição (incluindo acertos de cache).
+- **Atenção ao CSV:** a coluna `calls` para E7 memo foi preenchida com o **número de estados distintos** $n(n+1)/2$, apesar do nome genérico. Não deve ser interpretada como o total de invocações.
 
 ---
 
-### E8: Problema da Mochila 0/1 — Caráter Pseudo-Polinomial
+### E8: Mochila 0/1 — Dependência de $W$ e de $n$
 
 <p align="center">
-  <img src="docs/figures/e8_knapsack_tempo_w.png" width="48%" alt="E8 Tempo em Função de W"/>
-  <img src="docs/figures/e8_knapsack_memoria.png" width="48%" alt="E8 Memória 2D vs 1D"/>
+  <img src="docs/figures/e8_knapsack_tempo_w.png" width="48%" alt="E8 — tempo em função da capacidade W" />
+  <img src="docs/figures/e8_knapsack_memoria.png" width="48%" alt="E8 — memória tabela 2D versus vetor 1D" />
+</p>
+<p align="center">
+  <img src="docs/figures/e8_knapsack_tempo_n.png" width="56%" alt="E8 — tempo variando n com capacidade W fixa" />
 </p>
 
-* **Pseudo-Polinomial:** O tempo cresce em função direta da magnitude numérica da capacidade $W$.
-* **Compactação 1D:** A otimização em vetor unidimensional com iteração reversa reduziu o pico de memória de **1,63 MB** (1.633.600 bytes) para **39,2 KB** (40.192 bytes) em $W=1000$ (**97,5% de economia**).
+- Com $n=50$ itens fixos, o tempo de tabulação aumenta com a capacidade numérica $W$, coerente com $\Theta(nW)$.
+- Em $W=1000$, tabela 2D: **1.633.600 B**; vetor 1D: **40.192 B** de alocações rastreadas (**97,5%** de redução).
+- O experimento complementar mantém $W=200$ fixo e aumenta a quantidade de itens. As duas comparações isolam variáveis diferentes.
+
+**Dados:** [CSVs de cada experimento](benchmarks/results) · [Gráficos adicionais no PD LAB](https://ribeiro-jp.github.io/Trabalho-AEDS-II-Programaco-Dinamica/benchmarks.html)
 
 ---
 
 ## 💡 Discussão dos Resultados
 
-1. **Indispensabilidade da PD:** Problemas com subestrutura ótima e subproblemas superpostos exigem PD; decisões gulosas míopes causam perdas financeiras concretas em até um terço dos casos (E6).
-2. **Top-Down vs. Bottom-Up:** Ambas compartilham a mesma complexidade assintótica $\Theta(n)$, mas a tabulação dispensa overhead de pilha de chamadas e elimina riscos de interrupção por limite de recursão (E5).
-3. **Constantes Ocultas:** Mesma complexidade teórica não implica mesmo tempo prático: C++ superou CPython por até $161\times$ devido à ausência de boxing e alocação contígua em heap (E4).
-4. **Espaço vs. Traceback:** Vetores de linha única poupam mais de 97% de RAM quando apenas o valor ótimo é necessário (E3, E8); a matriz completa só se justifica quando se exige reconstruir a solução passo a passo.
+1. **Adequação da PD:** subestrutura ótima e subproblemas sobrepostos tornam uma formulação candidata natural à técnica, **mas não obrigam seu uso**. O E6 demonstra que o guloso de densidade pode ser subótimo sob os preços simulados.
+2. **Top-down versus bottom-up:** na mesma formulação, ambas podem ter a mesma ordem assintótica, mas custo de recursão, conjunto de estados efetivamente visitados e restrições práticas podem diferir (E1, E2, E5, E7).
+3. **Algoritmo versus linguagem:** a diferença de cerca de **161 vezes** observada em E4 compara as versões Python/C++ efetivamente implementadas. Ela não isolou a contribuição de cada detalhe de compilador, armazenamento ou execução.
+4. **Memória versus reconstrução:** em E3 e E8, versões compactas economizam memória ao preservar apenas o necessário para calcular o valor; guardar escolhas ou recorrer a algoritmos adicionais permite reconstruir soluções em outros compromissos de espaço/tempo.
+5. **Interpretação de gráficos:** uma curva identificada por “espaço $O(1)$” no E1 é a **variante de Fibonacci**, mas o eixo vertical do gráfico fino mede **tempo**. Cache quente mede consulta, não cálculo completo.
+6. **Evidência experimental:** tendências observadas apoiam as análises teóricas sem constituir demonstrações matemáticas por si só; gráficos e estimativas são específicos da máquina, das entradas e do protocolo de amostragem.
 
 ---
 
 ## ⚠️ Limitações do Projeto
 
-1. **Complexidade Pseudo-polinomial:** Na Mochila 0/1, capacidades $W$ muito elevadas ($W \ge 10^9$) tornam a PD lenta mesmo para poucos itens.
-2. **Dependência de Subproblemas:** Problemas como o *Caminho Simples Mais Longo* em grafos gerais não podem ser resolvidos por Programação Dinâmica porque violam a independência dos subproblemas (Cormen §15.3): a escolha de um subcaminho consome vértices que não podem ser reutilizados no restante do caminho, impedindo a subestrutura ótima.
-3. **Restrições de Memória em Grandes Strings:** No LCS, sequências biológicas com milhões de bases esgotam a memória RAM na matriz 2D completa, exigindo algoritmos híbridos com divisão e conquista (como Hirschberg).
+1. **Pseudopolinomialidade e exponencialidade:** na mochila 0/1, $\Theta(nW)$ é pseudopolinomial porque a capacidade pode ser grande em relação à sua codificação binária. Held–Karp para caixeiro-viajante permanece exponencial, com $O(n^2 2^n)$ tempo e $O(n2^n)$ espaço.
+2. **Maior caminho simples em grafos gerais:** combinar apenas os melhores subcaminhos pode falhar, pois os caminhos escolhidos podem compartilhar vértices. Isso **não impede PD**: incluir no estado o subconjunto de vértices visitados e o vértice final permite uma formulação exponencial, com tempo $O(n^2 2^n)$ e espaço $O(n2^n)$. A subestrutura ótima depende da definição do estado.
+3. **Memória em entradas extensas:** LCS com tabela completa utiliza espaço quadrático; duas linhas calculam somente o comprimento, e Hirschberg é uma alternativa para reconstruir com espaço linear.
+4. **Medição:** `tracemalloc` não fornece RSS nem RAM total; medições submicrossegundo possuem ruído; cinco repetições e uma configuração experimental não autorizam conclusões universais.
+5. **C++ versus Python:** diferenças de implementação além da linguagem e do compilador limitam inferências causais do E4.
+6. **Limite de recursão:** aumentar `sys.setrecursionlimit()` não elimina limites físicos de pilha ou de memória; a versão bottom-up é preferível quando evitar recursão for uma exigência.
+
+---
+
+## 📌 Situação dos Entregáveis
+
+| Entregável | Situação verificável na branch `main` |
+| :--- | :--- |
+| Implementações Python/C++ | Presentes em `src/` e `cpp/` |
+| Testes automatizados | Suíte com **48 casos previstos**; o badge se refere à rodada documentada, não a uma nova execução |
+| Benchmarks E1–E8, CSVs e figuras | Disponíveis em `benchmarks/` e `docs/figures/` |
+| Portal didático PD LAB | Disponível em `web/` e no GitHub Pages |
+| Relatório técnico e Cheat Sheet | Desenvolvidos como materiais acadêmicos; **o PDF final não está publicado na árvore `main` inspecionada** |
+| Seminário de 40 minutos | Material de apresentação a ser utilizado pela equipe |
+
+**Antes de entregar:** conferir a versão final do PDF/Cheat Sheet, executar `make test`, validar a correspondência dos CSVs e figuras com o relatório, e ensaiar os simuladores e o quiz.
 
 ---
 
 ## 📚 Referências Acadêmicas
 
-1. **CORMEN, Thomas H.; LEISERSON, Charles E.; RIVEST, Ronald L.; STEIN, Clifford.** *Algoritmos: Teoria e Prática*. 3. ed. Rio de Janeiro: Elsevier, 2012. Capítulo 15: Programação Dinâmica, p. 263-305.
+1. **CORMEN, Thomas H.; LEISERSON, Charles E.; RIVEST, Ronald L.; STEIN, Clifford.** *Algoritmos: Teoria e Prática*. 3. ed. Rio de Janeiro: Elsevier, 2012. Capítulo 15: Programação Dinâmica.
 2. **BELLMAN, Richard.** *Dynamic Programming*. Princeton University Press, 1957.
-3. **NEEDLEMAN, Saul B.; WUNSCH, Christian D.** A general method applicable to the search for similarities in the amino acid sequence of two proteins. *Journal of Molecular Biology*, v. 48, n. 3, p. 443-453, 1970.
-4. **KLEINBERG, Jon; TARDOS, Éva.** *Algorithm Design*. Boston: Pearson / Addison-Wesley, 2006. Capítulo 6: Dynamic Programming.
-5. **SEDGEWICK, Robert; WAYNE, Kevin.** *Algorithms*. 4. ed. Upper Saddle River: Addison-Wesley, 2011.
+3. **HELD, Michael; KARP, Richard M.** A dynamic programming approach to sequencing problems. *Journal of the Society for Industrial and Applied Mathematics*, 10(1), 1962.
+4. **NEEDLEMAN, Saul B.; WUNSCH, Christian D.** A general method applicable to the search for similarities in the amino acid sequence of two proteins. *Journal of Molecular Biology*, 48(3), 1970.
+5. **HIRSCHBERG, Daniel S.** A linear space algorithm for computing maximal common subsequences. *Communications of the ACM*, 18(6), 1975.
+6. **KLEINBERG, Jon; TARDOS, Éva.** *Algorithm Design*. Addison-Wesley, 2006.
+7. **SEDGEWICK, Robert; WAYNE, Kevin.** *Algorithms*. 4. ed. Addison-Wesley, 2011.
 
 ---
 
 ## Autores
 
 **Projeto:** Estratégias Avançadas de Projeto e Análise de Algoritmos: Programação Dinâmica  
-**Instituição:** Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG) -- Campus Divinópolis  
-**Disciplina:** Algoritmos e Estruturas de Dados II (AEDS-II)  
-**Professor Orientador:** <a href="https://github.com/mpiress">Michel Pires da Silva</a>
+**Instituição:** Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG) — Campus Divinópolis  
+**Disciplina:** Algoritmos e Estruturas de Dados II (AEDS II)  
+**Professor:** <a href="https://github.com/mpiress">Michel Pires da Silva</a>
 
 <table align="center">
   <tr>
-    <td align="center" width="20%">
-      <a href="https://github.com/alisson-h">
-        <img src="https://github.com/alisson-h.png" width="100px" style="border-radius:50%;" alt="Alisson Henrique"/><br>
-        <b>Alisson Henrique</b>
-      </a><br>
-      <img src="https://img.shields.io/github/followers/alisson-h?label=Seguidores&style=social"/>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://github.com/zCarlos17">
-        <img src="https://github.com/zCarlos17.png" width="100px" style="border-radius:50%;" alt="Carlos Daniel"/><br>
-        <b>Carlos Daniel</b>
-      </a><br>
-      <img src="https://img.shields.io/github/followers/zCarlos17?label=Seguidores&style=social"/>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://github.com/Joao-santos-oliveira">
-        <img src="https://github.com/Joao-santos-oliveira.png" width="100px" style="border-radius:50%;" alt="João Gabriel Santos"/><br>
-        <b>João Gabriel Santos</b>
-      </a><br>
-      <img src="https://img.shields.io/github/followers/Joao-santos-oliveira?label=Seguidores&style=social"/>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://github.com/Ribeiro-JP">
-        <img src="https://github.com/Ribeiro-JP.png" width="100px" style="border-radius:50%;" alt="João Pedro Ribeiro"/><br>
-        <b>João Pedro Ribeiro</b>
-      </a><br>
-      <img src="https://img.shields.io/github/followers/Ribeiro-JP?label=Seguidores&style=social"/>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://github.com/Paulohenrish">
-        <img src="https://github.com/Paulohenrish.png" width="100px" style="border-radius:50%;" alt="João Pedro Ribeiro"/><br>
-        <b>Paulo Henrique</b>
-      </a><br>
-      <img src="https://img.shields.io/github/followers/Paulohenrish?label=Seguidores&style=social"/>
-    </td>
+    <td align="center" width="20%"><a href="https://github.com/alisson-h"><img src="https://github.com/alisson-h.png" width="100px" alt="Alisson Henrique"/><br/><b>Alisson Henrique</b></a></td>
+    <td align="center" width="20%"><a href="https://github.com/zCarlos17"><img src="https://github.com/zCarlos17.png" width="100px" alt="Carlos Daniel"/><br/><b>Carlos Daniel</b></a></td>
+    <td align="center" width="20%"><a href="https://github.com/Joao-santos-oliveira"><img src="https://github.com/Joao-santos-oliveira.png" width="100px" alt="João Gabriel Santos"/><br/><b>João Gabriel Santos</b></a></td>
+    <td align="center" width="20%"><a href="https://github.com/Ribeiro-JP"><img src="https://github.com/Ribeiro-JP.png" width="100px" alt="João Pedro Ribeiro"/><br/><b>João Pedro Ribeiro</b></a></td>
+    <td align="center" width="20%"><a href="https://github.com/Paulohenrish"><img src="https://github.com/Paulohenrish.png" width="100px" alt="Paulo Henrique"/><br/><b>Paulo Henrique</b></a></td>
   </tr>
 </table>
 
 ---
 
 <p align="center">
-  <b>CEFET-MG — Departamento de Computação — Campus Divinópolis</b><br>
+  <b>CEFET-MG — Departamento de Computação — Campus Divinópolis</b><br/>
   Trabalho Acadêmico de Algoritmos e Estruturas de Dados II — 2026
 </p>
