@@ -1,5 +1,9 @@
 <p align="center">
-  <img src="docs/figures/summary_complexity_dashboard.png" alt="Dashboard de síntese de complexidade e benchmarks" style="width:100%; max-height:480px; object-fit:cover; border-radius:10px;" />
+  <img
+    src="docs/figures/banner.png"
+    alt="Programação Dinâmica — AEDS II — CEFET-MG"
+    width="100%"
+  />
 </p>
 
 # Análise Teórica e Empírica de Algoritmos em Programação Dinâmica: Complexidade, Otimizações e Estudos de Caso
@@ -22,7 +26,7 @@
 
 ---
 
-## 📋 Sumário Executivo
+## Sumário Executivo
 
 Este repositório documenta uma investigação teórica e experimental sobre **Programação Dinâmica (PD)**, realizada na disciplina **Algoritmos e Estruturas de Dados II (AEDS II)** do **CEFET-MG — Campus Divinópolis**, sob orientação do Prof. Michel Pires da Silva. O projeto toma como referência o capítulo de Programação Dinâmica de Cormen et al. e compara **recursão ingênua**, **top-down com memoização**, **bottom-up com tabulação** e **otimizações espaciais**.
 
@@ -58,7 +62,7 @@ Os tempos relatados são **observações em um ambiente experimental específico
 
 ## 🎓 Contexto Acadêmico
 
-- **Instituição:** Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG) — Campus Divinópolis.
+- **Instituição:** Universidade Federal de Ciência e Inovação (UFCIMG) — Campus Divinópolis.
 - **Curso:** Engenharia da Computação.
 - **Departamento:** Departamento de Computação.
 - **Disciplina:** Algoritmos e Estruturas de Dados II (AEDS II).
@@ -68,7 +72,7 @@ Os tempos relatados são **observações em um ambiente experimental específico
 
 ---
 
-## 🎯 Objetivos Acadêmicos
+##  Objetivos Acadêmicos
 
 ### Análise Teórica versus Prática
 
@@ -96,7 +100,7 @@ Os tempos relatados são **observações em um ambiente experimental específico
 
 ---
 
-## 🔬 Algoritmos Estudados
+##  Algoritmos Estudados
 
 ### 1. Sequência de Fibonacci (Problema de Aquecimento)
 
@@ -162,7 +166,7 @@ A tabulação completa usa $\Theta(nW)$ tempo e $\Theta(nW)$ espaço; a versão 
 
 ---
 
-## 📊 Comparação Teórica e Assintótica
+##  Comparação Teórica e Assintótica
 
 A tabela resume os custos no **modelo unitário de operações elementares**. Para Fibonacci de precisão arbitrária, o armazenamento dos números e o custo das somas em bits não são constantes.
 
@@ -259,7 +263,7 @@ Trabalho-AEDS-II-Programaco-Dinamica/
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+##  Tecnologias Utilizadas
 
 | Tecnologia | Utilização |
 | :--- | :--- |
@@ -274,7 +278,7 @@ Trabalho-AEDS-II-Programaco-Dinamica/
 
 ---
 
-## 🛠️ Comandos do Makefile
+##  Comandos do Makefile
 
 Recomenda-se Linux ou WSL2, com Python, `pip`, `make` e (para E4) `g++` disponíveis.
 
@@ -300,7 +304,7 @@ O comando `make test` pode ser executado sem compilar C++ manualmente. Para resu
 
 ---
 
-## 🔧 Ambiente Experimental e Metodologia
+##  Ambiente Experimental e Metodologia
 
 A rodada documentada no relatório foi executada em **14/10/2026**, em Linux sob WSL2, com **AMD Ryzen 5 4600G**, **CPython 3.12.3** e **g++ 13.3** usando `-O3 -std=c++17`. A interpretação das medições deve levar em conta a máquina e os demais processos ativos.
 
@@ -316,7 +320,7 @@ A rodada documentada no relatório foi executada em **14/10/2026**, em Linux sob
 
 ---
 
-## 📊 Resultados Experimentais
+##  Resultados Experimentais
 
 ### E1: Fibonacci (Recursão Exponencial versus Programação Dinâmica)
 
@@ -433,7 +437,7 @@ A rodada documentada no relatório foi executada em **14/10/2026**, em Linux sob
 
 ---
 
-## 💡 Discussão dos Resultados
+##  Discussão dos Resultados
 
 1. **Adequação da PD:** subestrutura ótima e subproblemas sobrepostos tornam uma formulação candidata natural à técnica, **mas não obrigam seu uso**. O E6 demonstra que o guloso de densidade pode ser subótimo sob os preços simulados.
 2. **Top-down versus bottom-up:** na mesma formulação, ambas podem ter a mesma ordem assintótica, mas custo de recursão, conjunto de estados efetivamente visitados e restrições práticas podem diferir (E1, E2, E5, E7).
@@ -444,7 +448,7 @@ A rodada documentada no relatório foi executada em **14/10/2026**, em Linux sob
 
 ---
 
-## ⚠️ Limitações do Projeto
+##  Limitações do Projeto
 
 1. **Pseudopolinomialidade e exponencialidade:** na mochila 0/1, $\Theta(nW)$ é pseudopolinomial porque a capacidade pode ser grande em relação à sua codificação binária. Held–Karp para caixeiro-viajante permanece exponencial, com $O(n^2 2^n)$ tempo e $O(n2^n)$ espaço.
 2. **Maior caminho simples em grafos gerais:** combinar apenas os melhores subcaminhos pode falhar, pois os caminhos escolhidos podem compartilhar vértices. Isso **não impede PD**: incluir no estado o subconjunto de vértices visitados e o vértice final permite uma formulação exponencial, com tempo $O(n^2 2^n)$ e espaço $O(n2^n)$. A subestrutura ótima depende da definição do estado.
@@ -455,22 +459,7 @@ A rodada documentada no relatório foi executada em **14/10/2026**, em Linux sob
 
 ---
 
-## 📌 Situação dos Entregáveis
-
-| Entregável | Situação verificável na branch `main` |
-| :--- | :--- |
-| Implementações Python/C++ | Presentes em `src/` e `cpp/` |
-| Testes automatizados | Suíte com **48 casos previstos**; o badge se refere à rodada documentada, não a uma nova execução |
-| Benchmarks E1–E8, CSVs e figuras | Disponíveis em `benchmarks/` e `docs/figures/` |
-| Portal didático PD LAB | Disponível em `web/` e no GitHub Pages |
-| Relatório técnico e Cheat Sheet | Desenvolvidos como materiais acadêmicos; **o PDF final não está publicado na árvore `main` inspecionada** |
-| Seminário de 40 minutos | Material de apresentação a ser utilizado pela equipe |
-
-**Antes de entregar:** conferir a versão final do PDF/Cheat Sheet, executar `make test`, validar a correspondência dos CSVs e figuras com o relatório, e ensaiar os simuladores e o quiz.
-
----
-
-## 📚 Referências Acadêmicas
+##  Referências Acadêmicas
 
 1. **CORMEN, Thomas H.; LEISERSON, Charles E.; RIVEST, Ronald L.; STEIN, Clifford.** *Algoritmos: Teoria e Prática*. 3. ed. Rio de Janeiro: Elsevier, 2012. Capítulo 15: Programação Dinâmica.
 2. **BELLMAN, Richard.** *Dynamic Programming*. Princeton University Press, 1957.
@@ -485,7 +474,7 @@ A rodada documentada no relatório foi executada em **14/10/2026**, em Linux sob
 ## Autores
 
 **Projeto:** Estratégias Avançadas de Projeto e Análise de Algoritmos: Programação Dinâmica  
-**Instituição:** Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG) — Campus Divinópolis  
+**Instituição:** Universidade Federal de Ciência e Inovação (UFCIMG) — Campus Divinópolis  
 **Disciplina:** Algoritmos e Estruturas de Dados II (AEDS II)  
 **Professor:** <a href="https://github.com/mpiress">Michel Pires da Silva</a>
 
