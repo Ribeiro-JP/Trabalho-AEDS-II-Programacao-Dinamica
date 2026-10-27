@@ -10,7 +10,6 @@
 
 [![Linux](https://img.shields.io/badge/Platform-Linux-FCC624?logo=linux&logoColor=black)](https://www.linux.org/)
 [![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![C++](https://img.shields.io/badge/C%2B%2B-17%20(-O3)-00599C?logo=cplusplus&logoColor=white)](https://isocpp.org/)
 [![Pytest](https://img.shields.io/badge/Tests-48%20casos%20documentados-blue?logo=pytest&logoColor=white)](https://pytest.org/)
 [![LaTeX](https://img.shields.io/badge/Report-LaTeX%20%2F%20Overleaf-47A141?logo=latex&logoColor=white)](https://www.overleaf.com/)
 [![Status](https://img.shields.io/badge/Status-Academic%20Project-0D9488)](https://github.com/Ribeiro-JP/Trabalho-AEDS-II-Programaco-Dinamica)
@@ -132,8 +131,9 @@ Contraexemplo: para $p=(1,5,8,9)$ e $n=4$, a escolha gulosa inicial do pedaço d
 Para $A_i$ de dimensões $p_{i-1}\times p_i$:
 
 $$
-m[i,i]=0,\quad m[i,j]=\min_{i\le k<j}\{m[i,k]+m[k+1,j]+p_{i-1}p_kp_j\}.
+m[i,i]=0,\quad m[i,j]=\min_{i \le k < j} \{ m[i,k]+m[k+1,j]+p_{i-1}p_k p_j \}.
 $$
+
 
 A tabulação por diagonais usa $\Theta(n^3)$ tempo e $\Theta(n^2)$ espaço, com reconstrução pela tabela $s[i,j]$. A recursão ingênua dessa formulação realiza $3^{n-1}$ invocações; já o número de parentizações distintas é $C_{n-1}=\Theta(4^n/n^{3/2})$. Essas são duas grandezas diferentes.
 
